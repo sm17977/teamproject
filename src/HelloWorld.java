@@ -1,8 +1,6 @@
 public class HelloWorld {
-    public HelloWorld() {
+    public static void main(String[] args) {
         System.out.println("Justas Stromilas was here.");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
+        System.out.println("Finlay Georgiou-Young was here.");
     }
 }
