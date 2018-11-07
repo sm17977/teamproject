@@ -4,6 +4,10 @@ public class HelloWorld {
     public static void main(String[] args) {
         //printNames();
 
+        Market market = new Market();
+        market.requestStock("IBM");
+
+
         Frame frame = new Frame();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(3);
