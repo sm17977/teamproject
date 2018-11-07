@@ -5,7 +5,7 @@ public class HelloWorld {
         //printNames();
 
         Market market = new Market();
-        market.requestStock("IBM");
+        System.out.println(market.getStockPrice("IBM"));
 
 
         Frame frame = new Frame();
