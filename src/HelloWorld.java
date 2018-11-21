@@ -19,7 +19,8 @@ public class HelloWorld {
         System.out.println("Finlay Georgiou-Young was here.");
         System.out.println("Sean Mcleod was here.");
         System.out.println("Riaz Philippe was here.");
-        System.out.println("Cameron Cunningham was here.");//Server Test Pull & Push Complete
+        System.out.println("Cameron Cunningham was here.");
+        System.out.println("Timothy Zenonos was here.");//Server Test Pull & Push Complete
     }
 }
 
