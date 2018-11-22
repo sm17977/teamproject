@@ -128,7 +128,7 @@ public class GUI extends JFrame {
 
 
 
-
+//SECOND TAB:
 
         //JPanels for the data tab
         JPanel top = new JPanel();
