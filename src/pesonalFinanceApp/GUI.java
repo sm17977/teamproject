@@ -53,7 +53,7 @@ public class GUI extends JFrame {
         //components for inputInfoPanel
         JLabel bankFieldLabel = new JLabel("Money in the Bank:");
         JTextField bankField = new JTextField(10);
-        JButton bankButton = new JButton("set balance");
+        JButton bankButton = new JButton("Set balance");
         JLabel companyFieldLabel = new JLabel("Company:");
         JTextField companyField = new JTextField(10);
         JLabel sharesFieldLabel = new JLabel("Shares:");
@@ -89,9 +89,14 @@ public class GUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                message.setText("Current bank balance has been set to: £" + bankField.getText());
 
-                message.setText("your bank balance has been set to " + bankField.getText());
-                bankBalance = Integer.parseInt(bankField.getText());
+                try{
+                    bankBalance = Integer.parseInt(bankField.getText());
+                }
+                catch(NumberFormatException n){
+                   message.setText("Please provide an Integer value for the Bank Balance.");
+                }
                 bankField.setText("");
             }
         });
