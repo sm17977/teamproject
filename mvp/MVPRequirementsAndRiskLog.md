@@ -19,10 +19,12 @@
 
 ### Functional:
 
+* The application GUI will be developed using Java Swing.
+* The application will include the iexj4 Library to access data from IEX Trading.
 * The application should be able to show the total value of the users investments (bank balance + shares).
 * The application should allow the user to input a date within the last 3 years and view the value of their total investments at that time.
 * The application should be able to take information about company shares from CSV files to be used to display the users total investment value.
-* The application ahould be able to create a table based on the total value of the users investments at a given time.
+* The application should be able to create a table based on the total value of the users investments at a given time.
 * The application should allow the user to input their their bank balance, the companies they have shares with and the amount of shares they have with each company.
 * The application should allow the user to enter in up to 5 companies and no more.
 * The application should include validation and exception handling for all user input fields to prevent incorrect data formats used.
