@@ -25,6 +25,7 @@
 * The application ahould be able to create a table based on the total value of the users investments at a given time.
 * The application should allow the user to input their their bank balance, the companies they have shares with and the amount of shares they have with each company.
 * The application should allow the user to enter in up to 5 companies and no more.
+* The application should include validation and exception handling for all user input fields to prevent incorrect data formats used.
 
 
 ### Non-Functional:
@@ -32,6 +33,8 @@
 * The applications code should be commented, so it is easy to maintain and fix bugs.
 * The application should be user friendly (easy to learn and understand).
 * The application should have a fast response time (below 1 second).
+* The application should follow a clear structure to allow other developers to easily understand what the code does.
+* 
 
 
 ## Risk Log
