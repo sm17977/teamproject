@@ -56,8 +56,11 @@
 
 ### Sprint 5 (University Week 8)
 
-* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-68). It was set in sprint 5 and completed in sprint 5. It took x hours. I had to collaborate with my team in completing each markdown doumentation file.
-* In this week I made updates to the GUI and added some listeners to the buttons. I Gave the application a tab design using a JTabbedPane. In the first tab the user will input their bank balance, the company symbol and shares they have in that company, so I implemented the necessary buttons and text fields to allow the user to do so. I also coded the buttons so if the user enters above 5 companies, an appropriate message is shown. I made it so the input bank balance is saved in an integer instance variable, and the company and amount of shares is saved in a HashMap instance variable, with the company symbol as the key and the share amount as the value. With these values stored as instance variables, it allows the information to be taken and used in the other tab, which will show necessary data.
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-68). It was set in sprint 5 and completed in sprint 5. It took 12 hours. I had to collaborate with my team in completing each markdown doumentation file.
+* In this week I made updates to the GUI and added some listeners to the buttons. I Gave the application a tab design using a JTabbedPane. In the first tab the user will input their bank balance, the company symbol and shares they have in that company. This led me to implement the necessary buttons and text fields to allow the user to do so. I also coded the buttons so if the user enters above 5 companies, an appropriate message is shown. 
+When the buttons are pressed, the input bank balance is saved in an Integer instance variable, and the company and amount of shares is saved in a HashMap instance variable, with the company symbol as the key and the share amount as the value. With these values stored as instance variables, it allows the information to be taken and used in the other tab, which will show necessary data.
+    
 
-
+    In the data tab, I added an action listener to the "Total current value of investments" button. The button creates a variable of type double called total and adds the bank balance to it. It then loops through the map containing the companies the user has shares with, and the amount of shares they have with those companies. In the loop, a list of the daily stock prices in the last 5 years for the current company is created. The stock price on the most recent day 
+    is set to a double variable. The stock price of the current company in the loop is then multiplied by the users share amount for that company. This is then added to the total. Once the bank balance and all of the users share values have been added together, the center panel shows a message containing the total value of the users investments.
 
