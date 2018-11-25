@@ -1,11 +1,16 @@
 package pesonalFinanceApp;
 
+import pl.zankowski.iextrading4j.api.stocks.Chart;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
 
 public class GUI extends JFrame {
 
@@ -22,6 +27,8 @@ public class GUI extends JFrame {
 
 
     public GUI(){
+
+        Market market = new Market();
 
 
 
@@ -109,9 +116,13 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(userShares.size() <= 4){
-
-                    userShares.put(companyField.getText(), Integer.parseInt(sharesField.getText()));
-                    message.setText("your shares: " + userShares.toString());
+                    try {
+                        userShares.put(companyField.getText(), Integer.parseInt(sharesField.getText()));
+                        message.setText("your shares: " + userShares.toString());
+                    }
+                    catch (NumberFormatException n){
+                        message.setText("Please provide an Integer value for the Share amount.");
+                    }
                     companyField.setText("");
                     sharesField.setText("");
 
@@ -171,6 +182,47 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
+
+        currentValue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //creates a double variable to hold the total investment value
+                //set as the bank balance the user has entered. If nothing has entered the bank  balance is 0
+                double total = bankBalance;
+
+                //iterator created to iterate through each entry set in the map of companies and shares
+                Iterator it = userShares.entrySet().iterator();
+
+                //loops until there are no more entry sets in the map
+                while(it.hasNext()){
+
+                    Map.Entry currentEntry = (Map.Entry)it.next();
+
+                    //sets the company in the current entry set as a String variable and the share amount as a double variable
+                    String currentCompany = (String)currentEntry.getKey();
+                    double currentShare = (Integer)currentEntry.getValue();
+
+                    //sets the current companies stock prices in a list
+                    List<Chart> currentCompanyChart = market.getStockPrice(currentCompany);
+
+                    //gets the stock price of the most recent day
+                    Chart stockPrice = currentCompanyChart.get(0);
+
+                    //sets the value of the shares as a double variable
+                    //this is done by multiplying the current share amount by the closing stock price on the most recent day
+                    double shareVal = currentShare * stockPrice.getClose().doubleValue();
+
+                    //the value of the users shares in the current company are added to the total
+                    total += shareVal;
+                }
+
+                //center panel prints the current total of the users investments
+                outputData.setText("The total of your current investments are: £" + String.format("%.2f", total));
+
+            }
+        });
+
     }
 
 
