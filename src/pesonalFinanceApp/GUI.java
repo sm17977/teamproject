@@ -4,8 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class GUI extends JFrame {
 
@@ -20,7 +24,9 @@ public class GUI extends JFrame {
     Map<String, Integer> userShares = new HashMap<>();
 
 
-
+    JTable data;
+    String[] columnNames = { "Date", "Bank Balance", "Shares",  "Sold Share", "Bought Share" };
+    CSV csv;
     public GUI(){
 
 
@@ -35,6 +41,11 @@ public class GUI extends JFrame {
         tabPane.add("Input", inputInfoTab);
         tabPane.add("Data", showDataTab);
 
+        csv = new CSV();
+        csv.lines();
+        String[][] lines = new String[csv.tot_lines][0];
+        lines = csv.read(lines);
+
 //FIRST TAB:
 
         //JPanels for the inputInfo tab
@@ -45,6 +56,7 @@ public class GUI extends JFrame {
         //component for title panel
         JLabel inputInfoTitle = new JLabel("Please input your bank balance, the companies you have shares in and the amount of shares you have in each company");
         inputInfoTitle.setFont(inputInfoTitle.getFont().deriveFont(Font.BOLD, 15f));
+
 
         //component for message panel
         JLabel message = new JLabel("");
@@ -151,6 +163,11 @@ public class GUI extends JFrame {
         centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
         centerInfo.setBackground(Color.gray);
 
+        data = new JTable(lines, columnNames);
+        data.setBounds(30, 40, 200, 300);
+        JScrollPane sp = new JScrollPane(data);
+        centerInfo.add(sp);
+
         bottom.add(currentValue);
         bottom.add(dateLabel);
         bottom.add(dateInput);
@@ -165,10 +182,53 @@ public class GUI extends JFrame {
         setSize(1000,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setResizable(false);
+        //setResizable(false);
+    }
+}
+
+class CSV {
+    String file = "M:\\CE291\\src\\assignment1\\csv.txt";
+    public Scanner input = new Scanner(System.in);
+    public String line = "";
+    public int tot_lines = 0;
+    public static final String DELIMITER = ", ";
+    BufferedReader main;
+    BufferedReader counter;
+
+    public CSV(){
+        try {
+            main = new BufferedReader(new FileReader(file));
+            counter = new BufferedReader(new FileReader(file));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
+    public void lines(){
+        try {
+            while ((line = counter.readLine()) != null){
+                tot_lines += 1;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    public String[][] read(String[][] arr){
+        int i = 0;
+        lines();
+        String[][] parse = new String[tot_lines][0];
 
-
+        try {
+            while ((line = main.readLine()) != null){
+                String[] fields = line.split(DELIMITER);
+                parse[i] = fields;
+                i++;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        arr = parse;
+        return arr;
+    }
 }
