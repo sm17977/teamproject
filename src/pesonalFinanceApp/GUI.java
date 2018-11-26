@@ -4,53 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class GUI extends JFrame {
-    //Each JPanel is a separate tab
-    JPanel showDataTab;
-    JPanel inputInfoTab;
-    JTabbedPane tabPane;
 
-    //JPanels for the inputInfo tab
-    JPanel titlePanel;
-    JPanel textPanel;
-    JPanel inputInfoPanel;
-
-    //component for title panel
-    JLabel inputInfoTitle;
-
-    //component for message panel
-    JLabel message;
-
-    //components for inputInfoPanel
-    JLabel bankFieldLabel;
-    JTextField bankField;
-    JButton bankButton;
-    JLabel companyFieldLabel;
-    JTextField companyField;
-    JLabel sharesFieldLabel;
-    JTextField sharesField;
-    JButton companySharesButton;
-
-    //JPanels for the data tab
-    JPanel top;
-    JPanel centerInfo;
-    JPanel bottom;
-    //components for the data tab
-    JButton currentValue;
-    JButton search;
-    JLabel dateLabel;
-    JTextField dateInput;
-    JLabel clientName;
-    JTable data;
-    String[] columnNames = { "Date", "Bank Balance", "Shares",  "Sold Share", "Bought Share" };
-    CSV csv;
+    public static void main(String[] args){
+        GUI frame = new GUI();
+    }
 
     //instance variable bankBalance holds the bank balance of the user when entered
     int bankBalance;
@@ -59,15 +20,16 @@ public class GUI extends JFrame {
     Map<String, Integer> userShares = new HashMap<>();
 
 
+
     public GUI(){
 
 
 
         //Each JPanel is a separate tab
-        showDataTab = new JPanel(new BorderLayout());
-        inputInfoTab = new JPanel(new BorderLayout());
+        JPanel showDataTab = new JPanel(new BorderLayout());
+        JPanel inputInfoTab = new JPanel(new BorderLayout());
 
-       tabPane = new JTabbedPane();
+        JTabbedPane tabPane = new JTabbedPane();
 
         //adding the tabs to the tabbed pane
         tabPane.add("Input", inputInfoTab);
@@ -76,27 +38,27 @@ public class GUI extends JFrame {
 //FIRST TAB:
 
         //JPanels for the inputInfo tab
-        titlePanel = new JPanel();
-        textPanel = new JPanel(new BorderLayout());
-        inputInfoPanel = new JPanel();
+        JPanel titlePanel = new JPanel();
+        JPanel textPanel = new JPanel(new BorderLayout());
+        JPanel inputInfoPanel = new JPanel();
 
         //component for title panel
-        inputInfoTitle = new JLabel("Please input your bank balance, the companies you have shares in and the amount of shares you have in each company");
+        JLabel inputInfoTitle = new JLabel("Please input your bank balance, the companies you have shares in and the amount of shares you have in each company");
         inputInfoTitle.setFont(inputInfoTitle.getFont().deriveFont(Font.BOLD, 15f));
 
         //component for message panel
-        message = new JLabel("");
+        JLabel message = new JLabel("");
         message.setFont(message.getFont().deriveFont(15f) );
 
         //components for inputInfoPanel
-        bankFieldLabel = new JLabel("Money in the Bank:");
-        bankField = new JTextField(10);
-        bankButton = new JButton("set balance");
-        companyFieldLabel = new JLabel("Company:");
-        companyField = new JTextField(10);
-        sharesFieldLabel = new JLabel("Shares:");
-        sharesField = new JTextField(10);
-        companySharesButton = new JButton("add to your company shares");
+        JLabel bankFieldLabel = new JLabel("Money in the Bank:");
+        JTextField bankField = new JTextField(10);
+        JButton bankButton = new JButton("set balance");
+        JLabel companyFieldLabel = new JLabel("Company:");
+        JTextField companyField = new JTextField(10);
+        JLabel sharesFieldLabel = new JLabel("Shares:");
+        JTextField sharesField = new JTextField(10);
+        JButton companySharesButton = new JButton("add to your company shares");
 
         //adding components to titlePanel
         titlePanel.add(inputInfoTitle);
@@ -155,6 +117,9 @@ public class GUI extends JFrame {
                     companyField.setText("");
                     sharesField.setText("");
                 }
+
+
+
             }
         });
 
@@ -166,32 +131,25 @@ public class GUI extends JFrame {
 //SECOND TAB:
 
         //JPanels for the data tab
-        top = new JPanel();
-        centerInfo = new JPanel();
-        bottom = new JPanel();
+        JPanel top = new JPanel();
+        JPanel centerInfo = new JPanel();
+        JPanel bottom = new JPanel();
         //components for the data tab
-        currentValue = new JButton("Total current value of investments");
-        search = new JButton("Search");
-        dateLabel = new JLabel("Please input a date:");
-        dateInput = new JTextField(10);
-        clientName = new JLabel("CLIENTS NAME");
-
-        csv = new CSV();    //creating class object
-        csv.lines();    //call to method counting lines in file
-        String[][] lines = new String[csv.tot_lines][0];    //initialising new 2D array with length equal to lines in file
-        lines = csv.read(lines);    //setting array to return value of method
+        JButton currentValue = new JButton("Total current value of investments");
+        JButton search = new JButton("Search");
+        JLabel dateLabel = new JLabel("Please input a date:");
+        JTextField dateInput = new JTextField(10);
+        JLabel outputData = new JLabel("DATA WILL BE OUTPUT HERE");
+        JLabel clientName = new JLabel("CLIENTS NAME");
 
         top.add(clientName);
         top.setBackground(Color.white);
 
+        outputData.setVerticalAlignment(JLabel.CENTER);
+        outputData.setHorizontalAlignment(JLabel.CENTER);
+        centerInfo.add(outputData);
         centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
         centerInfo.setBackground(Color.gray);
-
-        //Creation of table holding values read by file
-        data = new JTable(lines, columnNames);
-        data.setBounds(30, 40, 200, 300);   //size of table set
-        JScrollPane sp = new JScrollPane(data);     //scroll pane created to the new table
-        centerInfo.add(sp);     //scroll pane added to centre frame in order to display table
 
         bottom.add(currentValue);
         bottom.add(dateLabel);
@@ -207,68 +165,10 @@ public class GUI extends JFrame {
         setSize(1000,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        //setResizable(false);                              ****test purposes****
+        setResizable(false);
     }
 
-    public static void main(String[] args){
-        GUI frame = new GUI();
-    }
-}
 
 
-//Class reads text file and counts its lines
-class CSV {
-    //Components initialised
-    String file = "M:\\teamproject\\csv.txt";   //specifying location of file
-    public String line = "";    //empty string to hold next line in file
-    public int tot_lines = 0;   //holds number of lines in file
-    public static final String DELIMITER = ", ";    //Delimeter specified to seperate values
-    BufferedReader main;    //Buffered readers declared to iterate through file
-    BufferedReader counter;
 
-    //Initialising both buffered readers to current file
-    public CSV(){
-        //error checking done if file cannot be read
-        try {
-            main = new BufferedReader(new FileReader(file));
-            counter = new BufferedReader(new FileReader(file));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    //Counting lines in the file
-    public void lines(){
-        //error checking done if file cannot be read
-        try {
-            //loop through each line in which the next line can be ammended to the temporary string
-            while ((line = counter.readLine()) != null){
-                tot_lines += 1;     //variable incremented each line
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    //Return 2D array with values read from file
-    public String[][] read(String[][] arr){
-        int i = 0;      //incrementing variable
-        lines();        //call to previous method sets correct numeric value
-        String[][] parse = new String[tot_lines][0];    //new 2D array created with length equal to lines in file
-
-        //error checking done if file cannot be read
-        try {
-            //loop through each line in which the next line can be ammended to the temporary string
-            while ((line = main.readLine()) != null){
-                String[] fields = line.split(DELIMITER);    //create an array which holds elements of the file seperated by delimeter
-                parse[i] = fields;  //2D array ammended
-                i++;
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        //value of 2D array ammended and returned
-        arr = parse;
-        return arr;
-    }
 }

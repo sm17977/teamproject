@@ -18,7 +18,7 @@ public class Main {
         List<Chart> ibm_chart = market.getStockPrice("IBM");
 
         // Print closing stock price of IBM for last 10 days
-        for(int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             Chart point = ibm_chart.get(i);
             System.out.println(point.getClose());
         }
@@ -28,23 +28,5 @@ public class Main {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(3);
 
-    }
-
-    static void printNames() {
-        System.out.println("Justas Stromilas was here.");
-        System.out.println("Finlay Georgiou-Young was here.");
-        System.out.println("Sean Mcleod was here.");
-        System.out.println("Riaz Philippe was here.");
-        System.out.println("Cameron Cunningham was here.");
-        System.out.println("Timothy Zenonos was here.");//Server Test Pull & Push Complete
-    }
-}
-
-// Build frame in this class
-class Frame extends JFrame {
-    private int size = 400;
-    public Frame(){
-        setTitle("Default pesonalFinanceApp.Frame");
-        setSize(size, size);
     }
 }
