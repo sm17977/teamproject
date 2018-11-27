@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -245,7 +246,8 @@ class ButtonHandler implements ActionListener {
 }
 //class reads from file and appends values found to a 2D array seperated by a delimeter
 class CSV {
-    String file = "M:\\teamproject\\csv.txt";       //decleration of main .txt file
+    String absolutePath = new File("").getAbsolutePath();
+    String file =  absolutePath + "\\csv.txt";       //decleration of main .txt file
     public String line = "";        //decleration of string which will contain each line read
     public int tot_lines = 0;       //integer value holds number of lines in the file
     public static final String DELIMITER = ", ";        //delimeter seperates values with the given string
