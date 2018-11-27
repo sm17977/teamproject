@@ -64,3 +64,14 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
     In the data tab, I added an action listener to the "Total current value of investments" button. The button creates a variable of type double called total and adds the bank balance to it. It then loops through the map containing the companies the user has shares with, and the amount of shares they have with those companies. In the loop, a list of the daily stock prices in the last 5 years for the current company is created. The stock price on the most recent day 
     is set to a double variable. The stock price of the current company in the loop is then multiplied by the users share amount for that company. This is then added to the total. Once the bank balance and all of the users share values have been added together, the center panel shows a message containing the total value of the users investments.
 
+## Team member Timothy Zinonos
+### Sprint 6 (University Week 9):
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-62)     Uploaded my photo to both GitLab and GitHub
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-63)     Learned how to link IntelliJ with GitLab
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-64)     Uplaoded Functional requirements
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-65)     Uplaoded Non-Functional requirements
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-66)     Created User Story
+* [Task 6](https://cseejira.essex.ac.uk/browse/CE291T21-67)     Completed Markdown documentation
+* 
+I created
+
