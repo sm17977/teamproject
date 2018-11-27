@@ -12,10 +12,9 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.StringReader;
+import java.util.*;
+import java.util.List;
 
 import static pesonalFinanceApp.Client.printMap;
 
@@ -23,6 +22,7 @@ public class GUI extends JFrame {
 
     public static void main(String[] args){
         GUI frame = new GUI();
+        frame.setVisible(true);
     }
 
     //instance variable bankBalance holds the bank balance of the user when entered
@@ -38,10 +38,7 @@ public class GUI extends JFrame {
 
         //Create instance of new client
         Client client = new Client();
-        ArrayList symbolList = new ArrayList();
 
-        Market market = new Market();
-        market.getSymbolList(symbolList);
 
 
         //Each JPanel is a separate tab
@@ -58,6 +55,7 @@ public class GUI extends JFrame {
         csv.lines();
         String[][] lines = new String[csv.tot_lines][0];
         lines = csv.read(lines);
+
 
 //FIRST TAB:
 
@@ -134,16 +132,41 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
+                Market market = new Market(companyField.getText(), Integer.parseInt(sharesField.getText()), Integer.parseInt(bankField.getText()));
+                ArrayList symbolList = new ArrayList();
+                market.getSymbolList(symbolList);
+
+
+
+                //Validate Share count
                 if (client.getShareCount() <= 4) {
 
+                    //Validate Symbol
                     if(market.validateSymbol(companyField.getText(), symbolList)){
+
+                        //Set share quantity
+                        client.setShareQuantity(Integer.parseInt(sharesField.getText()));
+
+                        //Add Share and Quantity to map
                         client.setUserShares(companyField.getText(), Integer.parseInt(sharesField.getText()));
                         message.setText("<html>" + printMap(client.getUserShares()) + "<br/></html>");
                         companyField.setText("");
                         sharesField.setText("");
 
 
+
                         System.out.println(printMap(client.getUserShares()));
+
+                        ArrayList generatedList = new ArrayList<>();
+                        market.generateChart(generatedList);
+
+                        Write write = new Write();
+                        write.writeToFile(generatedList);
+
+                        //Generate list of share values for current day
+                        System.out.println(generatedList.get(generatedList.size() - 1));
+
 
                     }
                     else{
@@ -272,16 +295,17 @@ class CSV {
         lines();
         String[][] parse = new String[tot_lines][0];
 
+
         try {
-            while ((line = main.readLine()) != null){
-                String[] fields = line.split(DELIMITER);
-                parse[i] = fields;
-                i++;
-            }
-        } catch (IOException e){
-            e.printStackTrace();
+        while ((line = main.readLine()) != null){
+            String[] fields = line.split(DELIMITER);
+            parse[i] = fields;
+            i++;
         }
-        arr = parse;
+    } catch (IOException e){
+        e.printStackTrace();
+    }
+    arr = parse;
         return arr;
     }
 }
