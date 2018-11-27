@@ -97,4 +97,4 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-59). Created Non-Functional Requirements.
 * [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-44). Initial thoughts on design.
 
-
+* I have imported iextrading4j library and implemented it to retrieve stock prices of any company for the last 5 years.
