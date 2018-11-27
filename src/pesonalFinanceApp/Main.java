@@ -20,13 +20,13 @@ public class Main {
         // Print closing stock price of IBM for last 10 days
         for(int i = 0; i < 10; ++i) {
             Chart point = ibm_chart.get(i);
-            System.out.println(point.getClose());
+            System.out.println("Date: " + point.getDate() + " - Value: " + point.getClose());
         }
 
 
         GUI frame = new GUI();
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(3);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     }
 
@@ -40,11 +40,3 @@ public class Main {
     }
 }
 
-// Build frame in this class
-class Frame extends JFrame {
-    private int size = 400;
-    public Frame(){
-        setTitle("Default pesonalFinanceApp.Frame");
-        setSize(size, size);
-    }
-}

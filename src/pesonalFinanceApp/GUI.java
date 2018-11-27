@@ -15,6 +15,8 @@ public class GUI extends JFrame {
 
     //instance variable bankBalance holds the bank balance of the user when entered
     int bankBalance;
+    //instance variable totalShares wil calc the total value of all shares the client holds
+    int totalShares;
 
     //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
     Map<String, Integer> userShares = new HashMap<>();
@@ -22,8 +24,6 @@ public class GUI extends JFrame {
 
 
     public GUI(){
-
-
 
         //Each JPanel is a separate tab
         JPanel showDataTab = new JPanel(new BorderLayout());
@@ -115,6 +115,16 @@ public class GUI extends JFrame {
                     companyField.setText("");
                     sharesField.setText("");
 
+
+                    //Add code to validate if name/symbol of share is in the iex share list.
+                    //Maybe change hashmap to <String, List<String>>? to store {shareName, {shareQuantity/totalShareValue/singleShareValue}}?
+
+
+
+
+
+
+
                 }
 
                 else{
@@ -122,6 +132,14 @@ public class GUI extends JFrame {
                     companyField.setText("");
                     sharesField.setText("");
                 }
+
+
+
+
+
+
+
+
 
 
 
