@@ -1,11 +1,23 @@
 package pesonalFinanceApp;
 
+import pl.zankowski.iextrading4j.api.refdata.ExchangeSymbol;
+import pl.zankowski.iextrading4j.api.refdata.SymbolType;
+import pl.zankowski.iextrading4j.api.stocks.Chart;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+
+import static pesonalFinanceApp.Client.printMap;
 
 public class GUI extends JFrame {
 
@@ -14,16 +26,23 @@ public class GUI extends JFrame {
     }
 
     //instance variable bankBalance holds the bank balance of the user when entered
-    int bankBalance;
     //instance variable totalShares wil calc the total value of all shares the client holds
-    int totalShares;
-
     //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
-    Map<String, Integer> userShares = new HashMap<>();
 
 
 
+    JTable data;
+    String[] columnNames = { "Date", "Bank Balance", "Company",  "Share Close Value", "Share Quantity", "Total Share Value" };
+    CSV csv;
     public GUI(){
+
+        //Create instance of new client
+        Client client = new Client();
+        ArrayList symbolList = new ArrayList();
+
+        Market market = new Market();
+        market.getSymbolList(symbolList);
+
 
         //Each JPanel is a separate tab
         JPanel showDataTab = new JPanel(new BorderLayout());
@@ -35,6 +54,11 @@ public class GUI extends JFrame {
         tabPane.add("Input", inputInfoTab);
         tabPane.add("Data", showDataTab);
 
+        csv = new CSV();
+        csv.lines();
+        String[][] lines = new String[csv.tot_lines][0];
+        lines = csv.read(lines);
+
 //FIRST TAB:
 
         //JPanels for the inputInfo tab
@@ -45,6 +69,7 @@ public class GUI extends JFrame {
         //component for title panel
         JLabel inputInfoTitle = new JLabel("Please input your bank balance, the companies you have shares in and the amount of shares you have in each company");
         inputInfoTitle.setFont(inputInfoTitle.getFont().deriveFont(Font.BOLD, 15f));
+
 
         //component for message panel
         JLabel message = new JLabel("");
@@ -58,7 +83,7 @@ public class GUI extends JFrame {
         JTextField companyField = new JTextField(10);
         JLabel sharesFieldLabel = new JLabel("Shares:");
         JTextField sharesField = new JTextField(10);
-        JButton companySharesButton = new JButton("add to your company shares");
+        JButton companySharesButton = new JButton("Add Share");
 
         //adding components to titlePanel
         titlePanel.add(inputInfoTitle);
@@ -89,13 +114,13 @@ public class GUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                message.setText("Current bank balance has been set to: £" + bankField.getText());
 
-                try{
-                    bankBalance = Integer.parseInt(bankField.getText());
+                message.setText("Your bank balance has been set to £" + bankField.getText());
+                try {
+                    client.setBalance(Integer.parseInt(bankField.getText()));
                 }
                 catch(NumberFormatException n){
-                   message.setText("Please provide an Integer value for the Bank Balance.");
+                    message.setText("Please enter an Integer value for your Bank Balance.");
                 }
                 bankField.setText("");
             }
@@ -108,30 +133,47 @@ public class GUI extends JFrame {
         companySharesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(userShares.size() <= 4){
 
-                    userShares.put(companyField.getText(), Integer.parseInt(sharesField.getText()));
-                    message.setText("your shares: " + userShares.toString());
-                    companyField.setText("");
-                    sharesField.setText("");
+                if (client.getShareCount() <= 4) {
 
-
-                    //Add code to validate if name/symbol of share is in the iex share list.
-                    //Maybe change hashmap to <String, List<String>>? to store {shareName, {shareQuantity/totalShareValue/singleShareValue}}?
+                    if(market.validateSymbol(companyField.getText(), symbolList)){
+                        client.setUserShares(companyField.getText(), Integer.parseInt(sharesField.getText()));
+                        message.setText("<html>" + printMap(client.getUserShares()) + "<br/></html>");
+                        companyField.setText("");
+                        sharesField.setText("");
 
 
+                        System.out.println(printMap(client.getUserShares()));
 
-
+                    }
+                    else{
+                        message.setText("Could not find Company. Please use valid IEX Symbol format.");
+                    }
 
 
 
                 }
+
+
 
                 else{
-                    message.setText("you can only enter up to 5 companies. Your list:" + userShares.toString());
+                    message.setText("you can only enter up to 5 companies. Your list:" + client.getUserShares().toString());
                     companyField.setText("");
                     sharesField.setText("");
                 }
+
+
+                //Add code to validate if name/symbol of share is in the iex share list.
+                //Maybe change hashmap to <String, List<String>>? to store {shareName, {shareQuantity/totalShareValue/singleShareValue}}?
+
+
+
+
+
+
+
+
+
 
 
 
@@ -174,6 +216,11 @@ public class GUI extends JFrame {
         centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
         centerInfo.setBackground(Color.gray);
 
+        data = new JTable(lines, columnNames);
+        data.setBounds(30, 40, 200, 300);
+        JScrollPane sp = new JScrollPane(data);
+        centerInfo.add(sp);
+
         bottom.add(currentValue);
         bottom.add(dateLabel);
         bottom.add(dateInput);
@@ -188,10 +235,53 @@ public class GUI extends JFrame {
         setSize(1000,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        setResizable(false);
+        //setResizable(false);
+    }
+}
+
+class CSV {
+    String file = "C:\\Users\\Sean\\Desktop\\Computer Games Y2\\CE291\\teamproject\\csv.txt";
+    public Scanner input = new Scanner(System.in);
+    public String line = "";
+    public int tot_lines = 0;
+    public static final String DELIMITER = ", ";
+    BufferedReader main;
+    BufferedReader counter;
+
+    public CSV(){
+        try {
+            main = new BufferedReader(new FileReader(file));
+            counter = new BufferedReader(new FileReader(file));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
+    public void lines(){
+        try {
+            while ((line = counter.readLine()) != null){
+                tot_lines += 1;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    public String[][] read(String[][] arr){
+        int i = 0;
+        lines();
+        String[][] parse = new String[tot_lines][0];
 
-
+        try {
+            while ((line = main.readLine()) != null){
+                String[] fields = line.split(DELIMITER);
+                parse[i] = fields;
+                i++;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        arr = parse;
+        return arr;
+    }
 }
