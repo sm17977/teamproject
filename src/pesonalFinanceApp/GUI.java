@@ -176,7 +176,7 @@ public class GUI extends JFrame {
         showDataTab.add(bottom, BorderLayout.SOUTH);
 
         add(tabPane);
-        setSize(1000,500);
+        setSize(1000,1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         //setResizable(false);
@@ -185,7 +185,7 @@ public class GUI extends JFrame {
 
 //class reads from file and appends values found to a 2D array seperated by a delimeter
 class CSV {
-    String file = "M:\\CE291\\src\\assignment1\\csv.txt";       //decleration of main .txt file
+    String file = "M:\\teamproject\\csv.txt";       //decleration of main .txt file
     public String line = "";        //decleration of string which will contain each line read
     public int tot_lines = 0;       //integer value holds number of lines in the file
     public static final String DELIMITER = ", ";        //delimeter seperates values with the given string
