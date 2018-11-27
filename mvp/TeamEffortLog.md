@@ -89,7 +89,8 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 
 ### Sprint 4 (University Week 6)
 
-* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learned how to export data from IEXTrading.com.
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learned how to export data from IEXTrading.com
+* [Gitlab commit](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/c47cdbd69d834a70906ee17ac59e4fe9e8296bfa).
 
 ### Sprint 5 (University Week 7)
 
