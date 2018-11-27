@@ -76,3 +76,26 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * I created a JTable which displays elements of a 2D array, this is added to the data tab on the GUI
 * Additionally I created a method which reads from a text file and stores elements on that text file to a 2D array
 
+## Team member name Justas Stromilas
+
+### Sprint 2 (University Week 4)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-1). Familiarised with command-line cseegit.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-11). Created simple "HelloWorld" class.
+
+### Sprint 3 (University Week 5)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-17). Created Simple JFrame.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-18). Uploaded true photo of myself.
+
+### Sprint 4 (University Week 6)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learned how to export data from IEXTrading.com
+* [Gitlab commit](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/c47cdbd69d834a70906ee17ac59e4fe9e8296bfa).
+
+### Sprint 5 (University Week 7)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-50). Created User Stories.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-59). Created Non-Functional Requirements.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-44). Initial thoughts on design.
+
+* I have imported iextrading4j library and implemented it to retrieve stock prices of any company for the last 5 years.
