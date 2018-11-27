@@ -73,6 +73,6 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-66)     Created User Story
 * [Task 6](https://cseejira.essex.ac.uk/browse/CE291T21-67)     Completed Markdown documentation
 
-* -I created a JTable which displays elements of a 2D array, this is added to the data tab on the GUI
-  -Additionally I created a method which reads from a text file and stores elements on that text file to a 2D array
+* I created a JTable which displays elements of a 2D array, this is added to the data tab on the GUI
+* Additionally I created a method which reads from a text file and stores elements on that text file to a 2D array
 
