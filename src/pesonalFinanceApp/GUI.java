@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -23,9 +24,20 @@ public class GUI extends JFrame {
     //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
     Map<String, Integer> userShares = new HashMap<>();
 
+    //JPanels for the data tab
+    JPanel top;
+    JPanel centerInfo;
+    JPanel bottom;
+    //components for the data tab
+    JLabel dateLabel;
+    JTextField dateInput;
+    JLabel clientName;
+    JLabel data_dates;
+
     //implementation of objects needed to run the CSV class
     JTable data;
     String[] columnNames = { "Date", "Bank Balance", "Shares",  "Sold Share", "Bought Share" };
+    String [][] lines;
     CSV csv;
 
     public GUI(){
@@ -44,7 +56,7 @@ public class GUI extends JFrame {
 
         csv = new CSV();        //new object of type CSV created
         csv.lines();        //call to method which calculates number of lines in file
-        String[][] lines = new String[csv.tot_lines][0];        //implement new 2D array equal to length of file
+        lines = new String[csv.tot_lines][0];        //implement new 2D array equal to length of file
         lines = csv.read(lines);    //call to method which alters the array
 
 //FIRST TAB:
@@ -130,29 +142,24 @@ public class GUI extends JFrame {
                     companyField.setText("");
                     sharesField.setText("");
                 }
-
-
-
             }
         });
-
-
-
 
 
 
 //SECOND TAB:
 
         //JPanels for the data tab
-        JPanel top = new JPanel();
-        JPanel centerInfo = new JPanel();
-        JPanel bottom = new JPanel();
+        top = new JPanel();
+        centerInfo = new JPanel();
+        bottom = new JPanel();
         //components for the data tab
         JButton currentValue = new JButton("Total current value of investments");
         JButton search = new JButton("Search");
-        JLabel dateLabel = new JLabel("Please input a date:");
-        JTextField dateInput = new JTextField(10);
-        JLabel clientName = new JLabel("CLIENTS NAME");
+        dateLabel = new JLabel("Please input a date:");
+        data_dates = new JLabel("");
+        dateInput = new JTextField(10);
+        clientName = new JLabel("CLIENTS NAME");
 
         top.add(clientName);
         top.setBackground(Color.white);
@@ -160,10 +167,16 @@ public class GUI extends JFrame {
         centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
         centerInfo.setBackground(Color.gray);
 
+
+        //actionlistener added to search button
+        search.addActionListener(new ButtonHandler(this, 1));
+        currentValue.addActionListener(new ButtonHandler(this, 2));
+
         data = new JTable(lines, columnNames);      //implementing new JTable with parameters equal to arrays created
         data.setBounds(30, 40, 200, 300);       //shift size of table
         JScrollPane sp = new JScrollPane(data);     //adding the table to a new scroll pane
         centerInfo.add(sp);     //scroll pane added to frame
+        centerInfo.add(data_dates, BorderLayout.SOUTH);
 
         bottom.add(currentValue);
         bottom.add(dateLabel);
@@ -183,6 +196,53 @@ public class GUI extends JFrame {
     }
 }
 
+class ButtonHandler implements ActionListener {
+    GUI j;
+    int act;
+
+    public ButtonHandler(GUI frame_ref1, int action) {
+        this.j = frame_ref1;
+        this.act = action;
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Boolean found = false;
+        if(this.act == 1){
+            for (int i = 0; i < this.j.csv.tot_lines; i++){
+                //System.out.println(this.j.lines[i][0] + " " + this.j.dateInput.getText() + "3");
+                if (this.j.dateInput.getText().equals(this.j.lines[i][0])) {
+                    System.out.println(Arrays.toString(this.j.lines[i]));
+                    this.j.data_dates.setText("Found: " + Arrays.toString(this.j.lines[i]));
+                    found = true;
+                    break;
+                }
+            }
+            if (found == false){
+                this.j.data_dates.setText("No Matching date");
+                System.out.println("No Matching date");
+            }
+        }else if (this.act == 2){
+            int tot_bank = 0;
+            int tot_shares = 0;
+            int tot = 0;
+            String temp = "";
+
+            for (int i = 0; i < this.j.csv.tot_lines; i++) {
+                temp = (this.j.lines[i][1].substring(1));
+                tot += Integer.parseInt(temp);
+            }
+            for (int i = 0; i < this.j.csv.tot_lines; i++) {
+                if (this.j.dateInput.getText().equals(this.j.lines[i][0])) {
+                    temp = (this.j.lines[i][1].substring(1));
+                    tot_bank = Integer.parseInt(temp);
+                    temp = (this.j.lines[i][2].substring(1));
+                    tot_shares = Integer.parseInt(temp);
+                }
+            }
+            this.j.data_dates.setText("Total in bank is " + tot_bank + "\n Total shares are " + tot_shares +"\n Total investments are " + tot );
+        }
+    }
+}
 //class reads from file and appends values found to a 2D array seperated by a delimeter
 class CSV {
     String file = "M:\\teamproject\\csv.txt";       //decleration of main .txt file
