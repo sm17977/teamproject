@@ -23,10 +23,11 @@ public class GUI extends JFrame {
     //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
     Map<String, Integer> userShares = new HashMap<>();
 
-
+    //implementation of objects needed to run the CSV class
     JTable data;
     String[] columnNames = { "Date", "Bank Balance", "Shares",  "Sold Share", "Bought Share" };
     CSV csv;
+
     public GUI(){
 
 
@@ -41,10 +42,10 @@ public class GUI extends JFrame {
         tabPane.add("Input", inputInfoTab);
         tabPane.add("Data", showDataTab);
 
-        csv = new CSV();
-        csv.lines();
-        String[][] lines = new String[csv.tot_lines][0];
-        lines = csv.read(lines);
+        csv = new CSV();        //new object of type CSV created
+        csv.lines();        //call to method which calculates number of lines in file
+        String[][] lines = new String[csv.tot_lines][0];        //implement new 2D array equal to length of file
+        lines = csv.read(lines);    //call to method which alters the array
 
 //FIRST TAB:
 
@@ -151,22 +152,18 @@ public class GUI extends JFrame {
         JButton search = new JButton("Search");
         JLabel dateLabel = new JLabel("Please input a date:");
         JTextField dateInput = new JTextField(10);
-        JLabel outputData = new JLabel("DATA WILL BE OUTPUT HERE");
         JLabel clientName = new JLabel("CLIENTS NAME");
 
         top.add(clientName);
         top.setBackground(Color.white);
-
-        outputData.setVerticalAlignment(JLabel.CENTER);
-        outputData.setHorizontalAlignment(JLabel.CENTER);
-        centerInfo.add(outputData);
+        
         centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
         centerInfo.setBackground(Color.gray);
 
-        data = new JTable(lines, columnNames);
-        data.setBounds(30, 40, 200, 300);
-        JScrollPane sp = new JScrollPane(data);
-        centerInfo.add(sp);
+        data = new JTable(lines, columnNames);      //implementing new JTable with parameters equal to arrays created
+        data.setBounds(30, 40, 200, 300);       //shift size of table
+        JScrollPane sp = new JScrollPane(data);     //adding the table to a new scroll pane
+        centerInfo.add(sp);     //scroll pane added to frame
 
         bottom.add(currentValue);
         bottom.add(dateLabel);
@@ -186,16 +183,19 @@ public class GUI extends JFrame {
     }
 }
 
+//class reads from file and appends values found to a 2D array seperated by a delimeter
 class CSV {
-    String file = "M:\\CE291\\src\\assignment1\\csv.txt";
-    public Scanner input = new Scanner(System.in);
-    public String line = "";
-    public int tot_lines = 0;
-    public static final String DELIMITER = ", ";
+    String file = "M:\\CE291\\src\\assignment1\\csv.txt";       //decleration of main .txt file
+    public String line = "";        //decleration of string which will contain each line read
+    public int tot_lines = 0;       //integer value holds number of lines in the file
+    public static final String DELIMITER = ", ";        //delimeter seperates values with the given string
+    //creating buffered readers which will hold the text file data
     BufferedReader main;
     BufferedReader counter;
 
+    //implementation of bufered readers which access the file
     public CSV(){
+        //error checking occurs if file cannot be opened
         try {
             main = new BufferedReader(new FileReader(file));
             counter = new BufferedReader(new FileReader(file));
@@ -205,9 +205,11 @@ class CSV {
     }
 
     public void lines(){
+
+        //error checking occurs if file cannot be opened
         try {
             while ((line = counter.readLine()) != null){
-                tot_lines += 1;
+                tot_lines += 1;     //local variable incremented through each line
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -216,19 +218,20 @@ class CSV {
 
     public String[][] read(String[][] arr){
         int i = 0;
-        lines();
-        String[][] parse = new String[tot_lines][0];
+        lines();    //call to method which changes local variable data
+        String[][] parse = new String[tot_lines][0];        //variable used to determine length of 2D array
 
+        //error checking occurs if file cannot be opened
         try {
             while ((line = main.readLine()) != null){
-                String[] fields = line.split(DELIMITER);
-                parse[i] = fields;
+                String[] fields = line.split(DELIMITER);        //new array created through each delimited line
+                parse[i] = fields;      //new 2D array given new value of array through each point of iteration
                 i++;
             }
         } catch (IOException e){
             e.printStackTrace();
         }
-        arr = parse;
+        arr = parse;        //array paramter intake switched to hold the new array created
         return arr;
     }
 }
