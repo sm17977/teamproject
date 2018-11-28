@@ -19,6 +19,10 @@
 
 ## Team member Riaz Philippe
 
+### Sprint 1
+*Sample text
+
+### Sprint 2
 *Repeat for each team member, i.e. with more subheadings "Sprint1, Sprint2, ... Sprint N"*
 
 
