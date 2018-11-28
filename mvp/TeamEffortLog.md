@@ -182,6 +182,9 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 
 ### Sprint 7 (University Week 9)
 
+* Implemented Write class to write share values to a CSV file - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/5dfc45fc934b4d1a3537d4f42ca7166a41d17f19)
+* Implemtented Client class to store all client data - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/8623d9450f3cd86db089e36cf6e5e863373bad59)
+* Added method "generateChart" to Market class to retrieve share data using the IEX API. [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/d54366cbf6586c4d7d0df254f22fb7e829d3b3b5)
 
 
 
