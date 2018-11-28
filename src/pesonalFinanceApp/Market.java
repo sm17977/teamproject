@@ -27,7 +27,7 @@ class Market {
     final private IEXTradingClient tradingClient = IEXTradingClient.create();
     //List containing all IEX symbols in
     final List<ExchangeSymbol> exchangeSymbolList = tradingClient.executeRequest(new SymbolsRequestBuilder().build());
-    //List which contains: date/share value/symbol of last 5 years (everyday)
+
 
 
 

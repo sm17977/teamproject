@@ -23,6 +23,7 @@ public class Write {
              File f = new File(FileName);
              PrintWriter printWriter = new PrintWriter(fileWriter);
 
+             //This will retrieve values from today, to view historical data use a loop
              printWriter.println(list.get(list.size() -1));
              printWriter.close();
              System.out.println("Writing to: " + f.getAbsolutePath());
