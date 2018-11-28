@@ -48,8 +48,8 @@ class Market {
                 .withSymbol(symbol)
                 .build());
         for(Chart c: chartList){
-            //list.add(c.getDate() + "," + bankBalance + "," + symbol + "," + c.getClose() + "," + shareCount + "," +(c.getClose().intValue() * shareCount));
-            list.add("Date: " +  c.getDate() + "\nBank Balance: £" + bankBalance + "\nCompany " + symbol + "\nCurrent Share Value: £" + c.getClose() + "\nShare Quantity: " + shareCount + "\nTotal Share Value: £" + (c.getClose().intValue() * shareCount));
+            list.add("\""  + c.getDate() + "\"" +  "," + "\"" + bankBalance + "\"" + "," + "\"" +  symbol + "\"" + "," + "\"" +  c.getClose() + "\"" + "," + "\"" + shareCount + "\"" + "," + "\""+ (c.getClose().intValue() * shareCount) + "\"");
+            //list.add("Date: " +  c.getDate() + "\nBank Balance: £" + bankBalance + "\nCompany " + symbol + "\nCurrent Share Value: £" + c.getClose() + "\nShare Quantity: " + shareCount + "\nTotal Share Value: £" + (c.getClose().intValue() * shareCount));
         }
         return list;
     }

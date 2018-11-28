@@ -150,9 +150,8 @@ public class GUI extends JFrame {
 
                         //Add Share and Quantity to map
                         client.setUserShares(companyField.getText(), Integer.parseInt(sharesField.getText()));
-                        message.setText("<html>" + printMap(client.getUserShares()) + "<br/></html>");
-                        companyField.setText("");
-                        sharesField.setText("");
+                        message.setText("<html>" + printMap(client.getUserShares()) + "|" + "<br/></html>");
+
 
 
 
@@ -166,6 +165,9 @@ public class GUI extends JFrame {
 
                         //Generate list of share values for current day
                         System.out.println(generatedList.get(generatedList.size() - 1));
+
+                        companyField.setText("");
+                        sharesField.setText("");
 
 
                     }
