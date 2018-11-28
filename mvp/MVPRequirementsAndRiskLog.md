@@ -48,6 +48,7 @@
 * The application should allow the user to input their their bank balance, the companies they have shares with and the amount of shares they have with each company.
 * The application should allow the user to enter in up to 5 companies and no more.
 * The application should include validation and exception handling for all user input fields to prevent incorrect data formats used.
+* The application shall calculate the total value of the client's investments using the formula (x*y) where x is the number of shares and y is the value of a single share.
 
 
 ### Non-Functional Requirements:
@@ -56,6 +57,7 @@
 * The application should be user friendly (easy to learn and understand).
 * The application should have a fast response time (below 1 second).
 * The application should follow a clear structure to allow other developers to easily understand what the code does.
+* The application must be written in Java.
 
 
 ### Risk Log
@@ -70,7 +72,9 @@
 *When marking this section we will be looking to see several realistic risks have been noted, and are actively being tracked and mitigated against.*
 
 **[Risk 1] Missing Team Member (https://cseejira.essex.ac.uk/browse/CE291T21-61)**
+
 **Description:** Our 6th team member 'Domantas' has failed to attend all scrum meetings bar the first. He has not communicated with the team since that meeting nor has he completed any of his assigned tasks. His status is unknown.
 
 His absence may have an impact on the overall project completion speed.
+
 **Summary:** A risk was created to document the disappearance of our 6th team member 'Domantas' who had only attended the first meeting and not communicated since. The risk was not assigned to anyone but the supervisor was informed who then made several attempts to reach out to Domantas. Domantas was eventually replaced with a new 6th team member: Timotheos.
