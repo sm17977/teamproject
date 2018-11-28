@@ -20,10 +20,10 @@
 
 ### Sprint 1 (University Week 3)
 **[Task 0] Upload a true photo of yourself to your GitLab and Jira profiles**
-* Completed before the first meeting (a task was not created).
+* Completed before the first meeting (a task was not created and cannot be linked).
 * It took roughly 10 minutes to complete the task.
 
-**[Task 1] Familiarise with command-line cseegit (https://cseejira.essex.ac.uk/browse/CE291T21-2)**
+**[Task 1: Familiarise with command-line cseegit](https://cseejira.essex.ac.uk/browse/CE291T21-2)**
 * Set and completed in Sprint 1.
 * It took 1 hour to complete the task.
 * Had some initial trouble with the task as I didn't realise Git had to first be installed on my home computer before I could use its commands.
@@ -32,32 +32,32 @@
 * No tasks completed.
 
 ### Sprint 3 (University Week 5)
-**[Task 1] Create "HelloWorld" in Java (https://cseejira.essex.ac.uk/browse/CE291T21-9)**
+**[Task 1: Create "HelloWorld" in Java](https://cseejira.essex.ac.uk/browse/CE291T21-9)**
 * Set in Sprint 2, completed in Sprint 3.
 * It took 1 hour to complete the task.
 
-**[Bug 1] Absence Record (https://cseejira.essex.ac.uk/browse/CE291T21-30)**
+**[Bug 1: Absence Record](https://cseejira.essex.ac.uk/browse/CE291T21-30)**
 * Created a bug for all team members to contribute to where team members can log the absence of those who are not present for the scrum meetings.
 
 ### Sprint 4 (University Week 6)
-**[Risk 1] Missing Team Member (https://cseejira.essex.ac.uk/browse/CE291T21-61)**
+**[Risk 1: Missing Team Member](https://cseejira.essex.ac.uk/browse/CE291T21-61)**
 * Created a risk for a team member who had failed to show up and give any sort of notice on his status for the previous two scrum meetings.
 
 ### Sprint 5 (University Week 7)
 * No tasks completed.
 
 ### Sprint 6 (University Week 8)
-**[Task 1] Intial thoughts on Design (https://cseejira.essex.ac.uk/browse/CE291T21-45)**
+**[Task 1: Intial thoughts on Design](https://cseejira.essex.ac.uk/browse/CE291T21-45)**
 * Set in Sprint 4, completed in Sprint 6.
 * It took 1 hour to complete the task.
 * Contributed my ideas for how I believe the program should be designed.
 
-**[Task 2] Functional Requirements (https://cseejira.essex.ac.uk/browse/CE291T21-53)**
+**[Task 2: Functional Requirements](https://cseejira.essex.ac.uk/browse/CE291T21-53)**
 * Set in Sprint 4, completed in Sprint 6.
 * It took 1 hour to complete the task.
 * Contributed my ideas for the functional requirements of our project.
 
-**[Task 3] User Stories (https://cseejira.essex.ac.uk/browse/CE291T21-48)**
+**[Task 3: User Stories](https://cseejira.essex.ac.uk/browse/CE291T21-48)**
 * Set in Sprint 4, completed in Sprint 6.
 * It took 1 hour to complete the task
 * Converted the ideas I had created for functional and non-functional requirements into a set of user stories.
