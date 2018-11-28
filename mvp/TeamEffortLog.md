@@ -60,7 +60,7 @@ No tasks completed.
 [Task 3] User Stories (https://cseejira.essex.ac.uk/browse/CE291T21-48)
 - Set in Sprint 4, completed in Sprint 6.
 - It took 1 hour to complete the task
-- Converted my ideas drawn for non-functional and functional requirements into a set of user stories.
+- Converted the ideas I had created for functional and non-functional requirements into a set of user stories.
 
 
 ## Team member Finlay Georgiou-Young
