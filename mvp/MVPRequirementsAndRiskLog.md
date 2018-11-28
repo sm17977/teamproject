@@ -71,10 +71,8 @@
 
 *When marking this section we will be looking to see several realistic risks have been noted, and are actively being tracked and mitigated against.*
 
-**[Risk 1] Missing Team Member (https://cseejira.essex.ac.uk/browse/CE291T21-61)**
-
+**[Risk 1] Missing Team Member (https://cseejira.essex.ac.uk/browse/CE291T21-61)**  
 **Description:** Our 6th team member 'Domantas' has failed to attend all scrum meetings bar the first. He has not communicated with the team since that meeting nor has he completed any of his assigned tasks. His status is unknown.
 
-His absence may have an impact on the overall project completion speed.
-
+His absence may have an impact on the overall project completion speed. 
 **Summary:** A risk was created to document the disappearance of our 6th team member 'Domantas' who had only attended the first meeting and not communicated since. The risk was not assigned to anyone but the supervisor was informed who then made several attempts to reach out to Domantas. Domantas was eventually replaced with a new 6th team member: Timotheos.
