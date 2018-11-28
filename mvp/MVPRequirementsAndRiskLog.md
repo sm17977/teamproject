@@ -36,6 +36,12 @@
 **Summary:** As Paul, I want the application to be user-friendly, so that it is quick and easy to view the value of my current investments on any date I input.  
 **Description:** For this story to be completed, the application needs to have a simple layout which is easy to navigate. It should have well labelled components (e.g. buttons, text fields and tabs) so the user knows how to use everything.  
 
+[Story 5](TBA)
+
+**Description:** As a client, I want the application to quickly output the graphical data of my shares so that I can quickly simplify bulks of information.
+
+**Summary:** To complete this story, the application must output a GUI within a few seconds which details the shares the client has in a company.
+
 
 ### Functional Requirements:
 
