@@ -140,3 +140,50 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-44). Initial thoughts on design.
 
 * I have imported iextrading4j library and implemented it to retrieve stock prices of any company for the last 5 years.
+
+## Team Member Sean Mcleod
+
+### Sprint 1 (University Week 3)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-3). Familiarise with command-line cseegit. It was set in sprint 1 and completed in sprint 3. I had to redo this task due to typing the name of the collaboration text file incorrectly.
+
+
+### Sprint 2 (University Week 4)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-3). Familiarise with command-line cseegit. It was set in sprint 1 and completed in sprint 3. I had to redo this task due to typing the name of the collaboration text file incorrectly.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-10). Create "HelloWorld" in Java. It was set in sprint 2 and completed in sprint 3.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-21). Upload a true photo of yourself to your GitLab and Jira profiles. It was set in sprint 2 and completed in sprint 3.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-24). Complete the Moodle GitLab exercise. It was set in sprint 2 and completed in sprint 3.
+
+### Sprint 3 (University Week 5)
+
+* No tasks set.
+
+### Sprint 4 (University Week 6)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-51). Functional Requirements. It was set in sprint sprint 4 and completed in sprint 7.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-46). User Stories. It was set in sprint 4 and completed in sprint 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-56). Non-Functional Requirements. It was set in sprint 4 and completed in sprint 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+
+### Sprint 5 (University Week 7)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-51). Functional Requirements. It was set in sprint sprint 4 and completed in sprint 7.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-46). User Stories. It was set in sprint 4 and completed in sprint 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-56). Non-Functional Requirements. It was set in sprint 4 and completed in sprint 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+
+### Sprint 6 (University Week 8)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-51). Functional Requirements. It was set in sprint sprint 4 and completed in sprint 7.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-46). User Stories. It was set in sprint 4 and completed in sprint 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-56). Non-Functional Requirements. It was set in sprint 4 and completed in sprint 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 6](https://cseejira.essex.ac.uk/browse/CE291T21-67). Complete the markdown documentation. Set in sprint 6 and completed in sprint 7.
+
+* Added exception handling to the input bank balance button - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/52dc37e38fbb201fb6413ce68ab88c39cd132f5d)
+
+### Sprint 7 (University Week 9)
+
+
+
+
+
