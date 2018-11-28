@@ -178,7 +178,6 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
 * [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
 * [Task 6](https://cseejira.essex.ac.uk/browse/CE291T21-67). Complete the markdown documentation. Set in sprint 6 and completed in sprint 7.
-
 * Added exception handling to the input bank balance button - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/52dc37e38fbb201fb6413ce68ab88c39cd132f5d)
 
 ### Sprint 7 (University Week 9)
