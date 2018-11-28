@@ -17,7 +17,7 @@
 *Do the same for each fully completed sprint.*
 
 
-## Team member name 2
+## Team member Riaz Philippe
 
 *Repeat for each team member, i.e. with more subheadings "Sprint1, Sprint2, ... Sprint N"*
 
