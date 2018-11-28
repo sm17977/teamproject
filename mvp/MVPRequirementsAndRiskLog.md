@@ -83,4 +83,4 @@
 
 His absence may have an impact on the overall project completion speed.  
 
-**Summary:** A risk was created to document the disappearance of our 6th team member 'Domantas' who had only attended the first meeting and not communicated since. The risk was not assigned to anyone but the supervisor was informed who then made several attempts to reach out to Domantas. Domantas was eventually replaced with a new 6th team member: Timotheos.
+**Summary:** A risk was created to document the disappearance of our 6th team member 'Domantas'. Prior to the creation of this risk, he had only attended the first meeting with failure to communicate on his status ever since. The risk was not assigned to anyone but the supervisor was informed who then made several attempts to reach out to Domantas. Domantas was eventually replaced with a new 6th team member: Timotheos.
