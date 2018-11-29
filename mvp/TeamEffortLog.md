@@ -186,6 +186,16 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * Implemtented Client class to store all client data - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/8623d9450f3cd86db089e36cf6e5e863373bad59)
 * Added method "generateChart" to Market class to retrieve share data using the IEX API. [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/d54366cbf6586c4d7d0df254f22fb7e829d3b3b5)
 
+## Team Member Cameron Cunningham
 
+### Sprint 1 (University Week 3)
+
+* [Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4) Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+
+### Sprint 2 (University Week 4)
+* [Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4). Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* [Task 2] (https://cseejira.essex.ac.uk/browse/CE291T21-12). Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
+* [Task 3] (https://cseejira.essex.ac.uk/browse/CE291T21-19). Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
+* [Task 4] (https://cseejira.essex.ac.uk/browse/CE291T21-23). Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
 
 
