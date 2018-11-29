@@ -20,7 +20,7 @@
 
 ### User Stories:
 
-[Story 1](https://cseejira.essex.ac.uk/browse/CE291T21-76)  
+**[Story 1](https://cseejira.essex.ac.uk/browse/CE291T21-76)**
 * **Summary:** As Jennifer, I want to be able to view the current total value of my investments, so that I can see whether my investments are doing well.  
 * **Description:** For this story to be completed, the application needs a text field for the user to input their bank balance and a button to set it to a variable. It also needs 2 other text fields for the user to enter the companies they have shares in, and the amount of shares they have with those companies. The text fields must then have a button to set the input company and the input share amount to a Map variable, with the input company as the key and the input share amount as the value. A way of accessing the current share prices for the companies in the map is needed, so that the share amount can be multiplied by the prices. The bank balance and total value of all of the shares will then need to be added and shown on a center panel.  
 
