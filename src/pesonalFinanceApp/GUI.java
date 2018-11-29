@@ -169,7 +169,7 @@ public class GUI extends JFrame {
         centerInfo.setBackground(Color.gray);
 
 
-        //actionlistener added to search button
+        //actionlistener called to buttons
         search.addActionListener(new ButtonHandler(this, 1));
         currentValue.addActionListener(new ButtonHandler(this, 2));
 
@@ -197,6 +197,7 @@ public class GUI extends JFrame {
     }
 }
 
+//Button handler created for buttons in the data tab
 class ButtonHandler implements ActionListener {
     GUI j;
     int act;
@@ -210,37 +211,45 @@ class ButtonHandler implements ActionListener {
         Boolean found = false;
         if(this.act == 1){
             for (int i = 0; i < this.j.csv.tot_lines; i++){
-                //System.out.println(this.j.lines[i][0] + " " + this.j.dateInput.getText() + "3");
+                //check made if the date input by the user is equal to that found in the table
                 if (this.j.dateInput.getText().equals(this.j.lines[i][0])) {
-                    System.out.println(Arrays.toString(this.j.lines[i]));
-                    this.j.data_dates.setText("Found: " + Arrays.toString(this.j.lines[i]));
-                    found = true;
-                    break;
+                    this.j.data_dates.setText("Found: " + Arrays.toString(this.j.lines[i]));    //text set to row found
+                    found = true;   //boolean switched
+                    break;  //break statement made to avoid setting text through multiple values
                 }
             }
+            //label set to default if not date is matching according to boolean value
             if (found == false){
                 this.j.data_dates.setText("No Matching date");
-                System.out.println("No Matching date");
             }
         }else if (this.act == 2){
+            //integer values initialised holding values of the table
             int tot_bank = 0;
             int tot_shares = 0;
             int tot = 0;
-            String temp = "";
+            String temp = "";   //temporary string holds current line
 
             for (int i = 0; i < this.j.csv.tot_lines; i++) {
-                temp = (this.j.lines[i][1].substring(1));
-                tot += Integer.parseInt(temp);
+                temp = (this.j.lines[i][1].substring(1));   //custom string formated beginning after the price sign
+                tot += Integer.parseInt(temp);  //string parsed into an integer
             }
             for (int i = 0; i < this.j.csv.tot_lines; i++) {
+                //check made if the date input by the user is equal to that found in the table
                 if (this.j.dateInput.getText().equals(this.j.lines[i][0])) {
-                    temp = (this.j.lines[i][1].substring(1));
-                    tot_bank = Integer.parseInt(temp);
-                    temp = (this.j.lines[i][2].substring(1));
-                    tot_shares = Integer.parseInt(temp);
+                    found = true;   //boolean switched
+                    temp = (this.j.lines[i][1].substring(1));   //string formatted
+                    tot_bank = Integer.parseInt(temp);  //string parsed into an integer
+                    temp = (this.j.lines[i][2].substring(1));   //string formatted
+                    tot_shares = Integer.parseInt(temp);    //string parsed into an integer
                 }
             }
-            this.j.data_dates.setText("Total in bank is " + tot_bank + "\n Total shares are " + tot_shares +"\n Total investments are " + tot );
+            //label set to value based on boolean value
+            if (found == true) {
+                //label displays calculated and found values
+                this.j.data_dates.setText("Total in bank is " + tot_bank + "\n Total shares are " + tot_shares + "\n Total investments are " + tot);
+            }else if (found == false){
+                this.j.data_dates.setText("No Matching date");
+            }
         }
     }
 }
