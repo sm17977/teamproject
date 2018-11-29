@@ -4,6 +4,8 @@
 
 *Include a paragraph or two, agreed by all team members, on how well the group has worked together, and how well the project is progressing.*
 We worked well together
+As a team, we feel that we work well as a group. The project progressed to a satisfactory level and despite some setbacks, we were able to complete the MVP and get everyone up to speed. We feel that there was a lack of intiative in completed our assigned tasks during the first few sprints which has since been resolved. During Weeks 6 and 7, our team members found themselves overwhelmed with the heavy workload from our other modules. This unfortunately resulted in the project experiencing a period where the contributed work was minimal.
+
 Project progressed well towards the end
 Lack of initiaive at the start
 Hiccup with assignment deadlines
@@ -19,8 +21,10 @@ Scrum meeting accompanied by retrospectives
 Helped us understand issues members experiences
 Improve by placing strictness for deadlines to comply professional standards
 
+
 *Highlight any communication issues that might be affecting the project.*
 Communication issues with coding
+
 
 *If standup meetings were used, then include a Jira link, and discuss their effectiveness.*
 
