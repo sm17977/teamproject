@@ -15,6 +15,7 @@ The first tab that will be shown is the input tab
 
 
 
+###Input tab:
 
 <img src = "images/MVPDemonstration_Image1.png" width = 600>
 <img src = "images/MVPDemonstration_Image2.png" width = 600>
@@ -31,13 +32,36 @@ When the button is pressed a message will be shown in the center panel telling t
 <img src = "images/MVPDemonstration_Image6.png" width = 600>
 <img src = "images/MVPDemonstration_Image7.png" width = 600>
 
-The input tab also has two text fields where the user inputs a company they have shares in and the amount of shares they have in that company.
-There is a button which when pressed adds the company input and the share amount input into a map instance variable. 
+The input tab also has two text fields where the user inputs the symbol of the company they have shares in and the amount of shares they have in that company.
+There is a button which when pressed adds the company symbol input and the share amount input into a map instance variable. 
 The map takes the company symbol as the key and the share amount as the value.
 
 
 
 
+<img src = "images/MVPDemonstration_Image8.png" width = 600>
+<img src = "images/MVPDemonstration_Image9.png" width = 600>
+<img src = "images/MVPDemonstration_Image10.png" width = 600>
+
+If there are 5 companies in the map and the user tries to enter another, an appropriate message will be shown, and the map with the 5 companies will be shown.
 
 
+
+
+
+<img src = "images/MVPDemonstration_Image11.png" width = 600>
+<img src = "images/MVPDemonstration_Image12.png" width = 600>
+
+If the users input is invalid then an appropriate message will be shown
+
+
+###Data tab:
+
+<img src = "images/MVPDemonstration_Image13.png" width = 600>
+<img src = "images/MVPDemonstration_Image14.png" width = 600>
+
+On the data tab there is a "Total current value of investments" button. When it is pressed, the bank balance obtained from the input tab is added to the value of the users shares, which gives the total value of the users investments. The value of the users shares is obtained using the map from the input tab and the IEX trading API. Using the company symbols input by the user and the amount of shares they have in that company, the API is used to multiply the input share amount by the companies share value. The users share values for each company are added together with the bank balance and are shown to the user in an appropriate message in the center panel.
+
+<img src = "images/MVPDemonstration_Image15.png" width = 600>
+<img src = "images/MVPDemonstration_Image16.png" width = 600>
 
