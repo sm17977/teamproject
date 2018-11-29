@@ -49,6 +49,7 @@
 
 ## Burndown-Charts Discussion
 *Add a discussion of what the burndown charts indicate, and how your team might improve their velocity / estimation ability in future sprints.*
+* The burndown charts indicate the actual and estimated amount of work to be completed in the weekly sprints. Our team can use these burndown charts in the future to track progress better, and get a visualisation of how efficiently we are completing tasks in every sprint. The estimated amount of work is also helpful and from the estimation we can prepare for the week and organise when to complete tasks and manage our time optimally. 
 
 ## Product Backlog
 *Include here a screenshot of your current product backlog.*
