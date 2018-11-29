@@ -16,10 +16,51 @@
 
 *Do the same for each fully completed sprint.*
 
+## Team member Riaz Philippe
 
-## Team member name 2
+### Sprint 1 (University Week 3)
+**[Task 0] Upload a true photo of yourself to your GitLab and Jira profiles**
+* Completed before the first meeting (a task was not created and cannot be linked).
+* It took roughly 10 minutes to complete the task.
 
-*Repeat for each team member, i.e. with more subheadings "Sprint1, Sprint2, ... Sprint N"*
+**[Task 1: Familiarise with command-line cseegit](https://cseejira.essex.ac.uk/browse/CE291T21-2)**
+* Set and completed in Sprint 1.
+* It took 1 hour to complete the task.
+* Had some initial trouble with the task as I didn't realise Git had to first be installed on my home computer before I could use its commands.
+
+### Sprint 2 (University Week 4)
+* No tasks completed.
+
+### Sprint 3 (University Week 5)
+**[Task 1: Create "HelloWorld" in Java](https://cseejira.essex.ac.uk/browse/CE291T21-9)**
+* Set in Sprint 2, completed in Sprint 3.
+* It took 1 hour to complete the task.
+
+**[Bug 1: Absence Record](https://cseejira.essex.ac.uk/browse/CE291T21-30)**
+* Created a bug for all team members to contribute to where team members can log the absence of those who are not present for the scrum meetings.
+
+### Sprint 4 (University Week 6)
+**[Risk 1: Missing Team Member](https://cseejira.essex.ac.uk/browse/CE291T21-61)**
+* Created a risk for a team member who had failed to show up and give any sort of notice on his status for the previous two scrum meetings.
+
+### Sprint 5 (University Week 7)
+* No tasks completed.
+
+### Sprint 6 (University Week 8)
+**[Task 1: Intial thoughts on Design](https://cseejira.essex.ac.uk/browse/CE291T21-45)**
+* Set in Sprint 4, completed in Sprint 6.
+* It took 1 hour to complete the task.
+* Contributed my ideas for how I believe the program should be designed.
+
+**[Task 2: Functional Requirements](https://cseejira.essex.ac.uk/browse/CE291T21-53)**
+* Set in Sprint 4, completed in Sprint 6.
+* It took 1 hour to complete the task.
+* Contributed my ideas for the functional requirements of our project.
+
+**[Task 3: User Stories](https://cseejira.essex.ac.uk/browse/CE291T21-48)**
+* Set in Sprint 4, completed in Sprint 6.
+* It took 1 hour to complete the task
+* Converted the ideas I had created for functional and non-functional requirements into a set of user stories.
 
 
 ## Team member Finlay Georgiou-Young
@@ -99,3 +140,62 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 * [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-44). Initial thoughts on design.
 
 * I have imported iextrading4j library and implemented it to retrieve stock prices of any company for the last 5 years.
+
+## Team Member Sean Mcleod
+
+### Sprint 1 (University Week 3)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-3). Familiarise with command-line cseegit. It was set in sprint 1 and completed in sprint 3. I had to redo this task due to typing the name of the collaboration text file incorrectly.
+
+
+### Sprint 2 (University Week 4)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-3). Familiarise with command-line cseegit. It was set in sprint 1 and completed in sprint 3. I had to redo this task due to typing the name of the collaboration text file incorrectly.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-10). Create "HelloWorld" in Java. It was set in sprint 2 and completed in sprint 3.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-21). Upload a true photo of yourself to your GitLab and Jira profiles. It was set in sprint 2 and completed in sprint 3.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-24). Complete the Moodle GitLab exercise. It was set in sprint 2 and completed in sprint 3.
+
+### Sprint 3 (University Week 5)
+
+* No tasks set.
+
+### Sprint 4 (University Week 6)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-51). Functional Requirements. It was set in sprint sprint 4 and completed in sprint 7.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-46). User Stories. It was set in sprint 4 and completed in sprint 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-56). Non-Functional Requirements. It was set in sprint 4 and completed in sprint 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+
+### Sprint 5 (University Week 7)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-51). Functional Requirements. It was set in sprint sprint 4 and completed in sprint 7.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-46). User Stories. It was set in sprint 4 and completed in sprint 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-56). Non-Functional Requirements. It was set in sprint 4 and completed in sprint 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+
+### Sprint 6 (University Week 8)
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-51). Functional Requirements. It was set in sprint sprint 4 and completed in sprint 7.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-46). User Stories. It was set in sprint 4 and completed in sprint 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-56). Non-Functional Requirements. It was set in sprint 4 and completed in sprint 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-41). Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-40). Learn how to export data from a website to a Java file. Initial thoughts on Design. It was set in sprint 4 and completed in sprint 7.
+* [Task 6](https://cseejira.essex.ac.uk/browse/CE291T21-67). Complete the markdown documentation. Set in sprint 6 and completed in sprint 7.
+* Added exception handling to the input bank balance button - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/52dc37e38fbb201fb6413ce68ab88c39cd132f5d)
+
+### Sprint 7 (University Week 9)
+
+* Implemented Write class to write share values to a CSV file - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/5dfc45fc934b4d1a3537d4f42ca7166a41d17f19)
+* Implemtented Client class to store all client data - [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/8623d9450f3cd86db089e36cf6e5e863373bad59)
+* Added method "generateChart" to Market class to retrieve share data using the IEX API. [Commit Link](https://cseegit.essex.ac.uk/ce291/team21/teamproject/commit/d54366cbf6586c4d7d0df254f22fb7e829d3b3b5)
+
+## Team Member Cameron Cunningham
+
+### Sprint 1 (University Week 3)
+
+* [Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4) Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+
+### Sprint 2 (University Week 4)
+* [Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4). Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* [Task 2] (https://cseejira.essex.ac.uk/browse/CE291T21-12). Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
+* [Task 3] (https://cseejira.essex.ac.uk/browse/CE291T21-19). Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
+* [Task 4] (https://cseejira.essex.ac.uk/browse/CE291T21-23). Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
+
+

@@ -49,9 +49,6 @@ public class GUI extends JFrame {
         JPanel showDataTab = new JPanel(new BorderLayout());
         JPanel inputInfoTab = new JPanel(new BorderLayout());
 
-        Market market = new Market();
-
-
         JTabbedPane tabPane = new JTabbedPane();
 
         //adding the tabs to the tabbed pane
@@ -237,18 +234,13 @@ class ButtonHandler implements ActionListener {
             }
             for (int i = 0; i < this.j.csv.tot_lines; i++) {
                 if (this.j.dateInput.getText().equals(this.j.lines[i][0])) {
-                    found = true;
                     temp = (this.j.lines[i][1].substring(1));
                     tot_bank = Integer.parseInt(temp);
                     temp = (this.j.lines[i][2].substring(1));
                     tot_shares = Integer.parseInt(temp);
                 }
             }
-            if (found == true) {
-                this.j.data_dates.setText("Total in bank is " + tot_bank + "\n Total shares are " + tot_shares + "\n Total investments all dates are " + tot);
-            }else if (found == false){
-                this.j.data_dates.setText("No Matching date");
-            }
+            this.j.data_dates.setText("Total in bank is " + tot_bank + "\n Total shares are " + tot_shares +"\n Total investments are " + tot );
         }
     }
 }
