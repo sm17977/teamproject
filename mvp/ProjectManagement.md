@@ -3,8 +3,16 @@
 ## Project management discussion
 
 *Include a paragraph or two, agreed by all team members, on how well the group has worked together, and how well the project is progressing.*
+We worked well together
+Project progressed well towards the end
+Lack of initiaive at the start
+Hiccup with assignment deadlines
+
 
 *Discuss the scrum meetings, and what could make them more efficient (if anything).*
+Scrum meeting accompanied by retrospectives
+Helped us understand issues members experiences
+Improve by placing strictness for deadlines to comply professional standards
 
 *Highlight any communication issues that might be affecting the project.*
 
