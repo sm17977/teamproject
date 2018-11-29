@@ -8,19 +8,6 @@ As a team, we feel that we work well as a group. The project progressed to a sat
 
 Towards the end of the project, we feel that our productivity greatly increased because of the skills we developed from collaborating in Java alongside the communications we held in meetings and on the "Open Discussion" task on Jira. Overall, we are pleased with the progress made on the project. We learned a lot on the aspects of team work which we can use to learn from our mistakes.
 
-During the span on the project, we implememted the skills we learned 
-Working on the project has greatly helped to improve our Java skills
-
-
-Project progressed well towards the end
-/Lack of initiaive at the start
-/Hiccup with assignment deadlines
-/Hard to assign tasks at the end, last minute issues
-/Meeting outside lab hours to collaborate
-Good understanding towards the end
-Helped develop Java skills and understanding of API
-Overall pleased
-
 
 *Discuss the scrum meetings, and what could make them more efficient (if anything).*
 Scrum meeting accompanied by retrospectives
