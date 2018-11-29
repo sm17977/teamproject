@@ -55,5 +55,3 @@
 
 ## Other Areas
 *If your team has anything else they want to demonstrate, e.g. advanced project management tools, reporting graphs with suitable explanation and interpretation, advanced use of Jira (e.g. issue links, epics, versions), then include a summary here.*
-
-*If standup meetings were used, then include a Jira link, and discuss their effectiveness.*
