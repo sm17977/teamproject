@@ -1,3 +1,4 @@
+**DO NOTE DELETE ANY COMMENTS UNTIL FINALISATION**
 # Project Management Log
 
 ## Project Management Discussion
@@ -9,11 +10,13 @@ Towards the end of the project, we feel that our productivity greatly increased 
 
 
 *Discuss the scrum meetings, and what could make them more efficient (if anything).*
-We
-Scrum meeting accompanied by retrospectives
-Helped us understand issues members experienced, scrum master made relevant adjustments
-Team members notifying us of absence (Absence Record)
-Improve by placing strictness for deadlines to comply professional standards
+We held sprint retrospectives alongside our scrum meetings. These retrospectives provided team members the opportunity to create brief discussions regarding assigned tasks. In particular, we followed a format where each member in turn answered: "What went well?", What could you have been done better?" and "What can be improved for the next sprint?". This allowed for the team to review their progress and discuss any issues which we felt were impacting our progress. Though not all team members were present for each meeting, the team put in an active effort to always inform the team of potential absence prior to the start of the meeting. Team member absences are recorded and can be viewed in the **["Absence Record"](https://cseejira.essex.ac.uk/browse/CE291T21-30)** bug in Jira. We feel that we could improve the effectiveness of our scrum meetings by placing a greater emphasis on the strictness for task deadlines to comply with profesisonal standards. 
+
+# Notes (to be deleted upon team review confirmation)
+* Scrum meeting accompanied by retrospectives
+* Helped us understand issues members experienced, scrum master made relevant adjustments
+* Team members notifying us of absence (Absence Record)
+* Improve by placing strictness for deadlines to comply professional standards
 
 
 *Highlight any communication issues that might be affecting the project.*
