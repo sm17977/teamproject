@@ -31,15 +31,21 @@
 ## Sprint Burndown Charts
 
 *In this section include a screenshot of a sprint-burndown chart for each of your completed sprints.*
-* In progress.
 
-<img src = "images/BurndownChart_Week_4_Sprint_2.png">
+**Sprint 2 (University Week 4)**     
+<img src = "images/BurndownChart_Week_4_Sprint_2.png" width = 450>
 
-* width = 300
-<img src = "images/BurndownChart_Week_4_Sprint_2.png" width = 300>
+**Sprint 3 (University Week 5)**      
+<img src = "images/BurndownChart_Week_5_Sprint_3.png" width = 450>
 
-* height  = 300
-<img src = "images/BurndownChart_Week_4_Sprint_2.png" height = 300>
+**Sprint 4 (University Week 6)**     
+<img src = "images/BurndownChart_Week_6_Sprint_4.png" width = 450>  
+
+**Sprint 5 (University Week 7)**     
+<img src = "images/BurndownChart_Week_7_Sprint_5.png" width = 450>  
+
+**Sprint 6 (University Week 8)**     
+<img src = "images/BurndownChart_Week_8_Sprint_6.png" width = 450>  
 
 
 ## Burndown-Charts Discussion
