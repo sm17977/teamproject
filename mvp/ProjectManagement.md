@@ -1,4 +1,3 @@
-**DO NOTE DELETE ANY COMMENTS UNTIL FINALISATION**
 # Project Management Log
 
 ## Project Management Discussion
