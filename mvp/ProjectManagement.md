@@ -33,7 +33,13 @@
 *In this section include a screenshot of a sprint-burndown chart for each of your completed sprints.*
 * In progress.
 
-<img src = "images/BurndownChartWeek_4Sprint_2.png">
+<img src = "images/BurndownChart_Week_4_Sprint_2.png">
+
+* width = 300
+<img src = "images/BurndownChart_Week_4_Sprint_2.png" width = 300>
+
+* height  = 300
+<img src = "images/BurndownChart_Week_4_Sprint_2.png" height = 300>
 
 
 ## Burndown-Charts Discussion
