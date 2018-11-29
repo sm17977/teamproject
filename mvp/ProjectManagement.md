@@ -1,14 +1,15 @@
 # Project Management Log
 
-## Project management discussion
+## Project Management Discussion
 
 *Include a paragraph or two, agreed by all team members, on how well the group has worked together, and how well the project is progressing.*
-As a team, we feel that we work well as a group. The project progressed to a satisfactory level and despite some setbacks, we were able to complete the MVP and get everyone up to speed. We feel that there was a lack of intiative in completed our assigned tasks during the first few sprints which has since been resolved. During Weeks 6 and 7, our team members found themselves overwhelmed with the heavy workload from our other modules. This unfortunately resulted in the project experiencing a period where the contributed work was minimal. Due to the buildup of tasks towards the end of the project, it became difficult to evenly distribution specific tasks. This resulted in us taking the initiative to organise meetings outside of the lab hours to collaborate on the required tasks for the project and to help us get an understanding of each other's code.
+As a team, we feel that we work well as a group. The project progressed to a satisfactory level and despite some setbacks, we were able to complete the MVP and get everyone up to speed by the deadline. We feel that there was a lack of initiative in completing our assigned tasks during the first few sprints which has since been resolved. During Weeks 6 and 7, our team members found themselves overwhelmed with the heavy workload presented from our other modules. Unfortunately, this resulted in the project experiencing a period where the contributed work was minimal. Due to the build-up of tasks towards the end of the project, it became difficult to evenly distribute specific tasks. This resulted in us taking the initiative to organise meetings outside of the lab hours to collaborate on the required tasks for the project. This ultimately helped us get a better understanding of each other's code, allowing us to collectively work together as a team rather than as individuals.
 
 Towards the end of the project, we feel that our productivity greatly increased because of the skills we developed from collaborating in Java alongside the communications we held in meetings and on the "Open Discussion" task on Jira. Overall, we are pleased with the progress made on the project. We learned a lot on the aspects of team work which we can use to learn from our mistakes.
 
 
 *Discuss the scrum meetings, and what could make them more efficient (if anything).*
+We
 Scrum meeting accompanied by retrospectives
 Helped us understand issues members experienced, scrum master made relevant adjustments
 Team members notifying us of absence (Absence Record)
