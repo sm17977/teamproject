@@ -19,7 +19,7 @@
 ## Team member Riaz Philippe
 
 ### Sprint 1 (University Week 3)
-**[Task 0] Upload a true photo of yourself to your GitLab and Jira profiles**
+**Task 0: Upload a true photo of yourself to your GitLab and Jira profiles**
 * Completed before the first meeting (a task was not created and cannot be linked).
 * It took roughly 10 minutes to complete the task.
 
