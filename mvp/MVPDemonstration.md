@@ -65,3 +65,7 @@ On the data tab there is a "Total current value of investments" button. When it 
 <img src = "images/MVPDemonstration_Image15.png" width = 600>
 <img src = "images/MVPDemonstration_Image16.png" width = 600>
 
+On the data tab there is also a text field where the user can input a date in the format dd/mm/yyyy. Once the user enters a date, the "Search" button can be pressed, and it will show what the users total investments would be on a specific date in the last 3 years. This is done by finding the difference in days between the current date and the input date. This can then be used with the IEX trading API to find any companies share value on a previous date. 
+
+<img src = "images/MVPDemonstration_Image17.png" width = 600>
+<img src = "images/MVPDemonstration_Image18.png" width = 600>
