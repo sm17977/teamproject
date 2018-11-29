@@ -33,6 +33,9 @@
 *In this section include a screenshot of a sprint-burndown chart for each of your completed sprints.*
 * In progress.
 
+<img src = "images/BurndownChartWeek_4Sprint_2.png">
+
+
 ## Burndown-Charts Discussion
 *Add a discussion of what the burndown charts indicate, and how your team might improve their velocity / estimation ability in future sprints.*
 
