@@ -16,7 +16,10 @@ Improve by placing strictness for deadlines to comply professional standards
 
 
 *Highlight any communication issues that might be affecting the project.*
+We faced some communication issues in regards to coding for the project as there was difficulty when using GitLab with IntelliJ to push and pull code commits. This often resulted in our team members accidentally overwriting each other's commits. We have since bettered our communication to minimalise the risk of this occuring again in the future.  
+
 Communication issues with coding
+Issues with pushing/pulling code (accidently overwriting work)
 
 
 *If standup meetings were used, then include a Jira link, and discuss their effectiveness.*
