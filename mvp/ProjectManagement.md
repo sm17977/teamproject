@@ -19,7 +19,7 @@
 
 * We faced some communication issues in regards to coding for the project as there was difficulty when using GitLab with IntelliJ to push and pull code commits. This often resulted in our team members accidentally overwriting each other's commits. We have since bettered our communication to minimalise the risk of this occuring again in the future.  
 
-**Notes (to be deleted upon team review confirmation)**
+### Notes (to be deleted upon team review confirmation)
 
 *Communication issues with coding   
 *Issues with pushing/pulling code (accidently overwriting work) 
@@ -32,19 +32,22 @@
 
 *In this section include a screenshot of a sprint-burndown chart for each of your completed sprints.*
 
-**Sprint 2 (University Week 4)**     
+### Sprint 1 (University Week 3)     
+* Unavaiable.
+
+### Sprint 2 (University Week 4)     
 <img src = "images/BurndownChart_Week_4_Sprint_2.png" width = 450>
 
-**Sprint 3 (University Week 5)**      
+### Sprint 3 (University Week 5)      
 <img src = "images/BurndownChart_Week_5_Sprint_3.png" width = 450>
 
-**Sprint 4 (University Week 6)**     
+### Sprint 4 (University Week 6)     
 <img src = "images/BurndownChart_Week_6_Sprint_4.png" width = 450>  
 
-**Sprint 5 (University Week 7)**     
+### Sprint 5 (University Week 7)     
 <img src = "images/BurndownChart_Week_7_Sprint_5.png" width = 450>  
 
-**Sprint 6 (University Week 8)**     
+### Sprint 6 (University Week 8)     
 <img src = "images/BurndownChart_Week_8_Sprint_6.png" width = 450>  
 
 
