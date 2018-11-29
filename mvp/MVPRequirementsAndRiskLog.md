@@ -82,3 +82,22 @@
 His absence may have an impact on the overall project completion speed.  
 
 **Summary:** A risk was created to document the disappearance of our 6th team member 'Domantas'. Prior to the creation of this risk, he had only attended the first meeting with failure to communicate on his status ever since. The risk was not assigned to anyone but the supervisor was informed who then made several attempts to reach out to Domantas. Domantas was eventually replaced with a new 6th team member: Timotheos.
+
+**[Risk 2: Change management overload](https://management.simplicable.com/management/new/130-project-risks) **  
+Link leads to helpful website
+
+**Summary:** There was miscommunication between team members which lead to various versions of code being overwritten.
+
+**Description:**This increased the complexity of aligning our coding ideas together and sacrificing time to re-implement a working version, but not to the point where there would be a stakeholder conflict.
+
+**[Risk 3: Learning curves lead to delays and cost overrun]**  
+
+**Summary:** All team members were still in the progress of learning skills to complete the project which in turn introduced low productivity.
+
+**Description:** All team members were in the process of learning Java coding skills (for example IEX documentation), understanding interfaces with Jira and connecting IntelliJ with GitLab.
+
+**[Risk 4: Decisions are low quality]**  
+
+**Summary:** Decisions were vague.
+
+**Description:** Scrum masters had difficulties assigning tasks which covered every aspect of what needed to be done, and uneven workloads to team members.
