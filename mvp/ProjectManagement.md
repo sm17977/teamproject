@@ -16,7 +16,9 @@
 
 *Highlight any communication issues that might be affecting the project.*
 
-* We faced some communication issues in regards to coding for the project as there was difficulty when using GitLab with IntelliJ to push and pull code commits. This often resulted in our team members accidentally overwriting each other's commits. We have since bettered our communication to minimalise the risk of this occuring again in the future.  
+* We faced some communication issues in regards to coding for the project as there was difficulty when using GitLab with IntelliJ to push and pull code commits. This often resulted in our team members accidentally overwriting each other's commits, meaning whole classes and methods would dissappear. Further reading on using IntelliJ with Git was required to understand what the different VCS functions do in IntelliJ, for example: Updating the Project, when to choose Merge or Re-Base and resolving conflicts. We have since bettered our communication to minimalise the risk of this occuring again in the future.  
+
+* Another communication also relating to the coding of the project, was that more communication was necerssary on which specific tasks each member was assigned to complete. During the development of the project, multiple people ended up developing similar features due to the pushing and pulling of commits not working as expected. This effected the efficiency of the project as some code would have to be made redundant - and therefore remove - if somebody else had already implemented this. To avoid this in the future, we must plan all classes, methods and instance variables etc. which we think will be necerssary using the provided specification, and assign our members specific tasks to implement these, rather than choosing to code parts of the program that have not been started yet. 
 
 ### Notes (to be deleted upon team review confirmation)
 
