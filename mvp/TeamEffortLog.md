@@ -116,6 +116,7 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 
 * I created a JTable which displays elements of a 2D array, this is added to the data tab on the GUI
 * Additionally I created a method which reads from a text file and stores elements on that text file to a 2D array
+* Another method was created adding functionality to buttons linked to the table, allowing the display of rows found with specified dates and calculation and display of money balances
 
 ## Team member name Justas Stromilas
 
