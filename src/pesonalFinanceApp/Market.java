@@ -5,10 +5,11 @@ import pl.zankowski.iextrading4j.api.stocks.ChartRange;
 import pl.zankowski.iextrading4j.client.IEXTradingClient;
 import pl.zankowski.iextrading4j.client.rest.request.stocks.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-class Market {
+class Market{
     final private IEXTradingClient tradingClient = IEXTradingClient.create();
     Market() { }
     // Current stock price of company
@@ -16,13 +17,24 @@ class Market {
     // https://iextrading.com/trading/eligible-symbols/
 
     // List of quotes for company for last 5 years
-    List<Chart> getStockPrice(String symbol) {
+     List<Chart> getStockPrice(String symbol) {
         final List<Chart> chartList = tradingClient.executeRequest(new ChartRequestBuilder()
                 .withChartRange(ChartRange.FIVE_YEARS)
                 .withSymbol(symbol)
                 .build());
         return chartList;
     }
+
+    ArrayList getChart (List<Chart> chart){
+        ArrayList list = new ArrayList();
+
+        for(Chart c: chart){
+            list.add(c.getClose() + c.getDate());
+        }
+        return list;
+
+    }
+
 
 }
 
