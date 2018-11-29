@@ -7,6 +7,11 @@ We worked well together
 Project progressed well towards the end
 Lack of initiaive at the start
 Hiccup with assignment deadlines
+Hard to assign tasks at the end, last minute issues
+Meeting outside lab hours to collaborate
+Good understanding towards the end
+Helped develop Java skills and understanding of API
+Overall pleased
 
 
 *Discuss the scrum meetings, and what could make them more efficient (if anything).*
@@ -15,6 +20,7 @@ Helped us understand issues members experiences
 Improve by placing strictness for deadlines to comply professional standards
 
 *Highlight any communication issues that might be affecting the project.*
+Communication issues with coding
 
 *If standup meetings were used, then include a Jira link, and discuss their effectiveness.*
 
