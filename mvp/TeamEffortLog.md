@@ -190,12 +190,12 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 
 ### Sprint 1 (University Week 3)
 
-* [Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4) Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* **[Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4)** Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
 
 ### Sprint 2 (University Week 4)
-* [Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4). Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
-* [Task 2] (https://cseejira.essex.ac.uk/browse/CE291T21-12). Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
-* [Task 3] (https://cseejira.essex.ac.uk/browse/CE291T21-19). Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
-* [Task 4] (https://cseejira.essex.ac.uk/browse/CE291T21-23). Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
+* **[Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4)**. Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* **[Task 2] (https://cseejira.essex.ac.uk/browse/CE291T21-12)**. Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
+* **[Task 3] (https://cseejira.essex.ac.uk/browse/CE291T21-19)**. Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
+* **[Task 4] (https://cseejira.essex.ac.uk/browse/CE291T21-23)**. Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
 
 
