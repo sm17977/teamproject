@@ -190,12 +190,52 @@ When the buttons are pressed, the input bank balance is saved in an Integer inst
 
 ### Sprint 1 (University Week 3)
 
-* **[Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4)** Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* No tasks set
 
 ### Sprint 2 (University Week 4)
-* **[Task 1] (https://cseejira.essex.ac.uk/browse/CE291T21-4)**. Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
-* **[Task 2] (https://cseejira.essex.ac.uk/browse/CE291T21-12)**. Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
-* **[Task 3] (https://cseejira.essex.ac.uk/browse/CE291T21-19)**. Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
-* **[Task 4] (https://cseejira.essex.ac.uk/browse/CE291T21-23)**. Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-4) Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-4). Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-12). Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-19). Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-23). Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
+
+###Sprint 3 (University Week 5)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-4) Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-4). Familiarise with command-line cseegit. This was set in sprint 1 and completed by sprint 4.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-12). Create 'HelloWord' in java. Started in sprint 2 and completed by sprint 4.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-19). Upload a photo to gitlab and jira profile. Was set in Sprint 2 and completed by sprint 4.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-23). Complete the Moodle GitLab exercise. Set in sprint 2 and completed in sprint 4.
+
+###Sprint 4 (University Week 6)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-52) Functional Requirements. This was set in sprint 3 and was completed in week 7
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-47) User Stories. This was set in sprint 4 and completed in week 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-57) Non-Functional Requirements. This was set in sprint 4 and completed in week 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-42) Initial Thoughts on Design. This was set in sprint 4 and completed in week 7.
+
+###Sprint 5 (University Week 7)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-52) Functional Requirements. This was set in sprint 3 and was completed in week 7
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-47) User Stories. This was set in sprint 4 and completed in week 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-57) Non-Functional Requirements. This was set in sprint 4 and completed in week 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-42) Initial Thoughts on Design. This was set in sprint 4 and completed in week 7.
+
+###Sprint 6 (University Week 8)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-52) Functional Requirements. This was set in sprint 3 and was completed in week 7
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-47) User Stories. This was set in sprint 4 and completed in week 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-57) Non-Functional Requirements. This was set in sprint 4 and completed in week 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-42) Initial Thoughts on Design. This was set in sprint 4 and completed in week 7.
+
+###Sprint 7 (University Week 9)
+
+* [Task 1](https://cseejira.essex.ac.uk/browse/CE291T21-52) Functional Requirements. This was set in sprint 3 and was completed in week 7
+* [Task 2](https://cseejira.essex.ac.uk/browse/CE291T21-47) User Stories. This was set in sprint 4 and completed in week 7.
+* [Task 3](https://cseejira.essex.ac.uk/browse/CE291T21-57) Non-Functional Requirements. This was set in sprint 4 and completed in week 7.
+* [Task 4](https://cseejira.essex.ac.uk/browse/CE291T21-42) Initial Thoughts on Design. This was set in sprint 4 and completed in week 7.
+* [Task 5](https://cseejira.essex.ac.uk/browse/CE291T21-71) Complete Markdown Documentation. This was set in sprint 7 and completed within the week of sprint 7.
+
 
 
