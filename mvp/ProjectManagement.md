@@ -29,7 +29,7 @@
 *In this section include a screenshot of a sprint-burndown chart for each of your completed sprints.*
 
 ### Sprint 1 (University Week 3)     
-* Unavaiable. No sprint created.
+* Unavailable. No sprint created.
 
 ### Sprint 2 (University Week 4)     
 <img src = "images/BurndownChart_Week_4_Sprint_2.png" width = 450>
