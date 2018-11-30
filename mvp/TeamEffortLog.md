@@ -67,7 +67,7 @@
 
 ### Sprint 1 (University Week 3)
 
-
+* I was set to familiarise myself with the Git command-line. It was set and completed in sprint 1. It took 1 to 2 hours. I had to learn how Git worked and how to commit, push and pull from the Git command line.
 
 ### Sprint 2 (University Week 4)
 
@@ -102,8 +102,13 @@
 When the buttons are pressed, the input bank balance is saved in an Integer instance variable, and the company and amount of shares is saved in a HashMap instance variable, with the company symbol as the key and the share amount as the value. With these values stored as instance variables, it allows the information to be taken and used in the other tab, which will show necessary data.
     
 
-    In the data tab, I added an action listener to the "Total current value of investments" button. The button creates a variable of type double called total and adds the bank balance to it. It then loops through the map containing the companies the user has shares with, and the amount of shares they have with those companies. In the loop, a list of the daily stock prices in the last 5 years for the current company is created. The stock price on the most recent day 
-    is set to a double variable. The stock price of the current company in the loop is then multiplied by the users share amount for that company. This is then added to the total. Once the bank balance and all of the users share values have been added together, the center panel shows a message containing the total value of the users investments.
+    In the data tab, I added an action listener to the "Total current value of investments" button. The button creates a variable of type double called total and adds the bank balance to it. It then loops through the map containing the companies the user has shares with, and the amount of shares they have with those companies. In the loop, a list of the daily stock prices in the last 5 years for the current company is created. The stock price on the most recent day is set to a double variable. The stock price of the current company in the loop is then multiplied by the users share amount for that company. This is then added to the total. Once the bank balance and all of the users share values have been added together, the center panel shows a message containing the total value of the users investments.
+    
+    In the data tab I also added an action listener to the "Search" button. When it is pressed it finds the amount of days between the current date and the date input by the user. The days between them is then used, with the IEX trading API, to find the share values for the companies input by the users on the date input. When the share values are found for the companies, they are multipled by the share amounts. The sum of the value of all of the users shares added to the users bank balance then gives you the total of what the users investments would be worth on the date input. This is then shown in a message in the center panel.
+    
+    
+    
+    
 
 ## Team member Timothy Zinonos
 ### Sprint 6 (University Week 9):
