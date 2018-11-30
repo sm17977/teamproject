@@ -6,23 +6,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 
 public class GUI extends JFrame {
 
-    public static void main(String[] args){
-        GUI frame = new GUI();
-    }
 
     //instance variable bankBalance holds the bank balance of the user when entered
-    int bankBalance;
+    double bankBalance;
 
     //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
-    Map<String, Integer> userShares = new HashMap<>();
+    Map<String, Double> userShares = new HashMap<>();
 
 
 
@@ -58,7 +58,7 @@ public class GUI extends JFrame {
         message.setFont(message.getFont().deriveFont(15f) );
 
         //components for inputInfoPanel
-        JLabel bankFieldLabel = new JLabel("Money in the Bank:");
+        JLabel bankFieldLabel = new JLabel("Bank balance:");
         JTextField bankField = new JTextField(10);
         JButton bankButton = new JButton("Set balance");
         JLabel companyFieldLabel = new JLabel("Company:");
@@ -73,6 +73,7 @@ public class GUI extends JFrame {
         //adding components to textPanel
         textPanel.add(message, BorderLayout.CENTER);
         message.setHorizontalAlignment(SwingConstants.CENTER);
+        textPanel.setBackground(Color.LIGHT_GRAY);
 
         //adding components to inputInfoPanel
         inputInfoPanel.add(bankFieldLabel);
@@ -96,13 +97,19 @@ public class GUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                message.setText("Current bank balance has been set to: £" + bankField.getText());
+
 
                 try{
-                    bankBalance = Integer.parseInt(bankField.getText());
+
+                    //formats balance to 2 decimal places
+                    String formattedBalance = String.format("%.2f", Double.parseDouble(bankField.getText()));
+
+                    message.setText("Current bank balance has been set to: £" + formattedBalance);
+
+                    bankBalance = Double.parseDouble(formattedBalance);
                 }
-                catch(NumberFormatException n){
-                   message.setText("Please provide an Integer value for the Bank Balance.");
+                catch(Exception n){
+                   message.setText("Please provide a numerical value for the Bank Balance.");
                 }
                 bankField.setText("");
             }
@@ -117,10 +124,10 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(userShares.size() <= 4){
                     try {
-                        userShares.put(companyField.getText(), Integer.parseInt(sharesField.getText()));
+                        userShares.put(companyField.getText(), Double.parseDouble(sharesField.getText()));
                         message.setText("your shares: " + userShares.toString());
                     }
-                    catch (NumberFormatException n){
+                    catch (Exception n){
                         message.setText("Please provide an Integer value for the Share amount.");
                     }
                     companyField.setText("");
@@ -165,7 +172,7 @@ public class GUI extends JFrame {
         outputData.setHorizontalAlignment(JLabel.CENTER);
         centerInfo.add(outputData);
         centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
-        centerInfo.setBackground(Color.gray);
+        centerInfo.setBackground(Color.LIGHT_GRAY);
 
         bottom.add(currentValue);
         bottom.add(dateLabel);
@@ -201,7 +208,7 @@ public class GUI extends JFrame {
 
                     //sets the company in the current entry set as a String variable and the share amount as a double variable
                     String currentCompany = (String)currentEntry.getKey();
-                    double currentShare = (Integer)currentEntry.getValue();
+                    double currentShare = (Double) currentEntry.getValue();
 
                     //sets the current companies stock prices in a list
                     List<Chart> currentCompanyChart = market.getStockPrice(currentCompany);
@@ -218,13 +225,75 @@ public class GUI extends JFrame {
                 }
 
                 //center panel prints the current total of the users investments
-                outputData.setText("The total of your current investments are: £" + String.format("%.2f", total));
+                outputData.setText("The total value of your current investments are: £" + String.format("%.2f", total));
 
             }
         });
 
-    }
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                try {
+                    //gets current date as string
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = new Date();
+
+
+                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
+                    LocalDate date1 = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
+                    LocalDate date2 = LocalDate.parse(dateInput.getText(), dateFormat);
+
+                    //gets the days between the current date and the input date
+                    long days = ChronoUnit.DAYS.between(date1, date2);
+
+
+                    //creates a double variable to hold the total investment value
+                    //set as the bank balance the user has entered. If nothing has entered the bank  balance is 0
+                    double total = bankBalance;
+
+                    //iterator created to iterate through each entry set in the map of companies and shares
+                    Iterator it = userShares.entrySet().iterator();
+
+                    //loops until there are no more entry sets in the map
+                    while (it.hasNext()) {
+
+                        Map.Entry currentEntry = (Map.Entry) it.next();
+
+                        //sets the company in the current entry set as a String variable and the share amount as a double variable
+                        String currentCompany = (String) currentEntry.getKey();
+                        double currentShare = (Double) currentEntry.getValue();
+
+                        //sets the current companies stock prices in a list
+                        List<Chart> currentCompanyChart = market.getStockPrice(currentCompany);
+
+                        //gets the stock price of the most recent day
+                        Chart stockPrice = currentCompanyChart.get((int) Math.abs(days));
+
+                        //sets the value of the shares as a double variable
+                        //this is done by multiplying the current share amount by the closing stock price on the most recent day
+                        double shareVal = currentShare * stockPrice.getClose().doubleValue();
+
+                        //the value of the users shares in the current company are added to the total
+                        total += shareVal;
+                    }
+
+                    //center panel prints the current total of the users investments
+                    outputData.setText("The total value of your investments on " + dateInput.getText() + " would be: £" + String.format("%.2f", total));
+
+                    dateInput.setText("");
+
+                } catch (Exception e1) {
+                    outputData.setText("Please enter a valid date within the last 3 years in the form dd/mm/yyyy.");
+                }
+
+            }
+
+        });
+
+    }
 
 
 
