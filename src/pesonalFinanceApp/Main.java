@@ -15,14 +15,6 @@ public class Main {
         // When calling .getStockPrice() <- insert symbol as a string
 
         // example: Daily IBM stock for last 5 years
-        List<Chart> ibm_chart = market.getStockPrice("IBM");
-
-        // Print closing stock price of IBM for last 10 days
-        for (int i = 0; i < 10; ++i) {
-            Chart point = ibm_chart.get(i);
-            System.out.println(point.getClose());
-        }
-
 
         GUI frame = new GUI();
         frame.setVisible(true);

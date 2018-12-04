@@ -8,14 +8,10 @@ import java.util.ArrayList;
 
 //Class to write CSV File
 public class Write {
-
     private String FileName = "outputData.csv";
-
-
 
     public Write(){
     }
-
 
      void writeToFile (ArrayList list){
          try {
@@ -32,12 +28,5 @@ public class Write {
          catch (IOException e){
              System.out.println("File creation failed.");
          }
-
-
-
-
      }
-
-
-
 }

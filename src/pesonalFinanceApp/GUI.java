@@ -1,36 +1,39 @@
 package pesonalFinanceApp;
 
+import org.jfree.data.time.Day;
 import pl.zankowski.iextrading4j.api.stocks.Chart;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
+import static java.lang.Math.toIntExact;
+
 
 
 public class GUI extends JFrame {
 
-
-    //instance variable bankBalance holds the bank balance of the user when entered
-    double bankBalance;
+    Market market;
+    double bankBalance = 0;
+    Charts chart = new Charts();
 
     //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
     Map<String, Double> userShares = new HashMap<>();
+    Map<String, List<Chart>> stockMap = new HashMap<>();
 
-
+    // Second Tab
+    JTextField dateInput;
+    JLabel outputData;
 
     public GUI(){
 
-        Market market = new Market();
-
-
+        market = new Market();
 
         //Each JPanel is a separate tab
         JPanel showDataTab = new JPanel(new BorderLayout());
@@ -42,7 +45,7 @@ public class GUI extends JFrame {
         tabPane.add("Input", inputInfoTab);
         tabPane.add("Data", showDataTab);
 
-//FIRST TAB:
+        // --- FIRST TAB ---
 
         //JPanels for the inputInfo tab
         JPanel titlePanel = new JPanel();
@@ -50,7 +53,7 @@ public class GUI extends JFrame {
         JPanel inputInfoPanel = new JPanel();
 
         //component for title panel
-        JLabel inputInfoTitle = new JLabel("Please input your bank balance, the companies you have shares in and the amount of shares you have in each company");
+        JLabel inputInfoTitle = new JLabel("Input bank balance, company and amount of stock owned.");
         inputInfoTitle.setFont(inputInfoTitle.getFont().deriveFont(Font.BOLD, 15f));
 
         //component for message panel
@@ -94,13 +97,9 @@ public class GUI extends JFrame {
         //sets the message JLabel to show an appropriate message
         //sets the instance variable to the users input in the bankField text field
         bankButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 try{
-
                     //formats balance to 2 decimal places
                     String formattedBalance = String.format("%.2f", Double.parseDouble(bankField.getText()));
 
@@ -124,7 +123,14 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(userShares.size() <= 4){
                     try {
-                        userShares.put(companyField.getText(), Double.parseDouble(sharesField.getText()));
+                        String company_symbol = companyField.getText();
+                        Double share_amount = Double.parseDouble(sharesField.getText());
+
+                        userShares.put(company_symbol, share_amount);
+
+                        List<Chart> stock_list = market.getStockPrice(company_symbol);
+                        stockMap.put(company_symbol, stock_list);
+
                         message.setText("your shares: " + userShares.toString());
                     }
                     catch (Exception n){
@@ -132,7 +138,6 @@ public class GUI extends JFrame {
                     }
                     companyField.setText("");
                     sharesField.setText("");
-
                 }
 
                 else{
@@ -140,40 +145,33 @@ public class GUI extends JFrame {
                     companyField.setText("");
                     sharesField.setText("");
                 }
-
-
-
             }
         });
 
-
-
-
-
-
-//SECOND TAB:
+        // --- SECOND TAB ---
 
         //JPanels for the data tab
         JPanel top = new JPanel();
         JPanel centerInfo = new JPanel();
         JPanel bottom = new JPanel();
+
         //components for the data tab
-        JButton currentValue = new JButton("Total current value of investments");
-        JButton search = new JButton("Search");
+        JButton stockValue = new JButton("Stock Value");
+        JButton currentValue = new JButton("Portfolio Value");
+        JButton search = new JButton("Search"); // Unnecessary
+
         JLabel dateLabel = new JLabel("Please input a date:");
-        JTextField dateInput = new JTextField(10);
-        JLabel outputData = new JLabel("DATA WILL BE OUTPUT HERE");
+        dateInput = new JTextField(10);
+        outputData = new JLabel("DATA WILL BE OUTPUT HERE");
         JLabel clientName = new JLabel("CLIENTS NAME");
 
         top.add(clientName);
         top.setBackground(Color.white);
 
-        outputData.setVerticalAlignment(JLabel.CENTER);
-        outputData.setHorizontalAlignment(JLabel.CENTER);
-        centerInfo.add(outputData);
-        centerInfo.setBorder(BorderFactory.createEmptyBorder(200,50,200,50));
+        centerInfo.add(chart);
         centerInfo.setBackground(Color.LIGHT_GRAY);
 
+        bottom.add(stockValue);
         bottom.add(currentValue);
         bottom.add(dateLabel);
         bottom.add(dateInput);
@@ -190,111 +188,137 @@ public class GUI extends JFrame {
         setVisible(true);
         setResizable(false);
 
-        currentValue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        // Portfolio Value Handler
+        CurrentValueHandler currentValueH = new CurrentValueHandler(this);
+        currentValue.addActionListener(currentValueH);
 
-                //creates a double variable to hold the total investment value
-                //set as the bank balance the user has entered. If nothing has entered the bank  balance is 0
-                double total = bankBalance;
+        // Stock Value Handler
+        StockValueHandler stockValueH = new StockValueHandler(this);
+        stockValue.addActionListener(stockValueH);
 
-                //iterator created to iterate through each entry set in the map of companies and shares
-                Iterator it = userShares.entrySet().iterator();
-
-                //loops until there are no more entry sets in the map
-                while(it.hasNext()){
-
-                    Map.Entry currentEntry = (Map.Entry)it.next();
-
-                    //sets the company in the current entry set as a String variable and the share amount as a double variable
-                    String currentCompany = (String)currentEntry.getKey();
-                    double currentShare = (Double) currentEntry.getValue();
-
-                    //sets the current companies stock prices in a list
-                    List<Chart> currentCompanyChart = market.getStockPrice(currentCompany);
-
-                    //gets the stock price of the most recent day
-                    Chart stockPrice = currentCompanyChart.get(0);
-
-                    //sets the value of the shares as a double variable
-                    //this is done by multiplying the current share amount by the closing stock price on the most recent day
-                    double shareVal = currentShare * stockPrice.getClose().doubleValue();
-
-                    //the value of the users shares in the current company are added to the total
-                    total += shareVal;
-                }
-
-                //center panel prints the current total of the users investments
-                outputData.setText("The total value of your current investments are: £" + String.format("%.2f", total));
-
-            }
-        });
-
-        search.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    //gets current date as string
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    Date date = new Date();
-
-
-                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-
-                    LocalDate date1 = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
-                    LocalDate date2 = LocalDate.parse(dateInput.getText(), dateFormat);
-
-                    //gets the days between the current date and the input date
-                    long days = ChronoUnit.DAYS.between(date1, date2);
-
-
-                    //creates a double variable to hold the total investment value
-                    //set as the bank balance the user has entered. If nothing has entered the bank  balance is 0
-                    double total = bankBalance;
-
-                    //iterator created to iterate through each entry set in the map of companies and shares
-                    Iterator it = userShares.entrySet().iterator();
-
-                    //loops until there are no more entry sets in the map
-                    while (it.hasNext()) {
-
-                        Map.Entry currentEntry = (Map.Entry) it.next();
-
-                        //sets the company in the current entry set as a String variable and the share amount as a double variable
-                        String currentCompany = (String) currentEntry.getKey();
-                        double currentShare = (Double) currentEntry.getValue();
-
-                        //sets the current companies stock prices in a list
-                        List<Chart> currentCompanyChart = market.getStockPrice(currentCompany);
-
-                        //gets the stock price of the most recent day
-                        Chart stockPrice = currentCompanyChart.get((int) Math.abs(days));
-
-                        //sets the value of the shares as a double variable
-                        //this is done by multiplying the current share amount by the closing stock price on the most recent day
-                        double shareVal = currentShare * stockPrice.getClose().doubleValue();
-
-                        //the value of the users shares in the current company are added to the total
-                        total += shareVal;
-                    }
-
-                    //center panel prints the current total of the users investments
-                    outputData.setText("The total value of your investments on " + dateInput.getText() + " would be: £" + String.format("%.2f", total));
-
-                    dateInput.setText("");
-
-                } catch (Exception e1) {
-                    outputData.setText("Please enter a valid date within the last 3 years in the form dd/mm/yyyy.");
-                }
-
-            }
-
-        });
+        // Search Handler
+        SearchHandler searchH = new SearchHandler(this);
+        search.addActionListener(searchH);
 
     }
-
-
-
 }
+
+// Second Tab Button
+class SearchHandler implements ActionListener {
+    GUI app;
+
+    SearchHandler(GUI app) {
+        this.app = app;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            //gets current date as string
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            LocalDate date1 = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
+            LocalDate date2 = LocalDate.parse(app.dateInput.getText(), dateFormat);
+
+            // Get the days between the current date and the input date
+            int days = toIntExact(ChronoUnit.DAYS.between(date1, date2));
+
+            //creates a double variable to hold the total investment value
+            //set as the bank balance the user has entered. If nothing has entered the bank  balance is 0
+            double total = app.bankBalance;
+
+            //iterator created to iterate through each entry set in the map of companies and shares
+            Iterator it = app.userShares.entrySet().iterator();
+
+            //loops until there are no more entry sets in the map
+            while (it.hasNext()) {
+
+                Map.Entry currentEntry = (Map.Entry) it.next();
+
+                //sets the company in the current entry set as a String variable and the share amount as a double variable
+                String currentCompany = (String) currentEntry.getKey();
+                double currentShare = (Double) currentEntry.getValue();
+
+                //sets the current companies stock prices in a list
+                List<Chart> currentCompanyChart = app.market.getStockPrice(currentCompany);
+
+                //gets the stock price of the most recent day
+                Chart stockPrice = currentCompanyChart.get((int) Math.abs(days));
+
+                //sets the value of the shares as a double variable
+                //this is done by multiplying the current share amount by the closing stock price on the most recent day
+                double shareVal = currentShare * stockPrice.getClose().doubleValue();
+
+                //the value of the users shares in the current company are added to the total
+                total += shareVal;
+            }
+
+            //center panel prints the current total of the users investments
+            app.outputData.setText("The total value of your investments on " + app.dateInput.getText() + " would be: £" + String.format("%.2f", total));
+
+            app.dateInput.setText("");
+
+        } catch (Exception e1) {
+            app.outputData.setText("Please enter a valid date within the last 3 years in the form dd/mm/yyyy.");
+        }
+    }
+}
+
+// Second Tab Button : Portfolio Value
+class CurrentValueHandler implements ActionListener {
+    GUI app;
+
+    CurrentValueHandler(GUI app) {
+        this.app = app;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        Map<String, Double> portfolio = new LinkedHashMap<>();
+
+        if(app.stockMap != null) {
+            app.stockMap.forEach((String company, List<Chart> list) -> {
+
+                for (int i = list.size() - 1; i > 0; i--) {
+                    String currentDay = list.get(i).getDate();
+
+                    Double shareCount = app.userShares.get(company);
+                    Double sharePrice = list.get(i).getClose().doubleValue();
+                    Double shareTotal = shareCount * sharePrice;
+
+                    if (portfolio.containsKey(currentDay)) {
+                        portfolio.put(currentDay, portfolio.get(currentDay) + shareTotal);
+                    } else {
+                        portfolio.put(currentDay, app.bankBalance + shareTotal);
+                    }
+                }
+
+            });
+
+            int days = Integer.parseInt(app.dateInput.getText());
+            app.chart.removeAll();
+            app.chart.updateChart(portfolio, days);
+            app.revalidate();
+        }
+    }
+}
+
+// Second Tab Button : Stock Value
+class StockValueHandler implements ActionListener {
+    GUI app;
+
+    StockValueHandler(GUI app) {
+        this.app = app;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int days = Integer.parseInt(app.dateInput.getText());
+        app.chart.removeAll();
+        app.chart.updateChart(app.stockMap, days, 0);
+        app.revalidate();
+    }
+}
+
