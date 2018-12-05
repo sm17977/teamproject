@@ -6,15 +6,18 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
+
+import static pesonalFinanceApp.GUI.border_color;
+import static pesonalFinanceApp.GUI.field_color;
+
 
 public class JTextFieldBlue extends JTextField {
     JTextFieldBlue(int col){
         super();
         setColumns(col);
-        setBackground(new Color(246,249,250));
-        Border line = new LineBorder(new Color(91,132,150));
+        setBackground(field_color);
+        Border line = new LineBorder(border_color);
         Border margin = new EmptyBorder(3,5,2,5);
         Border compound  = new CompoundBorder(line, margin);
         setBorder(compound);

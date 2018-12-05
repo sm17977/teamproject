@@ -8,6 +8,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +24,12 @@ import java.util.List;
 import static java.lang.Math.toIntExact;
 
 
-
 public class GUI extends JFrame {
+    public static final Color primary_color = new Color(222, 231, 235);
+    public static final Color secondary_color = new Color(234,240,242);
+    public static final Color text_color = new Color(54,78,89);
+    public static final Color border_color = text_color;
+    public static final Color field_color = new Color(246,249,250);
 
     Market market;
     double bankBalance = 0;
@@ -39,8 +45,7 @@ public class GUI extends JFrame {
 
     public GUI(){
         market = new Market();
-
-
+        getContentPane().setBackground(Color.WHITE);
         // -- Set icon --
         File f = new File("images\\growth.png");
         ImageIcon img = new ImageIcon(f.getAbsolutePath());
@@ -53,7 +58,10 @@ public class GUI extends JFrame {
         JPanel showDataTab = new JPanel(new BorderLayout());
         JPanel inputInfoTab = new JPanel(new BorderLayout());
 
+        // -- Tab pane / styling --
         JTabbedPane tabPane = new JTabbedPane();
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+        tabPane.setUI(tabUIStyle);
 
         //adding the tabs to the tabbed pane
         tabPane.add("Input", inputInfoTab);
@@ -62,9 +70,9 @@ public class GUI extends JFrame {
         // --- FIRST TAB ---
 
         //JPanels for the inputInfo tab
-        JPanel titlePanel = new JPanel();
+        JPanel titlePanel = new JPanelBlue();
         JPanel textPanel = new JPanel(new BorderLayout());
-        JPanel inputInfoPanel = new JPanel();
+        JPanel inputInfoPanel = new JPanelBlue();
 
         //component for title panel
         JLabel inputInfoTitle = new JLabel("Input bank balance, company and amount of stock owned.");
@@ -185,17 +193,14 @@ public class GUI extends JFrame {
         JLabel clientName = new JLabel("CLIENTS NAME");
 
         top.add(clientName);
-        top.setBackground(Color.white);
 
         centerInfo.add(chart);
-        centerInfo.setBackground(Color.LIGHT_GRAY);
 
         bottom.add(stockValue);
         bottom.add(currentValue);
         bottom.add(dateLabel);
         bottom.add(dateInput);
         bottom.add(search);
-        bottom.setBackground(Color.white);
 
         showDataTab.add(top, BorderLayout.NORTH);
         showDataTab.add(centerInfo, BorderLayout.CENTER);
@@ -221,14 +226,27 @@ public class GUI extends JFrame {
 
     }
 
-    // -- Helper function (for textfield in second tab) --
+    // -- Helper function ( for JFormattedTextField in second tab ) --
     private void restyleFormattedTextField(JFormattedTextField f) {
-        setBackground(new Color(246,249,250));
-        Border line = new LineBorder(new Color(91,132,150));
+        setBackground(field_color);
+        Border line = new LineBorder(border_color);
         Border margin = new EmptyBorder(3,5,2,5);
         Border compound  = new CompoundBorder(line, margin);
         f.setBorder(compound);
     }
+
+    // -- Helper function ( for JTabbedPane ) --
+     BasicTabbedPaneUI tabUIStyle =  new BasicTabbedPaneUI() {
+        @Override
+        protected void installDefaults() {
+            super.installDefaults();
+            highlight = primary_color;
+            lightHighlight = primary_color;
+            shadow = primary_color;
+            darkShadow = primary_color;
+            focus = primary_color;
+        }
+    };
 
 }
 
