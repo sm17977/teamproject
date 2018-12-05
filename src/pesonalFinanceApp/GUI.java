@@ -4,9 +4,14 @@ import org.jfree.data.time.Day;
 import pl.zankowski.iextrading4j.api.stocks.Chart;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -33,10 +38,18 @@ public class GUI extends JFrame {
     JLabel outputData;
 
     public GUI(){
-
         market = new Market();
 
-        //Each JPanel is a separate tab
+
+        // -- Set icon --
+        File f = new File("images\\growth.png");
+        ImageIcon img = new ImageIcon(f.getAbsolutePath());
+        setIconImage(img.getImage());
+
+        // -- Set window title --
+        setTitle("Portfolio Manager");
+
+        // -- Two tabs --
         JPanel showDataTab = new JPanel(new BorderLayout());
         JPanel inputInfoTab = new JPanel(new BorderLayout());
 
@@ -63,13 +76,13 @@ public class GUI extends JFrame {
 
         //components for inputInfoPanel
         JLabel bankFieldLabel = new JLabel("Bank balance:");
-        JTextField bankField = new JTextField(10);
-        JButton bankButton = new JButton("Set balance");
+        JTextField bankField = new JTextFieldBlue(10);
+        JButton bankButton = new JButtonBlue("Set balance");
         JLabel companyFieldLabel = new JLabel("Company:");
-        JTextField companyField = new JTextField(10);
-        JLabel sharesFieldLabel = new JLabel("Shares:");
-        JTextField sharesField = new JTextField(10);
-        JButton companySharesButton = new JButton("add to your company shares");
+        JTextField companyField = new JTextFieldBlue(10);
+        JLabel sharesFieldLabel = new JLabel("Stock:");
+        JTextField sharesField = new JTextFieldBlue(10);
+        JButton companySharesButton = new JButtonBlue("Add stock");
 
         //adding components to titlePanel
         titlePanel.add(inputInfoTitle);
@@ -152,19 +165,20 @@ public class GUI extends JFrame {
         // --- SECOND TAB ---
 
         //JPanels for the data tab
-        JPanel top = new JPanel();
-        JPanel centerInfo = new JPanel();
-        JPanel bottom = new JPanel();
+        JPanel top = new JPanelBlue();
+        JPanel centerInfo = new JPanelBlue();
+        JPanel bottom = new JPanelBlue();
 
         //components for the data tab
-        JButton stockValue = new JButton("Stock Value");
-        JButton currentValue = new JButton("Portfolio Value");
-        JButton search = new JButton("Search"); // Unnecessary
+        JButton stockValue = new JButtonBlue("Stock Value");
+        JButton currentValue = new JButtonBlue("Portfolio Value");
+        JButton search = new JButtonBlue("Search"); // Unnecessary
 
         // Label for TextField for input
         JLabel dateLabel = new JLabel("Input date:");
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         dateInput = new JFormattedTextField(format);
+        restyleFormattedTextField(dateInput);
         dateInput.setColumns(10);
 
         outputData = new JLabel("DATA WILL BE OUTPUT HERE");
@@ -206,6 +220,16 @@ public class GUI extends JFrame {
         search.addActionListener(searchH);
 
     }
+
+    // -- Helper function (for textfield in second tab) --
+    private void restyleFormattedTextField(JFormattedTextField f) {
+        setBackground(new Color(246,249,250));
+        Border line = new LineBorder(new Color(91,132,150));
+        Border margin = new EmptyBorder(3,5,2,5);
+        Border compound  = new CompoundBorder(line, margin);
+        f.setBorder(compound);
+    }
+
 }
 
 // Second Tab : Search Button (Obsolete)
@@ -351,4 +375,9 @@ class StockValueHandler implements ActionListener {
         }
     }
 }
+
+
+
+
+
 
