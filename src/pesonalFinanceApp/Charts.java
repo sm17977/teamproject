@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static pesonalFinanceApp.GUI.primary_color;
 import static pesonalFinanceApp.GUI.secondary_color;
+import static pesonalFinanceApp.GUI.third_color;
 
 
 public class Charts extends JPanel {
@@ -42,12 +43,15 @@ public class Charts extends JPanel {
 
         ChartPanel panel = new ChartPanel(chrt);
 
-        panel.getChart().setBackgroundPaint(primary_color);
+        // -- Outside of chart
+        chrt.setBackgroundPaint(new Color(166,165,186));
+        chrt.getLegend().setBackgroundPaint(new Color(166,165,186));
 
-        chrt.setBackgroundPaint(primary_color);
-        chrt.getPlot().setBackgroundPaint(Color.LIGHT_GRAY);
+        // -- Inside of chart
+        chrt.getPlot().setBackgroundPaint(secondary_color);
         chrt.getPlot().setOutlinePaint(Color.BLACK);
-        chrt.getLegend().setBackgroundPaint(primary_color);
+
+
 
         panel.setPopupMenu(null);
         panel.setPreferredSize(new Dimension(990,350));

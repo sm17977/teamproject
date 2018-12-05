@@ -8,7 +8,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,11 +24,14 @@ import static java.lang.Math.toIntExact;
 
 
 public class GUI extends JFrame {
-    public static final Color primary_color = new Color(222, 231, 235);
-    public static final Color secondary_color = new Color(234,240,242);
-    public static final Color text_color = new Color(54,78,89);
-    public static final Color border_color = text_color;
-    public static final Color field_color = new Color(246,249,250);
+
+    // Blue theme of the program, use these when colouring components
+    public static final Color primary_color = new Color(85,83,108);
+    public static final Color secondary_color = new Color(34,33,43);
+    public static final Color third_color = new Color(174,196,206);
+    public static final Color text_color = new Color(232,231,237);
+    public static final Color border_color = new Color(155,154,177);
+    public static final Color field_color = new Color(232,231,237);
 
     Market market;
     double bankBalance = 0;
@@ -41,11 +43,12 @@ public class GUI extends JFrame {
 
     // Second Tab
     JFormattedTextField dateInput;
-    JLabel outputData;
+    JLabelBlue outputData;
 
     public GUI(){
         market = new Market();
         getContentPane().setBackground(Color.WHITE);
+
         // -- Set icon --
         File f = new File("images\\growth.png");
         ImageIcon img = new ImageIcon(f.getAbsolutePath());
@@ -61,7 +64,10 @@ public class GUI extends JFrame {
         // -- Tab pane / styling --
         JTabbedPane tabPane = new JTabbedPane();
         UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+        UIManager.put("TabbedPane.selected", secondary_color);
         tabPane.setUI(tabUIStyle);
+        tabPane.setBackground(primary_color);
+        tabPane.setForeground(text_color);
 
         //adding the tabs to the tabbed pane
         tabPane.add("Input", inputInfoTab);
@@ -75,20 +81,20 @@ public class GUI extends JFrame {
         JPanel inputInfoPanel = new JPanelBlue();
 
         //component for title panel
-        JLabel inputInfoTitle = new JLabel("Input bank balance, company and amount of stock owned.");
+        JLabel inputInfoTitle = new JLabelBlue("Input bank balance, company and amount of stock owned.");
         inputInfoTitle.setFont(inputInfoTitle.getFont().deriveFont(Font.BOLD, 15f));
 
         //component for message panel
-        JLabel message = new JLabel("");
+        JLabel message = new JLabelBlue("");
         message.setFont(message.getFont().deriveFont(15f) );
 
         //components for inputInfoPanel
-        JLabel bankFieldLabel = new JLabel("Bank balance:");
+        JLabel bankFieldLabel = new JLabelBlue("Bank balance:");
         JTextField bankField = new JTextFieldBlue(10);
         JButton bankButton = new JButtonBlue("Set balance");
-        JLabel companyFieldLabel = new JLabel("Company:");
+        JLabel companyFieldLabel = new JLabelBlue("Company:");
         JTextField companyField = new JTextFieldBlue(10);
-        JLabel sharesFieldLabel = new JLabel("Stock:");
+        JLabel sharesFieldLabel = new JLabelBlue("Stock:");
         JTextField sharesField = new JTextFieldBlue(10);
         JButton companySharesButton = new JButtonBlue("Add stock");
 
@@ -183,14 +189,14 @@ public class GUI extends JFrame {
         JButton search = new JButtonBlue("Search"); // Unnecessary
 
         // Label for TextField for input
-        JLabel dateLabel = new JLabel("Input date:");
+        JLabel dateLabel = new JLabelBlue("Input date:");
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         dateInput = new JFormattedTextField(format);
         restyleFormattedTextField(dateInput);
         dateInput.setColumns(10);
 
-        outputData = new JLabel("DATA WILL BE OUTPUT HERE");
-        JLabel clientName = new JLabel("CLIENTS NAME");
+        outputData = new JLabelBlue("DATA WILL BE OUTPUT HERE");
+        JLabel clientName = new JLabelBlue("CLIENTS NAME");
 
         top.add(clientName);
 
@@ -240,11 +246,12 @@ public class GUI extends JFrame {
         @Override
         protected void installDefaults() {
             super.installDefaults();
-            highlight = primary_color;
-            lightHighlight = primary_color;
-            shadow = primary_color;
-            darkShadow = primary_color;
-            focus = primary_color;
+            highlight = secondary_color;
+            lightHighlight = secondary_color;
+            shadow = secondary_color;
+            darkShadow = secondary_color;
+            focus = secondary_color;
+            tabInsets = new Insets(1,5,1,5);
         }
     };
 
