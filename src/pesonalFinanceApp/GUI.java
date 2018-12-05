@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +29,7 @@ public class GUI extends JFrame {
     Map<String, List<Chart>> stockMap = new HashMap<>();
 
     // Second Tab
-    JTextField dateInput;
+    JFormattedTextField dateInput;
     JLabel outputData;
 
     public GUI(){
@@ -160,8 +161,12 @@ public class GUI extends JFrame {
         JButton currentValue = new JButton("Portfolio Value");
         JButton search = new JButton("Search"); // Unnecessary
 
-        JLabel dateLabel = new JLabel("Please input a date:");
-        dateInput = new JTextField(10);
+        // Label for TextField for input
+        JLabel dateLabel = new JLabel("Input date:");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        dateInput = new JFormattedTextField(format);
+        dateInput.setColumns(10);
+
         outputData = new JLabel("DATA WILL BE OUTPUT HERE");
         JLabel clientName = new JLabel("CLIENTS NAME");
 
@@ -203,7 +208,7 @@ public class GUI extends JFrame {
     }
 }
 
-// Second Tab Button
+// Second Tab : Search Button (Obsolete)
 class SearchHandler implements ActionListener {
     GUI app;
 
@@ -267,7 +272,7 @@ class SearchHandler implements ActionListener {
     }
 }
 
-// Second Tab Button : Portfolio Value
+// Second Tab : Button Portfolio Value
 class CurrentValueHandler implements ActionListener {
     GUI app;
 
@@ -278,7 +283,7 @@ class CurrentValueHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Map<String, Double> portfolio = new LinkedHashMap<>();
 
-        if(app.stockMap != null) {
+        if(!app.stockMap.isEmpty()) {
             app.stockMap.forEach((String company, List<Chart> list) -> {
 
                 for (int i = list.size() - 1; i > 0; i--) {
@@ -296,8 +301,19 @@ class CurrentValueHandler implements ActionListener {
                 }
 
             });
+            int days = 30;
 
-            int days = Integer.parseInt(app.dateInput.getText());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            LocalDate currentDate = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
+            LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
+
+            // Get the days between the current date and the input date
+            days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+
             app.chart.removeAll();
             app.chart.updateChart(portfolio, days);
             app.revalidate();
@@ -305,7 +321,7 @@ class CurrentValueHandler implements ActionListener {
     }
 }
 
-// Second Tab Button : Stock Value
+// Second Tab : Stock Value Button
 class StockValueHandler implements ActionListener {
     GUI app;
 
@@ -315,10 +331,24 @@ class StockValueHandler implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int days = Integer.parseInt(app.dateInput.getText());
-        app.chart.removeAll();
-        app.chart.updateChart(app.stockMap, days, 0);
-        app.revalidate();
+        if(!app.stockMap.isEmpty()) {
+            int days = 30;
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            LocalDate currentDate = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
+            LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
+
+            // Get the days between the current date and the input date
+            days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+
+            app.chart.removeAll();
+            app.chart.updateChart(app.stockMap, days, 0);
+            app.revalidate();
+        }
     }
 }
 
