@@ -186,7 +186,6 @@ public class GUI extends JFrame {
         //components for the data tab
         JButton stockValue = new JButtonBlue("Stock Value");
         JButton currentValue = new JButtonBlue("Portfolio Value");
-        JButton search = new JButtonBlue("Search"); // Unnecessary
 
         // Label for TextField for input
         JLabel dateLabel = new JLabelBlue("Input date:");
@@ -206,7 +205,6 @@ public class GUI extends JFrame {
         bottom.add(currentValue);
         bottom.add(dateLabel);
         bottom.add(dateInput);
-        bottom.add(search);
 
         showDataTab.add(top, BorderLayout.NORTH);
         showDataTab.add(centerInfo, BorderLayout.CENTER);
@@ -225,10 +223,6 @@ public class GUI extends JFrame {
         // Stock Value Handler
         StockValueHandler stockValueH = new StockValueHandler(this);
         stockValue.addActionListener(stockValueH);
-
-        // Search Handler
-        SearchHandler searchH = new SearchHandler(this);
-        search.addActionListener(searchH);
 
     }
 
@@ -251,74 +245,10 @@ public class GUI extends JFrame {
             shadow = secondary_color;
             darkShadow = secondary_color;
             focus = secondary_color;
-            tabInsets = new Insets(1,5,1,5);
+            tabInsets = new Insets(1,35,1,35);
         }
     };
 
-}
-
-// Second Tab : Search Button (Obsolete)
-class SearchHandler implements ActionListener {
-    GUI app;
-
-    SearchHandler(GUI app) {
-        this.app = app;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        try {
-            //gets current date as string
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = new Date();
-
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            LocalDate date1 = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
-            LocalDate date2 = LocalDate.parse(app.dateInput.getText(), dateFormat);
-
-            // Get the days between the current date and the input date
-            int days = toIntExact(ChronoUnit.DAYS.between(date1, date2));
-
-            //creates a double variable to hold the total investment value
-            //set as the bank balance the user has entered. If nothing has entered the bank  balance is 0
-            double total = app.bankBalance;
-
-            //iterator created to iterate through each entry set in the map of companies and shares
-            Iterator it = app.userShares.entrySet().iterator();
-
-            //loops until there are no more entry sets in the map
-            while (it.hasNext()) {
-
-                Map.Entry currentEntry = (Map.Entry) it.next();
-
-                //sets the company in the current entry set as a String variable and the share amount as a double variable
-                String currentCompany = (String) currentEntry.getKey();
-                double currentShare = (Double) currentEntry.getValue();
-
-                //sets the current companies stock prices in a list
-                List<Chart> currentCompanyChart = app.market.getStockPrice(currentCompany);
-
-                //gets the stock price of the most recent day
-                Chart stockPrice = currentCompanyChart.get((int) Math.abs(days));
-
-                //sets the value of the shares as a double variable
-                //this is done by multiplying the current share amount by the closing stock price on the most recent day
-                double shareVal = currentShare * stockPrice.getClose().doubleValue();
-
-                //the value of the users shares in the current company are added to the total
-                total += shareVal;
-            }
-
-            //center panel prints the current total of the users investments
-            app.outputData.setText("The total value of your investments on " + app.dateInput.getText() + " would be: £" + String.format("%.2f", total));
-
-            app.dateInput.setText("");
-
-        } catch (Exception e1) {
-            app.outputData.setText("Please enter a valid date within the last 3 years in the form dd/mm/yyyy.");
-        }
-    }
 }
 
 // Second Tab : Button Portfolio Value

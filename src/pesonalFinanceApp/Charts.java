@@ -17,9 +17,8 @@ import org.jfree.chart.JFreeChart;
 import java.awt.*;
 import java.util.Map;
 
-import static pesonalFinanceApp.GUI.primary_color;
 import static pesonalFinanceApp.GUI.secondary_color;
-import static pesonalFinanceApp.GUI.third_color;
+
 
 
 public class Charts extends JPanel {
@@ -44,8 +43,8 @@ public class Charts extends JPanel {
         ChartPanel panel = new ChartPanel(chrt);
 
         // -- Outside of chart
-        chrt.setBackgroundPaint(new Color(166,165,186));
-        chrt.getLegend().setBackgroundPaint(new Color(166,165,186));
+        chrt.setBackgroundPaint(new Color(199,198,211));
+        chrt.getLegend().setBackgroundPaint(new Color(199,198,211));
 
         // -- Inside of chart
         chrt.getPlot().setBackgroundPaint(secondary_color);
