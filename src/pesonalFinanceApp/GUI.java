@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -288,10 +289,17 @@ class CurrentValueHandler implements ActionListener {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             LocalDate currentDate = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
-            LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
 
-            // Get the days between the current date and the input date
-            days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+            //try catch block prevents a DateTimeParseException from being thrown if the user put nothing or an invalid date
+            //in the 'input date' text field and presses the 'Portfolio Value' button in the data tab
+            try{
+                LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
+
+                // Get the days between the current date and the input date
+                days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+            }
+            catch (DateTimeParseException ex){}
+
 
             app.chart.removeAll();
             app.chart.updateChart(portfolio, days);
@@ -319,10 +327,17 @@ class StockValueHandler implements ActionListener {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             LocalDate currentDate = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
-            LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
 
-            // Get the days between the current date and the input date
-            days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+            //try catch block prevents a DateTimeParseException from being thrown if the user put nothing or an invalid date
+            //in the 'input date' text field and presses the 'Stock Value' button in the data tab
+            try {
+                LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
+
+                // Get the days between the current date and the input date
+                days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+            }
+            catch (DateTimeParseException ex){ }
+
 
             app.chart.removeAll();
             app.chart.updateChart(app.stockMap, days, 0);
