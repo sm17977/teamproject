@@ -136,8 +136,11 @@ public class Charts extends JPanel {
                 }
                 stockSeries.addSeries(stockLinePlot);
             });
-            TimeSeries averageLinePlot = buildAverageLinePlot(stockSeries);
-            stockSeries.addSeries(averageLinePlot);
+            // If more than 1 stock, calculate average of stocks
+            if(stockMap.size() > 1){
+                TimeSeries averageLinePlot = buildAverageLinePlot(stockSeries);
+                stockSeries.addSeries(averageLinePlot);
+            }
         } else {
             TimeSeries emptyStockPlot = new TimeSeries("Empty");
             emptyStockPlot.add(new Day(10,10, 2018), 0);
@@ -147,32 +150,50 @@ public class Charts extends JPanel {
         return stockSeries;
     }
 
-    private TimeSeries buildAverageLinePlot(TimeSeriesCollection stockCollection) {
-        TimeSeries averageLinePlot = new TimeSeries("Average");
+    private TimeSeries buildAverageLinePlot(TimeSeriesCollection stocks) {
+        TimeSeries averageLinePlot;
+        HashMap<RegularTimePeriod, Float> datesAndValues;
 
-        HashMap<RegularTimePeriod, Float> valueSeries = new HashMap<>();
-        Integer seriesCount = stockCollection.getSeriesCount();
+        datesAndValues = getDatesAndValuesFromCollection(stocks);
 
-        for(int i = 0; i < stockCollection.getSeriesCount(); i++) {
-            TimeSeries stockSeries = stockCollection.getSeries(i);
+        Integer linePlotCount = stocks.getSeriesCount();
+        averageLinePlot = calculateAveragesFromMap(datesAndValues, linePlotCount);
+
+        return averageLinePlot;
+    }
+
+    private HashMap<RegularTimePeriod, Float> getDatesAndValuesFromCollection(TimeSeriesCollection stocks) {
+        HashMap<RegularTimePeriod, Float> datesAndValues = new HashMap<>();
+
+        for(int i = 0; i < stocks.getSeriesCount(); i++) {
+            TimeSeries stockSeries = stocks.getSeries(i);
 
             for(int j = 0; j < stockSeries.getItemCount(); j++) {
                 TimeSeriesDataItem dayItem = stockSeries.getDataItem(j);
 
-                if( valueSeries.containsKey(dayItem.getPeriod()) ) {
-                    Float totalValue = valueSeries.get( dayItem.getPeriod() );
+                if( datesAndValues.containsKey(dayItem.getPeriod()) ) {
+                    Float totalValue = datesAndValues.get( dayItem.getPeriod() );
                     Float dayValue = Float.valueOf(dayItem.getValue().toString());
-                    valueSeries.put(dayItem.getPeriod(), totalValue + dayValue);
+                    datesAndValues.put(dayItem.getPeriod(), totalValue + dayValue);
                 }
                 else {
                     Float dayValue = Float.valueOf(dayItem.getValue().toString());
-                    valueSeries.put(dayItem.getPeriod(), dayValue);
+                    datesAndValues.put(dayItem.getPeriod(), dayValue);
                 }
             }
         }
 
-        for(Map.Entry<RegularTimePeriod, Float> entry : valueSeries.entrySet()) {
-            averageLinePlot.add(entry.getKey(), entry.getValue() / seriesCount);
+        return datesAndValues;
+    }
+
+    private TimeSeries calculateAveragesFromMap(HashMap<RegularTimePeriod, Float> map, Integer linePlotCount) {
+
+        TimeSeries averageLinePlot = new TimeSeries("Average");
+        for(Map.Entry<RegularTimePeriod, Float> entry : map.entrySet()) {
+            RegularTimePeriod date = entry.getKey();
+            Float valueAverage = entry.getValue() / linePlotCount;
+
+            averageLinePlot.add(date, valueAverage);
         }
 
         return averageLinePlot;
