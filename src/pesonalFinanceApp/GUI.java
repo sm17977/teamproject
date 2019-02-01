@@ -1,6 +1,7 @@
 package pesonalFinanceApp;
 
 import pl.zankowski.iextrading4j.api.stocks.Chart;
+import pl.zankowski.iextrading4j.api.exception.IEXTradingException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -157,15 +158,18 @@ public class GUI extends JFrame {
                         String company_symbol = companyField.getText();
                         Double share_amount = Double.parseDouble(sharesField.getText());
 
-                        stocksAmount.put(company_symbol, share_amount);
-
                         List<Chart> stock_list = market.getStockPrice(company_symbol);
+                        stocksAmount.put(company_symbol, share_amount);
                         stocksHistory.put(company_symbol, stock_list);
 
                         message.setText("Your shares: " + stocksAmount.toString());
                     }
-                    catch (Exception n){
-                        message.setText("Please provide an Integer value for the Share amount.");
+                    catch (IEXTradingException ex) {
+                        message.setText("Please provide valid stock symbol.");
+                    }
+                    catch (Exception ex){
+                        message.setText("Please provide an integer value for the share amount.");
+                        System.err.println(ex.toString());
                     }
                     companyField.setText("");
                     sharesField.setText("");

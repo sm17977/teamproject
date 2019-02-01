@@ -23,6 +23,5 @@ class Market {
                 .build());
         return chartList;
     }
-
 }
 
