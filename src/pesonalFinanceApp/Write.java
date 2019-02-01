@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 //Class to write CSV File
 public class Write {
-    private String FileName = "outputData.csv";
+    private String FileName = "dataOutput.csv";
 
     public Write(){
     }

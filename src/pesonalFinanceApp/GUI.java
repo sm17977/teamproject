@@ -1,6 +1,5 @@
 package pesonalFinanceApp;
 
-import org.jfree.data.time.Day;
 import pl.zankowski.iextrading4j.api.stocks.Chart;
 
 import javax.swing.*;
@@ -27,24 +26,24 @@ import static java.lang.Math.toIntExact;
 public class GUI extends JFrame {
 
     // Blue theme of the program, use these when colouring components
-    public static final Color primary_color = new Color(85,83,108);
-    public static final Color secondary_color = new Color(34,33,43);
-    public static final Color third_color = new Color(174,196,206);
+    public static final Color primary_color = new Color(103,121,150);
+    public static final Color secondary_color = new Color(61,86,125);
     public static final Color text_color = new Color(232,231,237);
-    public static final Color border_color = new Color(155,154,177);
+    public static final Color border_color = new Color(45, 59, 90);
     public static final Color field_color = new Color(232,231,237);
 
     Market market;
     double bankBalance = 0;
     Charts chart = new Charts();
 
-    //instance variable userShares holds the company symbol as a key and the number of shares as it's value in a map
-    Map<String, Double> userShares = new HashMap<>();
-    Map<String, List<Chart>> stockMap = new HashMap<>();
+    // Respective stock amount and its historical data.
+    // Eg.: IBM - 30, IBM - (Day1, Day2...)
+    Map<String, Double> stocksAmount = new HashMap<>();
+    Map<String, List<Chart>> stocksHistory = new HashMap<>();
 
     // Second Tab
     JFormattedTextField dateInput;
-    JLabelBlue outputData;
+    JLabelBlue dataOutput;
 
     public GUI(){
         market = new Market();
@@ -70,7 +69,7 @@ public class GUI extends JFrame {
         tabPane.setBackground(primary_color);
         tabPane.setForeground(text_color);
 
-        //adding the tabs to the tabbed pane
+        // adding the tabs to the tabbed pane
         tabPane.add("Input", inputInfoTab);
         tabPane.add("Data", showDataTab);
 
@@ -78,7 +77,7 @@ public class GUI extends JFrame {
 
         //JPanels for the inputInfo tab
         JPanel titlePanel = new JPanelBlue();
-        JPanel textPanel = new JPanel(new BorderLayout());
+        JPanel textPanel = new JPanelBlue(new BorderLayout());
         JPanel inputInfoPanel = new JPanelBlue();
 
         //component for title panel
@@ -146,21 +145,21 @@ public class GUI extends JFrame {
 
         //companySharesButton action listener using inner class
         //sets the message JLabel to show an appropriate message
-        //creates a new entry for the userShares instance variable, using the company as the key and shares as the value
+        //creates a new entry for the stocksAmount instance variable, using the company as the key and shares as the value
         companySharesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(userShares.size() <= 4){
+                if(stocksAmount.size() <= 4){
                     try {
                         String company_symbol = companyField.getText();
                         Double share_amount = Double.parseDouble(sharesField.getText());
 
-                        userShares.put(company_symbol, share_amount);
+                        stocksAmount.put(company_symbol, share_amount);
 
                         List<Chart> stock_list = market.getStockPrice(company_symbol);
-                        stockMap.put(company_symbol, stock_list);
+                        stocksHistory.put(company_symbol, stock_list);
 
-                        message.setText("your shares: " + userShares.toString());
+                        message.setText("Your shares: " + stocksAmount.toString());
                     }
                     catch (Exception n){
                         message.setText("Please provide an Integer value for the Share amount.");
@@ -169,8 +168,8 @@ public class GUI extends JFrame {
                     sharesField.setText("");
                 }
 
-                else{
-                    message.setText("you can only enter up to 5 companies. Your list:" + userShares.toString());
+                else {
+                    message.setText("You can only enter up to 5 companies. Your list:" + stocksAmount.toString());
                     companyField.setText("");
                     sharesField.setText("");
                 }
@@ -186,7 +185,7 @@ public class GUI extends JFrame {
 
         //components for the data tab
         JButton stockValue = new JButtonBlue("Stock Value");
-        JButton currentValue = new JButtonBlue("Portfolio Value");
+        JButton portfolioValue = new JButtonBlue("Portfolio Value");
 
         // Label for TextField for input
         JLabel dateLabel = new JLabelBlue("Input date:");
@@ -195,7 +194,7 @@ public class GUI extends JFrame {
         restyleFormattedTextField(dateInput);
         dateInput.setColumns(10);
 
-        outputData = new JLabelBlue("DATA WILL BE OUTPUT HERE");
+        dataOutput = new JLabelBlue("DATA WILL BE OUTPUT HERE");
         JLabel clientName = new JLabelBlue("CLIENTS NAME");
 
         top.add(clientName);
@@ -203,7 +202,7 @@ public class GUI extends JFrame {
         centerInfo.add(chart);
 
         bottom.add(stockValue);
-        bottom.add(currentValue);
+        bottom.add(portfolioValue);
         bottom.add(dateLabel);
         bottom.add(dateInput);
 
@@ -219,7 +218,7 @@ public class GUI extends JFrame {
 
         // Portfolio Value Handler
         CurrentValueHandler currentValueH = new CurrentValueHandler(this);
-        currentValue.addActionListener(currentValueH);
+        portfolioValue.addActionListener(currentValueH);
 
         // Stock Value Handler
         StockValueHandler stockValueH = new StockValueHandler(this);
@@ -263,13 +262,13 @@ class CurrentValueHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Map<String, Double> portfolio = new LinkedHashMap<>();
 
-        if(!app.stockMap.isEmpty()) {
-            app.stockMap.forEach((String company, List<Chart> list) -> {
+        if(!app.stocksHistory.isEmpty()) {
+            app.stocksHistory.forEach((String company, List<Chart> list) -> {
 
                 for (int i = list.size() - 1; i > 0; i--) {
                     String currentDay = list.get(i).getDate();
 
-                    Double shareCount = app.userShares.get(company);
+                    Double shareCount = app.stocksAmount.get(company);
                     Double sharePrice = list.get(i).getClose().doubleValue();
                     Double shareTotal = shareCount * sharePrice;
 
@@ -318,7 +317,7 @@ class StockValueHandler implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!app.stockMap.isEmpty()) {
+        if(!app.stocksHistory.isEmpty()) {
             int days = 30;
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -340,7 +339,7 @@ class StockValueHandler implements ActionListener {
 
 
             app.chart.removeAll();
-            app.chart.updateChart(app.stockMap, days, 0);
+            app.chart.updateChart(app.stocksHistory, days, 0);
             app.revalidate();
         }
     }

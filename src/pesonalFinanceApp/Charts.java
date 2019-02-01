@@ -1,9 +1,7 @@
 package pesonalFinanceApp;
 
 import javax.swing.*;
-import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.jfree.data.time.*;
@@ -31,6 +29,36 @@ public class Charts extends JPanel {
         updateChart(stockMap, days, 0);
     }
 
+    // Stock
+    public void updateChart(Map<String, List<Chart>> data, int display_days, int flag){
+        stockMap = data;
+        days = display_days;
+
+        XYDataset dataset = createDataset();
+        JFreeChart chart = ChartFactory.createTimeSeriesChart("Stock Prices",
+                "Date",
+                "Price (USD)",
+                dataset);
+
+        ChartPanel panel = buildChart(chart);
+        add(panel);
+    }
+
+    // Portfolio
+    public void updateChart(Map<String, Double> data, int display_days){
+        portfolioMap = data;
+        days = display_days;
+
+        XYDataset dataset = createPortfolioDataset();
+        JFreeChart chart = ChartFactory.createTimeSeriesChart("Stock Prices",
+                "Date",
+                "Price (USD)",
+                dataset);
+
+        ChartPanel panel = buildChart(chart);
+        add(panel);
+    }
+
     private ChartPanel buildChart(JFreeChart chart) {
         JFreeChart chrt = chart;
         XYPlot plot = chrt.getXYPlot();
@@ -50,46 +78,17 @@ public class Charts extends JPanel {
     }
 
     private void styleChart(JFreeChart chrt) {
-        this.setBackground(secondary_color);
-
         // -- Outside of chart
         chrt.setBackgroundPaint(new Color(199,198,211));
         chrt.getLegend().setBackgroundPaint(new Color(199,198,211));
+        this.setBackground(secondary_color);
 
         // -- Inside of chart
         chrt.getPlot().setBackgroundPaint(secondary_color);
         chrt.getPlot().setOutlinePaint(Color.BLACK);
     }
 
-    // Portfolio
-    public void updateChart(Map<String, Double> data, int display_days){
-        portfolioMap = data;
-        days = display_days;
 
-        XYDataset dataset = createPortfolioDataset();
-        JFreeChart chart = ChartFactory.createTimeSeriesChart("Stock Prices",
-                "Date",
-                "Price (USD)",
-                dataset);
-
-        ChartPanel panel = buildChart(chart);
-        add(panel);
-    }
-
-    // Stock
-    public void updateChart(Map<String, List<Chart>> data, int display_days, int flag){
-        stockMap = data;
-        days = display_days;
-
-        XYDataset dataset = createDataset();
-        JFreeChart chart = ChartFactory.createTimeSeriesChart("Stock Prices",
-                "Date",
-                "Price (USD)",
-                dataset);
-
-        ChartPanel panel = buildChart(chart);
-        add(panel);
-    }
 
     // -- Portfolio Data Set --
     private XYDataset createPortfolioDataset() {
@@ -123,7 +122,7 @@ public class Charts extends JPanel {
         if(stockMap != null) {
             stockMap.forEach((String stockName, List<Chart> stockGroup) -> {
                 TimeSeries stockLinePlot = new TimeSeries(stockName);
-
+                if(days > 1100) { days = 1100; }
                 for (int i = stockGroup.size() - 1; i > stockGroup.size() - days; i--) {
                     String[] stockDatePoint = stockGroup.get(i).getDate().split("-");
 
