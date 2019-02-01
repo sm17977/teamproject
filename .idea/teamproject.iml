@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="pl.zankowski:iextrading4j-all:2.3.0" level="project" />
-    <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" exported="" name="org.jfree:jfreechart:1.5.0" level="project" />
+    <orderEntry type="library" exported="" name="LGoodDatePicker-10.4.1" level="project" />
   </component>
 </module>

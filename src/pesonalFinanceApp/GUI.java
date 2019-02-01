@@ -20,6 +20,8 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import static java.lang.Math.toIntExact;
 
 
@@ -42,7 +44,8 @@ public class GUI extends JFrame {
     Map<String, List<Chart>> stocksHistory = new HashMap<>();
 
     // Second Tab
-    JFormattedTextField dateInput;
+
+    DatePicker dateInput = new DatePicker();
     JLabelBlue dataOutput;
 
     public GUI(){
@@ -190,9 +193,7 @@ public class GUI extends JFrame {
         // Label for TextField for input
         JLabel dateLabel = new JLabelBlue("Input date:");
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        dateInput = new JFormattedTextField(format);
-        restyleFormattedTextField(dateInput);
-        dateInput.setColumns(10);
+
 
         dataOutput = new JLabelBlue("DATA WILL BE OUTPUT HERE");
         JLabel clientName = new JLabelBlue("CLIENTS NAME");
@@ -282,22 +283,26 @@ class CurrentValueHandler implements ActionListener {
             });
             int days = 30;
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = new Date();
+            SimpleDateFormat inputDf = new SimpleDateFormat("d MMMMM yyyy");
+            SimpleDateFormat outputDf = new SimpleDateFormat("dd/MM/yyyy");
 
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            try {
+                // Input date
+                Date dateFormatted = inputDf.parse(app.dateInput.getText());
+                String inputFormatted = outputDf.format(dateFormatted);
 
-            LocalDate currentDate = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
+                // Current date
+                Date today = new Date();
+                String todayFormatted = outputDf.format(today);
 
-            //try catch block prevents a DateTimeParseException from being thrown if the user put nothing or an invalid date
-            //in the 'input date' text field and presses the 'Portfolio Value' button in the data tab
-            try{
-                LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate inputDate = LocalDate.parse(inputFormatted, df);
+                LocalDate currentDate = LocalDate.parse(todayFormatted, df);
 
                 // Get the days between the current date and the input date
                 days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
             }
-            catch (DateTimeParseException ex){}
+            catch (Exception ex) {}
 
 
             app.chart.removeAll();
@@ -318,24 +323,29 @@ class StockValueHandler implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(!app.stocksHistory.isEmpty()) {
+            // Default days: 30
             int days = 30;
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date date = new Date();
+            SimpleDateFormat inputDf = new SimpleDateFormat("d MMMMM yyyy");
+            SimpleDateFormat outputDf = new SimpleDateFormat("dd/MM/yyyy");
 
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            LocalDate currentDate = LocalDate.parse(simpleDateFormat.format(date), dateFormat);
-
-            //try catch block prevents a DateTimeParseException from being thrown if the user put nothing or an invalid date
-            //in the 'input date' text field and presses the 'Stock Value' button in the data tab
             try {
-                LocalDate inputDate = LocalDate.parse(app.dateInput.getText(), dateFormat);
+                // Input date
+                Date dateFormatted = inputDf.parse(app.dateInput.getText());
+                String inputFormatted = outputDf.format(dateFormatted);
+
+                // Current date
+                Date today = new Date();
+                String todayFormatted = outputDf.format(today);
+
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate inputDate = LocalDate.parse(inputFormatted, df);
+                LocalDate currentDate = LocalDate.parse(todayFormatted, df);
 
                 // Get the days between the current date and the input date
                 days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
             }
-            catch (DateTimeParseException ex){ }
+            catch (Exception ex) {}
 
 
             app.chart.removeAll();

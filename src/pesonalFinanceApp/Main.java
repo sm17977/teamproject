@@ -3,18 +3,18 @@ package pesonalFinanceApp;
 import pl.zankowski.iextrading4j.api.stocks.Chart;
 
 import javax.swing.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
+
+import static java.lang.Math.toIntExact;
 
 public class Main {
     public static void main(String[] args) {
-        // Market instance to retrieve data from
-        Market market = new Market();
-
-        // Go to https://iextrading.com/trading/eligible-symbols/
-        // to find symbols of any company
-        // When calling .getStockPrice() <- insert symbol as a string
-
-        // example: Daily IBM stock for last 5 years
 
         GUI frame = new GUI();
         frame.setVisible(true);
