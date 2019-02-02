@@ -32,7 +32,7 @@ public class Charts extends JPanel {
     // Stock
     public void updateChart(Map<String, List<Chart>> data, int display_days, int flag){
         stockMap = data;
-        days = display_days;
+        days = (int)((float)display_days / 1.4);
 
         XYDataset dataset = createDataset();
         JFreeChart chart = ChartFactory.createTimeSeriesChart("Stock Prices",
@@ -47,7 +47,7 @@ public class Charts extends JPanel {
     // Portfolio
     public void updateChart(Map<String, Double> data, int display_days){
         portfolioMap = data;
-        days = display_days;
+        days = (int)((float)display_days / 1.4);
 
         XYDataset dataset = createPortfolioDataset();
         JFreeChart chart = ChartFactory.createTimeSeriesChart("Stock Prices",
