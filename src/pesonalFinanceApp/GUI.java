@@ -17,12 +17,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
 import com.github.lgooddatepicker.components.DatePicker;
-import com.github.lgooddatepicker.components.DatePickerSettings;
+
 import static java.lang.Math.toIntExact;
 
 
@@ -38,6 +37,7 @@ public class GUI extends JFrame {
     Market market;
     double bankBalance = 0;
     Charts chart = new Charts();
+    CompanyData companyData = new CompanyData("NASDAQ.csv", "NYSE.csv");
 
     // Respective stock amount and its historical data.
     // Eg.: IBM - 30, IBM - (Day1, Day2...)
@@ -82,7 +82,7 @@ public class GUI extends JFrame {
         //JPanels for the inputInfo tab
         JPanel titlePanel = new JPanelBlue();
         JPanel textPanel = new JPanelBlue(new BorderLayout());
-        JPanel inputInfoPanel = new JPanelBlue();
+        JPanel inputInfoPanel = new JPanelBlue(new BorderLayout());
 
         //component for title panel
         JLabel inputInfoTitle = new JLabelBlue("Input bank balance, company and amount of stock owned.");
@@ -97,37 +97,51 @@ public class GUI extends JFrame {
         JTextField bankField = new JTextFieldBlue(10);
         JButton bankButton = new JButtonBlue("Set balance");
         JLabel companyFieldLabel = new JLabelBlue("Company:");
-        JTextField companyField = new JTextFieldBlue(10);
+        Java2sAutoComboBox companyField;
         JLabel sharesFieldLabel = new JLabelBlue("Stock:");
         JTextField sharesField = new JTextFieldBlue(10);
         JButton companySharesButton = new JButtonBlue("Add stock");
 
-        //adding components to titlePanel
+        // populate company suggestion field
+        ArrayList<String> suggestionWords = new ArrayList<>();
+        suggestionWords = companyData.getCompanies();
+        companyField = new Java2sAutoComboBox(suggestionWords);
+        companyField.setStrict(false);
+
+        // adding components to titlePanel
         titlePanel.add(inputInfoTitle);
 
-        //adding components to textPanel
+        // adding components to textPanel
         textPanel.add(message, BorderLayout.CENTER);
         message.setHorizontalAlignment(SwingConstants.CENTER);
         textPanel.setBackground(Color.LIGHT_GRAY);
 
-        //adding components to inputInfoPanel
-        inputInfoPanel.add(bankFieldLabel);
-        inputInfoPanel.add(bankField);
-        inputInfoPanel.add(bankButton);
-        inputInfoPanel.add(companyFieldLabel);
-        inputInfoPanel.add(companyField);
-        inputInfoPanel.add(sharesFieldLabel);
-        inputInfoPanel.add(sharesField);
-        inputInfoPanel.add(companySharesButton);
+        JPanelBlue inputInfoPanelRow1 = new JPanelBlue();
+        JPanelBlue inputInfoPanelRow2 = new JPanelBlue();
 
-        //adding JPanels to the tab
+
+        // adding components to inputInfoPanel
+        inputInfoPanelRow1.add(bankFieldLabel);
+        inputInfoPanelRow1.add(bankField);
+        inputInfoPanelRow1.add(bankButton);
+
+        inputInfoPanelRow2.add(companyFieldLabel);
+        inputInfoPanelRow2.add(companyField);
+        inputInfoPanelRow2.add(sharesFieldLabel);
+        inputInfoPanelRow2.add(sharesField);
+        inputInfoPanelRow2.add(companySharesButton);
+
+        inputInfoPanel.add(inputInfoPanelRow1, BorderLayout.NORTH);
+        inputInfoPanel.add(inputInfoPanelRow2, BorderLayout.CENTER);
+
+        // adding JPanels to the tab
         inputInfoTab.add(titlePanel, BorderLayout.NORTH);
         inputInfoTab.add(textPanel, BorderLayout.CENTER);
         inputInfoTab.add(inputInfoPanel, BorderLayout.SOUTH);
 
-        //bankButton action listener using inner class
-        //sets the message JLabel to show an appropriate message
-        //sets the instance variable to the users input in the bankField text field
+        // bankButton action listener using inner class
+        // sets the message JLabel to show an appropriate message
+        // sets the instance variable to the users input in the bankField text field
         bankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -155,7 +169,8 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(stocksAmount.size() <= 4){
                     try {
-                        String company_symbol = companyField.getText();
+                        String company_symbol = companyData.getSymbol(companyField.getText());
+                        System.out.println(company_symbol);
                         Double share_amount = Double.parseDouble(sharesField.getText());
 
                         List<Chart> stock_list = market.getStockPrice(company_symbol);
@@ -165,19 +180,17 @@ public class GUI extends JFrame {
                         message.setText("Your shares: " + stocksAmount.toString());
                     }
                     catch (IEXTradingException ex) {
-                        message.setText("Please provide valid stock symbol.");
+                        message.setText("Please provide a valid company name.");
                     }
                     catch (Exception ex){
                         message.setText("Please provide an integer value for the share amount.");
                         System.err.println(ex.toString());
                     }
-                    companyField.setText("");
                     sharesField.setText("");
                 }
 
                 else {
                     message.setText("You can only enter up to 5 companies. Your list:" + stocksAmount.toString());
-                    companyField.setText("");
                     sharesField.setText("");
                 }
             }
