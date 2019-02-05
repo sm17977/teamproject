@@ -121,19 +121,25 @@ public class Charts extends JPanel {
 
         if(stockMap != null) {
             stockMap.forEach((String stockName, List<Chart> stockGroup) -> {
+
                 TimeSeries stockLinePlot = new TimeSeries(stockName);
                 if(days > 1100) { days = 1100; }
-                for (int i = stockGroup.size() - 1; i > stockGroup.size() - days; i--) {
-                    String[] stockDatePoint = stockGroup.get(i).getDate().split("-");
+                for (int i = stockGroup.size() - 1; i > (stockGroup.size() > days ? stockGroup.size() - days : stockGroup.size()); i--) {
+                    try {
+                        String[] stockDatePoint = stockGroup.get(i).getDate().split("-");
+                        Integer stockDateYear = Integer.parseInt(stockDatePoint[0]);
+                        Integer stockDateMonth = Integer.parseInt(stockDatePoint[1]);
+                        Integer stockDateDay = Integer.parseInt(stockDatePoint[2]);
+                        Day stockDateObject = new Day(stockDateDay, stockDateMonth, stockDateYear);
 
-                    Integer stockDateYear = Integer.parseInt(stockDatePoint[0]);
-                    Integer stockDateMonth = Integer.parseInt(stockDatePoint[1]);
-                    Integer stockDateDay = Integer.parseInt(stockDatePoint[2]);
-                    Day stockDateObject = new Day(stockDateDay, stockDateMonth, stockDateYear);
-
-                    stockLinePlot.add(stockDateObject, stockGroup.get(i).getClose());
+                        stockLinePlot.add(stockDateObject, stockGroup.get(i).getClose());
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    }
                 }
                 stockSeries.addSeries(stockLinePlot);
+
+
             });
             // If more than 1 stock, calculate average of stocks
             if(stockMap.size() > 1){
