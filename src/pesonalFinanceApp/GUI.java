@@ -21,6 +21,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
 import com.github.lgooddatepicker.components.DatePicker;
+import net.miginfocom.swing.MigLayout;
 
 import static java.lang.Math.toIntExact;
 
@@ -81,8 +82,9 @@ public class GUI extends JFrame {
 
         //JPanels for the inputInfo tab
         JPanel titlePanel = new JPanelBlue();
-        JPanel textPanel = new JPanelBlue(new BorderLayout());
+        JPanel textPanel = new JPanelBlue(new GridBagLayout());
         JPanel inputInfoPanel = new JPanelBlue(new BorderLayout());
+        JPanel clientStartPanel = new JPanel(new BorderLayout());
 
         //component for title panel
         JLabel inputInfoTitle = new JLabelBlue("Input bank balance, company and amount of stock owned.");
@@ -93,6 +95,8 @@ public class GUI extends JFrame {
         message.setFont(message.getFont().deriveFont(15f) );
 
         //components for inputInfoPanel
+        JButton saveButton = new JButtonBlue("New Client");
+        JButton loadButton = new JButtonBlue("Load Data");
         JLabel bankFieldLabel = new JLabelBlue("Bank balance:");
         JTextField bankField = new JTextFieldBlue(10);
         JButton bankButton = new JButtonBlue("Set balance");
@@ -101,6 +105,7 @@ public class GUI extends JFrame {
         JLabel sharesFieldLabel = new JLabelBlue("Stock:");
         JTextField sharesField = new JTextFieldBlue(10);
         JButton companySharesButton = new JButtonBlue("Add stock");
+        JLabel clientStartTitle = new JLabel("Portfolio Manager");
 
         // populate company suggestion field
         ArrayList<String> suggestionWords = new ArrayList<>();
@@ -111,16 +116,37 @@ public class GUI extends JFrame {
         // adding components to titlePanel
         titlePanel.add(inputInfoTitle);
 
+        //adding components to clientStartPanel
+
+        Font font = new Font("Segoe UI", Font.PLAIN,40);
+        clientStartPanel.setLayout(new MigLayout("fillx", "[center]", "40[]30[]20"));
+        clientStartTitle.setFont(font.deriveFont(30.0f));
+        clientStartPanel.setBackground(Color.WHITE);
+        clientStartPanel.add(clientStartTitle, "cell 0 0, al center, span");
+        clientStartPanel.add(saveButton, "cell 0 1, al center, span");
+        clientStartPanel.add(loadButton, "cell 0 2, al center, span");
+        saveButton.setPreferredSize(new Dimension(300, 30));
+        loadButton.setPreferredSize(new Dimension(300, 30));
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String x = JOptionPane.showInputDialog(clientStartPanel, "testing");
+            }
+        });
+
+
+
         // adding components to textPanel
-        textPanel.add(message, BorderLayout.CENTER);
-        message.setHorizontalAlignment(SwingConstants.CENTER);
+        textPanel.setLayout(new MigLayout("fillx", "[center]", "25[center]"));
         textPanel.setBackground(Color.LIGHT_GRAY);
+        textPanel.add(clientStartPanel, " cell 0 0, width 400!, height 300!, al center");
 
         JPanelBlue inputInfoPanelRow1 = new JPanelBlue();
         JPanelBlue inputInfoPanelRow2 = new JPanelBlue();
 
 
         // adding components to inputInfoPanel
+
         inputInfoPanelRow1.add(bankFieldLabel);
         inputInfoPanelRow1.add(bankField);
         inputInfoPanelRow1.add(bankButton);
@@ -370,6 +396,24 @@ class StockValueHandler implements ActionListener {
             app.revalidate();
         }
     }
+}
+
+class NewClientHandler implements ActionListener{
+    GUI app;
+
+    public NewClientHandler(GUI app){
+        this.app = app;
+    }
+
+    public void actionPerformed(ActionEvent evt){
+        JOptionPane.showInternalInputDialog(null, "text");
+
+    }
+
+
+
+
+
 }
 
 
