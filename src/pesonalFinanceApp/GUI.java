@@ -99,7 +99,8 @@ public class GUI extends JFrame {
         //components for inputInfoPanel
         JButton newClientButton = new JButtonBlue("New Client");
         JButton loadButton = new JButtonBlue("Load Data");
-        JButtonBlue backButton = new JButtonBlue("Back");
+        JButtonBlue backButton1 = new JButtonBlue("Back");
+        JButtonBlue backButton2 = new JButtonBlue("Back");
         JLabel bankFieldLabel = new JLabelBlue("Bank balance:");
         JTextField bankField = new JTextFieldBlue(10);
         JButton bankButton = new JButtonBlue("Set balance");
@@ -110,6 +111,7 @@ public class GUI extends JFrame {
         JButton companySharesButton = new JButtonBlue("Add stock");
         JLabel clientStartTitle = new JLabel("Portfolio Manager");
         JLabel newClientTitle = new JLabel("Create new Portfolio");
+        JLabel loadClientTitle = new JLabel("Load a saved Portfolio");
 
         // populate company suggestion field
         ArrayList<String> suggestionWords = new ArrayList<>();
@@ -138,22 +140,29 @@ public class GUI extends JFrame {
         newClientButton.setPreferredSize(new Dimension(300, 30));
         loadButton.setPreferredSize(new Dimension(300, 30));
         newClientButton.addActionListener(new NewClientHandler(1, cardSwitcher));
+        loadButton.addActionListener(new NewClientHandler(3, cardSwitcher));
 
         // clientAddPanel components (2/3)
         clientAddPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
         newClientTitle.setFont(font.deriveFont(26.0f));
         clientAddPanel.setBackground(Color.WHITE);
-        clientAddPanel.add(backButton, "cell 0 0 , al left");
+        clientAddPanel.add(backButton1, "cell 0 0 , al left");
         clientAddPanel.add(newClientTitle, "cell 0 1, al center");
-        backButton.addActionListener(new NewClientHandler(2, cardSwitcher));
+        backButton1.addActionListener(new NewClientHandler(2, cardSwitcher));
 
         // loadClientPanel components (3/3)
-
+        clientLoadPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
+        loadClientTitle.setFont(font.deriveFont(26.0f));
+        clientLoadPanel.setBackground(Color.WHITE);
+        clientLoadPanel.add(backButton2, "cell 0 0 , al left");
+        clientLoadPanel.add(loadClientTitle, "cell 0 1, al center");
+        backButton2.addActionListener(new NewClientHandler(2, cardSwitcher));
 
 
         // adding components to textPanel
         switchPanel.add(clientStartPanel, "1");
         switchPanel.add(clientAddPanel, "2");
+        switchPanel.add(clientLoadPanel, "3");
         textPanel.setLayout(new MigLayout("fillx, debug", "[center]", "25[center]"));
         textPanel.setBackground(Color.LIGHT_GRAY);
         textPanel.add(switchPanel, " cell 0 0, width 400!, height 300!, al center");
@@ -431,7 +440,7 @@ class NewClientHandler implements ActionListener {
                 break;
             case 2: switcher.switchTo("1");
                 break;
-            case 3:
+            case 3: switcher.switchTo("3");
                 break;
         }
 
