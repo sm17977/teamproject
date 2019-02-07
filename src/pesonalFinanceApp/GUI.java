@@ -28,6 +28,17 @@ import static java.lang.Math.toIntExact;
 
 public class GUI extends JFrame {
 
+    public JTextField profileNameField;
+    public JTextField nameField;
+    public Client c = null;
+    JButton companySharesButton;
+    JTextField sharesField;
+    JTextField bankField;
+    JButton bankButton;
+    JTabbedPane tabPane;
+    JLabel activeClientTitle;
+    JLabel clientName;
+
     // Blue theme of the program, use these when colouring components
     public static final Color primary_color = new Color(103,121,150);
     public static final Color secondary_color = new Color(61,86,125);
@@ -42,8 +53,8 @@ public class GUI extends JFrame {
 
     // Respective stock amount and its historical data.
     // Eg.: IBM - 30, IBM - (Day1, Day2...)
-    Map<String, Double> stocksAmount = new HashMap<>();
-    Map<String, List<Chart>> stocksHistory = new HashMap<>();
+    //Map<String, Double> stocksAmount = new HashMap<>();
+    //Map<String, List<Chart>> stocksHistory = new HashMap<>();
 
     // Second Tab
 
@@ -67,7 +78,7 @@ public class GUI extends JFrame {
         JPanel inputInfoTab = new JPanel(new BorderLayout());
 
         // -- Tab pane / styling --
-        JTabbedPane tabPane = new JTabbedPane();
+        tabPane = new JTabbedPane();
         UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
         UIManager.put("TabbedPane.selected", secondary_color);
         tabPane.setUI(tabUIStyle);
@@ -77,6 +88,7 @@ public class GUI extends JFrame {
         // adding the tabs to the tabbed pane
         tabPane.add("Input", inputInfoTab);
         tabPane.add("Data", showDataTab);
+        tabPane.setEnabledAt(1, false);
 
         // --- FIRST TAB ---
 
@@ -87,6 +99,7 @@ public class GUI extends JFrame {
         JPanel clientStartPanel = new JPanel();
         JPanel clientAddPanel = new JPanel();
         JPanel clientLoadPanel = new JPanel();
+        JPanel clientActivePanel = new JPanel();
 
         //component for title panel
         JLabel inputInfoTitle = new JLabelBlue("Input bank balance, company and amount of stock owned.");
@@ -102,16 +115,29 @@ public class GUI extends JFrame {
         JButtonBlue backButton1 = new JButtonBlue("Back");
         JButtonBlue backButton2 = new JButtonBlue("Back");
         JLabel bankFieldLabel = new JLabelBlue("Bank balance:");
-        JTextField bankField = new JTextFieldBlue(10);
-        JButton bankButton = new JButtonBlue("Set balance");
+        bankField = new JTextFieldBlue(10);
+        bankButton = new JButtonBlue("Set balance");
+        bankField.setEditable(false);
+        bankButton.setEnabled(false);
         JLabel companyFieldLabel = new JLabelBlue("Company:");
         Java2sAutoComboBox companyField;
         JLabel sharesFieldLabel = new JLabelBlue("Stock:");
-        JTextField sharesField = new JTextFieldBlue(10);
-        JButton companySharesButton = new JButtonBlue("Add stock");
+        sharesField = new JTextFieldBlue(10);
+        companySharesButton = new JButtonBlue("Add stock");
+        sharesField.setEditable(false);
+        companySharesButton.setEnabled(false);
+
         JLabel clientStartTitle = new JLabel("Portfolio Manager");
         JLabel newClientTitle = new JLabel("Create new Portfolio");
         JLabel loadClientTitle = new JLabel("Load a saved Portfolio");
+        nameField = new JTextField(10);
+        JLabel nameFieldLbl = new JLabel("Client Name");
+        profileNameField = new JTextField(10);
+        JLabel profileNameFieldLbl = new JLabel("Portfolio Name");
+        JButtonBlue createClient = new JButtonBlue("Create Client");
+        activeClientTitle = new JLabel("");
+        JButton exitButton = new JButtonBlue("Exit");
+        // possible currency option attached to client?
 
         // populate company suggestion field
         ArrayList<String> suggestionWords = new ArrayList<>();
@@ -129,7 +155,7 @@ public class GUI extends JFrame {
         CardSwitcher cardSwitcher = new CardSwitcher(switchPanel, cardLayout);
 
 
-        // clientStartPanel components (1/3)
+        // clientStartPanel components (1/4)
         Font font = new Font("Segoe UI", Font.PLAIN,40);
         clientStartPanel.setLayout(new MigLayout("fillx", "[center]", "40[]30[]20"));
         clientStartTitle.setFont(font);
@@ -139,30 +165,46 @@ public class GUI extends JFrame {
         clientStartPanel.add(loadButton, "cell 0 2, al center, span");
         newClientButton.setPreferredSize(new Dimension(300, 30));
         loadButton.setPreferredSize(new Dimension(300, 30));
-        newClientButton.addActionListener(new NewClientHandler(1, cardSwitcher));
-        loadButton.addActionListener(new NewClientHandler(3, cardSwitcher));
+        newClientButton.addActionListener(new NewClientHandler(this,1, cardSwitcher, c));
+        loadButton.addActionListener(new NewClientHandler(this,3, cardSwitcher, c));
 
-        // clientAddPanel components (2/3)
-        clientAddPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
+        // clientAddPanel components (2/4)
+        clientAddPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20[]5[]5[]5[]30[]"));
         newClientTitle.setFont(font.deriveFont(26.0f));
         clientAddPanel.setBackground(Color.WHITE);
         clientAddPanel.add(backButton1, "cell 0 0 , al left");
         clientAddPanel.add(newClientTitle, "cell 0 1, al center");
-        backButton1.addActionListener(new NewClientHandler(2, cardSwitcher));
+        clientAddPanel.add(nameFieldLbl, "cell 0 2, al center");
+        clientAddPanel.add(nameField, "cell 0 3, al center");
+        clientAddPanel.add(profileNameFieldLbl, "cell 0 4, al center");
+        clientAddPanel.add(profileNameField, "cell 0 5, al center");
+        clientAddPanel.add(createClient, "cell 0 6, al center");
+        backButton1.addActionListener(new NewClientHandler(this,2, cardSwitcher, c));
+        createClient.addActionListener(new NewClientHandler(this,4, cardSwitcher, c));
 
-        // loadClientPanel components (3/3)
+        // loadClientPanel components (3/4)
         clientLoadPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
         loadClientTitle.setFont(font.deriveFont(26.0f));
         clientLoadPanel.setBackground(Color.WHITE);
         clientLoadPanel.add(backButton2, "cell 0 0 , al left");
         clientLoadPanel.add(loadClientTitle, "cell 0 1, al center");
-        backButton2.addActionListener(new NewClientHandler(2, cardSwitcher));
+        backButton2.addActionListener(new NewClientHandler(this,2, cardSwitcher, c));
+
+        // activeClientPanel components (4/4)
+        clientActivePanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
+        clientActivePanel.setFont(font.deriveFont(26.0f));
+        clientActivePanel.setBackground(Color.WHITE);
+        clientActivePanel.add(activeClientTitle, "cell 0 1, al center");
+        clientActivePanel.add(exitButton, "cell 0 1, al center");
+        exitButton.addActionListener(new NewClientHandler(this, 5, cardSwitcher, c));
+
 
 
         // adding components to textPanel
         switchPanel.add(clientStartPanel, "1");
         switchPanel.add(clientAddPanel, "2");
         switchPanel.add(clientLoadPanel, "3");
+        switchPanel.add(clientActivePanel, "4");
         textPanel.setLayout(new MigLayout("fillx, debug", "[center]", "25[center]"));
         textPanel.setBackground(Color.LIGHT_GRAY);
         textPanel.add(switchPanel, " cell 0 0, width 400!, height 300!, al center");
@@ -183,6 +225,8 @@ public class GUI extends JFrame {
         inputInfoPanelRow2.add(sharesFieldLabel);
         inputInfoPanelRow2.add(sharesField);
         inputInfoPanelRow2.add(companySharesButton);
+
+
 
         inputInfoPanel.add(inputInfoPanelRow1, BorderLayout.NORTH);
         inputInfoPanel.add(inputInfoPanelRow2, BorderLayout.CENTER);
@@ -220,32 +264,29 @@ public class GUI extends JFrame {
         companySharesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(stocksAmount.size() <= 4){
-                    try {
-                        String company_symbol = companyData.getSymbol(companyField.getText());
-                        System.out.println(company_symbol);
-                        Double share_amount = Double.parseDouble(sharesField.getText());
+                    if (c.stocksAmount.size() <= 4) {
+                        try {
+                            String company_symbol = companyData.getSymbol(companyField.getText());
+                            System.out.println(company_symbol);
+                            Double share_amount = Double.parseDouble(sharesField.getText());
 
-                        List<Chart> stock_list = market.getStockPrice(company_symbol);
-                        stocksAmount.put(company_symbol, share_amount);
-                        stocksHistory.put(company_symbol, stock_list);
+                            List<Chart> stock_list = market.getStockPrice(company_symbol);
+                            c.stocksAmount.put(company_symbol, share_amount);
+                            c.stocksHistory.put(company_symbol, stock_list);
 
-                        message.setText("Your shares: " + stocksAmount.toString());
+                            System.out.println("Your shares: " + c.stocksAmount.toString());
+                        } catch (IEXTradingException ex) {
+                            System.out.println("Please provide a valid company name.");
+                        } catch (Exception ex) {
+                            System.out.println("Please provide an integer value for the share amount.");
+                            System.err.println(ex.toString());
+                        }
+                        sharesField.setText("");
+                    } else {
+                        System.out.println("You can only enter up to 5 companies. Your list:" + c.stocksAmount.toString());
+                        sharesField.setText("");
                     }
-                    catch (IEXTradingException ex) {
-                        message.setText("Please provide a valid company name.");
-                    }
-                    catch (Exception ex){
-                        message.setText("Please provide an integer value for the share amount.");
-                        System.err.println(ex.toString());
-                    }
-                    sharesField.setText("");
-                }
 
-                else {
-                    message.setText("You can only enter up to 5 companies. Your list:" + stocksAmount.toString());
-                    sharesField.setText("");
-                }
             }
         });
 
@@ -266,7 +307,7 @@ public class GUI extends JFrame {
 
 
         dataOutput = new JLabelBlue("DATA WILL BE OUTPUT HERE");
-        JLabel clientName = new JLabelBlue("CLIENTS NAME");
+        clientName = new JLabelBlue("");
 
         top.add(clientName);
 
@@ -320,6 +361,7 @@ public class GUI extends JFrame {
         }
     };
 
+
 }
 
 // Second Tab : Button Portfolio Value
@@ -333,13 +375,13 @@ class CurrentValueHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Map<String, Double> portfolio = new LinkedHashMap<>();
 
-        if(!app.stocksHistory.isEmpty()) {
-            app.stocksHistory.forEach((String company, List<Chart> list) -> {
+        if(!app.c.stocksHistory.isEmpty()) {
+            app.c.stocksHistory.forEach((String company, List<Chart> list) -> {
 
                 for (int i = list.size() - 1; i > 0; i--) {
                     String currentDay = list.get(i).getDate();
 
-                    Double shareCount = app.stocksAmount.get(company);
+                    Double shareCount = app.c.stocksAmount.get(company);
                     Double sharePrice = list.get(i).getClose().doubleValue();
                     Double shareTotal = shareCount * sharePrice;
 
@@ -392,7 +434,7 @@ class StockValueHandler implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!app.stocksHistory.isEmpty()) {
+        if(!app.c.stocksHistory.isEmpty()) {
             // Default days: 30
             int days = 30;
 
@@ -419,7 +461,7 @@ class StockValueHandler implements ActionListener {
 
 
             app.chart.removeAll();
-            app.chart.updateChart(app.stocksHistory, days, 0);
+            app.chart.updateChart(app.c.stocksHistory, days, 0);
             app.revalidate();
         }
     }
@@ -428,10 +470,14 @@ class StockValueHandler implements ActionListener {
 class NewClientHandler implements ActionListener {
     int state;
     CardSwitcher switcher;
+    GUI app;
+    Client c;
 
-    public NewClientHandler(int state, CardSwitcher switcher) {
+    public NewClientHandler(GUI app, int state, CardSwitcher switcher, Client c) {
         this.state = state;
         this.switcher = switcher;
+        this.app = app;
+        this.c = c;
     }
 
     public void actionPerformed(ActionEvent evt) {
@@ -442,6 +488,32 @@ class NewClientHandler implements ActionListener {
                 break;
             case 3: switcher.switchTo("3");
                 break;
+            case 4: String clientName = app.nameField.getText();
+                    String portfolioName = app.profileNameField.getText();
+                    c = Client.getInstance(clientName, portfolioName);
+                    app.c = this.c;
+                    app.companySharesButton.setEnabled(true);
+                    app.sharesField.setEditable(true);
+                    app.bankField.setEditable(true);
+                    app.bankButton.setEnabled(true);
+                    app.tabPane.setEnabledAt(1, true);
+                    app.activeClientTitle.setText(clientName);
+                    app.clientName.setText(clientName + "'s Portfolio");
+                    switcher.switchTo("4");
+                    break;
+            case 5: this.c = null;
+                    app.c = null;
+                    app.companySharesButton.setEnabled(false);
+                    app.sharesField.setEditable(false);
+                    app.bankField.setEditable(false);
+                    app.bankButton.setEnabled(false);
+                    app.tabPane.setEnabledAt(1, false);
+                    switcher.switchTo("1");
+                    break;
+
+
+
+
         }
 
         //JOptionPane.showInternalInputDialog(null, "text");
