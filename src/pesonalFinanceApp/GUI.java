@@ -38,6 +38,7 @@ public class GUI extends JFrame {
     JTabbedPane tabPane;
     JLabel activeClientTitle;
     JLabel clientName;
+    JLabel activeClientBalance;
 
     // Blue theme of the program, use these when colouring components
     public static final Color primary_color = new Color(103,121,150);
@@ -47,7 +48,6 @@ public class GUI extends JFrame {
     public static final Color field_color = new Color(232,231,237);
 
     Market market;
-    double bankBalance = 0;
     Charts chart = new Charts();
     CompanyData companyData = new CompanyData("NASDAQ.csv", "NYSE.csv");
 
@@ -137,6 +137,9 @@ public class GUI extends JFrame {
         JButtonBlue createClient = new JButtonBlue("Create Client");
         activeClientTitle = new JLabel("");
         JButton exitButton = new JButtonBlue("Exit");
+        JLabel activeClientProfile = new JLabel("Client Profile");
+        activeClientBalance = new JLabel("Set your balance below.");
+        JLabel activeClientBalanceTitle = new JLabel("Balance");
         // possible currency option attached to client?
 
         // populate company suggestion field
@@ -156,6 +159,7 @@ public class GUI extends JFrame {
 
 
         // clientStartPanel components (1/4)
+        // Initial panel displayed on the input tab
         Font font = new Font("Segoe UI", Font.PLAIN,40);
         clientStartPanel.setLayout(new MigLayout("fillx", "[center]", "40[]30[]20"));
         clientStartTitle.setFont(font);
@@ -169,6 +173,7 @@ public class GUI extends JFrame {
         loadButton.addActionListener(new NewClientHandler(this,3, cardSwitcher, c));
 
         // clientAddPanel components (2/4)
+        // Panel allows users to create a client
         clientAddPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20[]5[]5[]5[]30[]"));
         newClientTitle.setFont(font.deriveFont(26.0f));
         clientAddPanel.setBackground(Color.WHITE);
@@ -183,6 +188,7 @@ public class GUI extends JFrame {
         createClient.addActionListener(new NewClientHandler(this,4, cardSwitcher, c));
 
         // loadClientPanel components (3/4)
+        // Panel allows users to load a save client profile
         clientLoadPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
         loadClientTitle.setFont(font.deriveFont(26.0f));
         clientLoadPanel.setBackground(Color.WHITE);
@@ -191,11 +197,18 @@ public class GUI extends JFrame {
         backButton2.addActionListener(new NewClientHandler(this,2, cardSwitcher, c));
 
         // activeClientPanel components (4/4)
-        clientActivePanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
-        clientActivePanel.setFont(font.deriveFont(26.0f));
+        // Panel shows the current active client profile
+        clientActivePanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]15[]5[]5"));
+        activeClientProfile.setFont(font.deriveFont(26.0f));
+        activeClientTitle.setFont(font.deriveFont(16.0f));
+        activeClientBalanceTitle.setFont(font.deriveFont(16.0f));
+        activeClientBalance.setFont(font.deriveFont(16.0f));
         clientActivePanel.setBackground(Color.WHITE);
-        clientActivePanel.add(activeClientTitle, "cell 0 1, al center");
-        clientActivePanel.add(exitButton, "cell 0 1, al center");
+        clientActivePanel.add(exitButton, "cell 0 0, al left");
+        clientActivePanel.add(activeClientProfile, "cell 0 1, al center");
+        clientActivePanel.add(activeClientTitle, "cell 0 2, al center");
+        clientActivePanel.add(activeClientBalance, "cell 0 3, al center");
+
         exitButton.addActionListener(new NewClientHandler(this, 5, cardSwitcher, c));
 
 
@@ -248,7 +261,9 @@ public class GUI extends JFrame {
 
                     message.setText("Current bank balance has been set to: £" + formattedBalance);
 
-                    bankBalance = Double.parseDouble(formattedBalance);
+                    c.bankBalance = Double.parseDouble(formattedBalance);
+                    activeClientBalance.setText(Double.toString(c.bankBalance));
+                    activeClientBalance.setText("Balance: $" + activeClientBalance.getText());
                 }
                 catch(Exception n){
                    message.setText("Please provide a numerical value for the Bank Balance.");
@@ -368,6 +383,7 @@ public class GUI extends JFrame {
 class CurrentValueHandler implements ActionListener {
     GUI app;
 
+
     CurrentValueHandler(GUI app) {
         this.app = app;
     }
@@ -388,7 +404,7 @@ class CurrentValueHandler implements ActionListener {
                     if (portfolio.containsKey(currentDay)) {
                         portfolio.put(currentDay, portfolio.get(currentDay) + shareTotal);
                     } else {
-                        portfolio.put(currentDay, app.bankBalance + shareTotal);
+                        portfolio.put(currentDay, app.c.bankBalance + shareTotal);
                     }
                 }
 
@@ -492,12 +508,15 @@ class NewClientHandler implements ActionListener {
                     String portfolioName = app.profileNameField.getText();
                     c = Client.getInstance(clientName, portfolioName);
                     app.c = this.c;
+                    app.nameField.setText("");
+                    app.profileNameField.setText("");
                     app.companySharesButton.setEnabled(true);
                     app.sharesField.setEditable(true);
                     app.bankField.setEditable(true);
                     app.bankButton.setEnabled(true);
                     app.tabPane.setEnabledAt(1, true);
                     app.activeClientTitle.setText(clientName);
+                    app.activeClientTitle.setText("Name: " + app.activeClientTitle.getText());
                     app.clientName.setText(clientName + "'s Portfolio");
                     switcher.switchTo("4");
                     break;
