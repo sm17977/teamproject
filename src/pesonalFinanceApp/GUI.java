@@ -84,7 +84,9 @@ public class GUI extends JFrame {
         JPanel titlePanel = new JPanelBlue();
         JPanel textPanel = new JPanelBlue(new GridBagLayout());
         JPanel inputInfoPanel = new JPanelBlue(new BorderLayout());
-        JPanel clientStartPanel = new JPanel(new BorderLayout());
+        JPanel clientStartPanel = new JPanel();
+        JPanel clientAddPanel = new JPanel();
+        JPanel clientLoadPanel = new JPanel();
 
         //component for title panel
         JLabel inputInfoTitle = new JLabelBlue("Input bank balance, company and amount of stock owned.");
@@ -95,8 +97,9 @@ public class GUI extends JFrame {
         message.setFont(message.getFont().deriveFont(15f) );
 
         //components for inputInfoPanel
-        JButton saveButton = new JButtonBlue("New Client");
+        JButton newClientButton = new JButtonBlue("New Client");
         JButton loadButton = new JButtonBlue("Load Data");
+        JButtonBlue backButton = new JButtonBlue("Back");
         JLabel bankFieldLabel = new JLabelBlue("Bank balance:");
         JTextField bankField = new JTextFieldBlue(10);
         JButton bankButton = new JButtonBlue("Set balance");
@@ -106,6 +109,7 @@ public class GUI extends JFrame {
         JTextField sharesField = new JTextFieldBlue(10);
         JButton companySharesButton = new JButtonBlue("Add stock");
         JLabel clientStartTitle = new JLabel("Portfolio Manager");
+        JLabel newClientTitle = new JLabel("Create new Portfolio");
 
         // populate company suggestion field
         ArrayList<String> suggestionWords = new ArrayList<>();
@@ -116,30 +120,44 @@ public class GUI extends JFrame {
         // adding components to titlePanel
         titlePanel.add(inputInfoTitle);
 
-        //adding components to clientStartPanel
+        // --adding components to clientStartPanel--
+        CardLayout cardLayout = new CardLayout();
+        // panel to contain cards
+        JPanel switchPanel = new JPanel(cardLayout);
+        CardSwitcher cardSwitcher = new CardSwitcher(switchPanel, cardLayout);
 
+
+        // clientStartPanel components (1/3)
         Font font = new Font("Segoe UI", Font.PLAIN,40);
         clientStartPanel.setLayout(new MigLayout("fillx", "[center]", "40[]30[]20"));
-        clientStartTitle.setFont(font.deriveFont(30.0f));
+        clientStartTitle.setFont(font);
         clientStartPanel.setBackground(Color.WHITE);
         clientStartPanel.add(clientStartTitle, "cell 0 0, al center, span");
-        clientStartPanel.add(saveButton, "cell 0 1, al center, span");
+        clientStartPanel.add(newClientButton, "cell 0 1, al center, span");
         clientStartPanel.add(loadButton, "cell 0 2, al center, span");
-        saveButton.setPreferredSize(new Dimension(300, 30));
+        newClientButton.setPreferredSize(new Dimension(300, 30));
         loadButton.setPreferredSize(new Dimension(300, 30));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String x = JOptionPane.showInputDialog(clientStartPanel, "testing");
-            }
-        });
+        newClientButton.addActionListener(new NewClientHandler(1, cardSwitcher));
+
+        // clientAddPanel components (2/3)
+        clientAddPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
+        newClientTitle.setFont(font.deriveFont(26.0f));
+        clientAddPanel.setBackground(Color.WHITE);
+        clientAddPanel.add(backButton, "cell 0 0 , al left");
+        clientAddPanel.add(newClientTitle, "cell 0 1, al center");
+        backButton.addActionListener(new NewClientHandler(2, cardSwitcher));
+
+        // loadClientPanel components (3/3)
 
 
 
         // adding components to textPanel
-        textPanel.setLayout(new MigLayout("fillx", "[center]", "25[center]"));
+        switchPanel.add(clientStartPanel, "1");
+        switchPanel.add(clientAddPanel, "2");
+        textPanel.setLayout(new MigLayout("fillx, debug", "[center]", "25[center]"));
         textPanel.setBackground(Color.LIGHT_GRAY);
-        textPanel.add(clientStartPanel, " cell 0 0, width 400!, height 300!, al center");
+        textPanel.add(switchPanel, " cell 0 0, width 400!, height 300!, al center");
+
 
         JPanelBlue inputInfoPanelRow1 = new JPanelBlue();
         JPanelBlue inputInfoPanelRow2 = new JPanelBlue();
@@ -398,23 +416,49 @@ class StockValueHandler implements ActionListener {
     }
 }
 
-class NewClientHandler implements ActionListener{
-    GUI app;
+class NewClientHandler implements ActionListener {
+    int state;
+    CardSwitcher switcher;
 
-    public NewClientHandler(GUI app){
-        this.app = app;
+    public NewClientHandler(int state, CardSwitcher switcher) {
+        this.state = state;
+        this.switcher = switcher;
     }
 
-    public void actionPerformed(ActionEvent evt){
-        JOptionPane.showInternalInputDialog(null, "text");
+    public void actionPerformed(ActionEvent evt) {
+        switch (state){
+            case 1: switcher.switchTo("2");
+                break;
+            case 2: switcher.switchTo("1");
+                break;
+            case 3:
+                break;
+        }
+
+        //JOptionPane.showInternalInputDialog(null, "text");
 
     }
-
-
-
-
-
 }
+
+    class CardSwitcher {
+        CardLayout layout;
+        Container container;
+        public CardSwitcher(Container container, CardLayout layout) {
+            this.layout = layout;
+            this.container = container;
+        }
+        public void switchTo(String card) {
+            layout.show(container, card);
+        }
+    }
+
+
+
+
+
+
+
+
 
 
 
