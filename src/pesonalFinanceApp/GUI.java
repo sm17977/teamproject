@@ -13,6 +13,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -37,8 +39,12 @@ public class GUI extends JFrame {
     JButton bankButton;
     JTabbedPane tabPane;
     JLabel activeClientTitle;
-    JLabel clientName;
+    JLabel clientNameTop;
     JLabel activeClientBalance;
+    JComboBox<Client> profiles;
+    DefaultComboBoxModel<Client> comboBoxModel;
+    JButtonBlue loadClientButton;
+    JPanel top;
 
     // Blue theme of the program, use these when colouring components
     public static final Color primary_color = new Color(103,121,150);
@@ -127,6 +133,7 @@ public class GUI extends JFrame {
         sharesField.setEditable(false);
         companySharesButton.setEnabled(false);
 
+
         JLabel clientStartTitle = new JLabel("Portfolio Manager");
         JLabel newClientTitle = new JLabel("Create new Portfolio");
         JLabel loadClientTitle = new JLabel("Load a saved Portfolio");
@@ -140,6 +147,7 @@ public class GUI extends JFrame {
         JLabel activeClientProfile = new JLabel("Client Profile");
         activeClientBalance = new JLabel("Set your balance below.");
         JLabel activeClientBalanceTitle = new JLabel("Balance");
+        JButtonBlue saveProfileButton = new JButtonBlue("Save Profile");
         // possible currency option attached to client?
 
         // populate company suggestion field
@@ -189,16 +197,21 @@ public class GUI extends JFrame {
 
         // loadClientPanel components (3/4)
         // Panel allows users to load a save client profile
-        clientLoadPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20"));
+        clientLoadPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20[]30"));
         loadClientTitle.setFont(font.deriveFont(26.0f));
         clientLoadPanel.setBackground(Color.WHITE);
+        profiles = new JComboBox();
+        loadClientButton = new JButtonBlue("Load Selected Profile");
         clientLoadPanel.add(backButton2, "cell 0 0 , al left");
         clientLoadPanel.add(loadClientTitle, "cell 0 1, al center");
+        clientLoadPanel.add(profiles, "cell 0 3, al center");
+        clientLoadPanel.add(loadClientButton, "cell 0 4, al center");
         backButton2.addActionListener(new NewClientHandler(this,2, cardSwitcher, c));
+        loadClientButton.addActionListener(new NewClientHandler(this, 7, cardSwitcher, c));
 
         // activeClientPanel components (4/4)
         // Panel shows the current active client profile
-        clientActivePanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]15[]5[]5"));
+        clientActivePanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]15[]5[]35[]"));
         activeClientProfile.setFont(font.deriveFont(26.0f));
         activeClientTitle.setFont(font.deriveFont(16.0f));
         activeClientBalanceTitle.setFont(font.deriveFont(16.0f));
@@ -208,6 +221,8 @@ public class GUI extends JFrame {
         clientActivePanel.add(activeClientProfile, "cell 0 1, al center");
         clientActivePanel.add(activeClientTitle, "cell 0 2, al center");
         clientActivePanel.add(activeClientBalance, "cell 0 3, al center");
+        clientActivePanel.add(saveProfileButton, "cell 0 4, al center");
+        saveProfileButton.addActionListener(new NewClientHandler(this, 6, cardSwitcher, c));
 
         exitButton.addActionListener(new NewClientHandler(this, 5, cardSwitcher, c));
 
@@ -308,7 +323,7 @@ public class GUI extends JFrame {
         // --- SECOND TAB ---
 
         //JPanels for the data tab
-        JPanel top = new JPanelBlue();
+        top = new JPanelBlue();
         JPanel centerInfo = new JPanelBlue();
         JPanel bottom = new JPanelBlue();
 
@@ -322,9 +337,9 @@ public class GUI extends JFrame {
 
 
         dataOutput = new JLabelBlue("DATA WILL BE OUTPUT HERE");
-        clientName = new JLabelBlue("");
+        clientNameTop = new JLabelBlue("");
 
-        top.add(clientName);
+        top.add(clientNameTop);
 
         centerInfo.add(chart);
 
@@ -375,6 +390,11 @@ public class GUI extends JFrame {
             tabInsets = new Insets(1,35,1,35);
         }
     };
+
+    public DefaultComboBoxModel<Client> getComboBoxModel(ArrayList<Client> profileList){
+        Client[] comboBoxModel = profileList.toArray(new Client[0]);
+        return new DefaultComboBoxModel<>(comboBoxModel);
+    }
 
 
 }
@@ -496,18 +516,28 @@ class NewClientHandler implements ActionListener {
         this.c = c;
     }
 
-    public void actionPerformed(ActionEvent evt) {
+    public void actionPerformed(ActionEvent evt)  {
         switch (state){
+            // New Client Panel Button
             case 1: switcher.switchTo("2");
                 break;
+                //Back Button
             case 2: switcher.switchTo("1");
                 break;
+                //Load Panel Button
             case 3: switcher.switchTo("3");
                 break;
+                //Create Client Button
             case 4: String clientName = app.nameField.getText();
                     String portfolioName = app.profileNameField.getText();
-                    c = Client.getInstance(clientName, portfolioName);
-                    app.c = this.c;
+                    if (c == null){
+                        System.out.println("No client yet..");
+                    }
+                    else {
+                        System.out.println("Client already exists");
+                    }
+                    c = Client.getInstance(clientName, portfolioName, new HashMap<>(), new HashMap<>());
+                    app.c = c;
                     app.nameField.setText("");
                     app.profileNameField.setText("");
                     app.companySharesButton.setEnabled(true);
@@ -517,11 +547,15 @@ class NewClientHandler implements ActionListener {
                     app.tabPane.setEnabledAt(1, true);
                     app.activeClientTitle.setText(clientName);
                     app.activeClientTitle.setText("Name: " + app.activeClientTitle.getText());
-                    app.clientName.setText(clientName + "'s Portfolio");
+                    app.clientNameTop.setText(clientName + "'s Portfolio");
                     switcher.switchTo("4");
                     break;
-            case 5: this.c = null;
-                    app.c = null;
+                    //Exit button to sign out client
+            case 5:
+
+                    app.c.resetClient();
+                    app.activeClientBalance.setText("Set your balance below.");
+                    app.activeClientTitle.setText("");
                     app.companySharesButton.setEnabled(false);
                     app.sharesField.setEditable(false);
                     app.bankField.setEditable(false);
@@ -529,28 +563,69 @@ class NewClientHandler implements ActionListener {
                     app.tabPane.setEnabledAt(1, false);
                     switcher.switchTo("1");
                     break;
+            case 6:
+                //Save profile button
+                System.out.println("Saving Profile...");
+                try {
+                    app.c.saveProfile(app.c);
+                    app.comboBoxModel = app.getComboBoxModel(app.c.clientProfileList);
+                    app.profiles.setModel(app.comboBoxModel);
+                    for(Client c : app.c.clientProfileList){
+                        System.out.println(c.toString());
+                    }
+                }
+                catch(IOException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+                //Loading a selected profile
+            case 7:
+
+                Object selected = app.profiles.getSelectedItem();
+                String name = selected.toString();
+                try {
+                    c = app.c.loadProfile(name);
+
+                }
+                catch (IOException | ClassNotFoundException e ){
+                }
+                app.c = c;
+                app.companySharesButton.setEnabled(true);
+                app.sharesField.setEditable(true);
+                app.bankField.setEditable(true);
+                app.bankButton.setEnabled(true);
+                app.tabPane.setEnabledAt(1, true);
+                app.activeClientTitle.setText("Name: " + c.clientName);
+                app.activeClientBalance.setText("Balance: $" + Double.toString(c.bankBalance));
+                app.clientNameTop.setText(c.clientName + "'s Portfolio");
+                switcher.switchTo("4");
 
 
 
 
         }
 
-        //JOptionPane.showInternalInputDialog(null, "text");
+
+
+
+
+
 
     }
 }
 
-    class CardSwitcher {
-        CardLayout layout;
-        Container container;
-        public CardSwitcher(Container container, CardLayout layout) {
-            this.layout = layout;
-            this.container = container;
-        }
-        public void switchTo(String card) {
-            layout.show(container, card);
-        }
+class CardSwitcher {
+    CardLayout layout;
+    Container container;
+    public CardSwitcher(Container container, CardLayout layout) {
+        this.layout = layout;
+        this.container = container;
     }
+    public void switchTo(String card) {
+        layout.show(container, card);
+    }
+}
+
 
 
 
