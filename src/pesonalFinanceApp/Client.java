@@ -1,76 +1,74 @@
 package pesonalFinanceApp;
 
 import afu.org.checkerframework.checker.igj.qual.I;
+import pl.zankowski.iextrading4j.api.stocks.Chart;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
-//Class client to hold all information regarding the client (user)
-public class Client {
+//Singleton class client to hold all information regarding the client (user)
+public class Client implements Serializable {
+    private static Client single_client = null;
 
-    //Client name
-    private String clientName;
-    //Number of companies
-    private String Companies;
-    //Client bank balance
-    private int bankBalance;
-    //Count of unique client shares
-    private int shareQuantity = 0;
-    //Client Total Value of all shares the client holds
-    private int totalShares;
-    //Map to hold the shares and quantity of shares the client holds
-    private Map<String[], Integer> userShares;
+    public String clientName;
+    private String portfolioName;
+    public double bankBalance;
+    HashMap<String, Double> stocksAmount;
+    Map<String, List<Chart>> stocksHistory;
+    public static ArrayList<Client> clientProfileList = new ArrayList<>();
 
+    private Client(String clientName, String portfolioName, HashMap<String, Double> stocksAmount, Map<String, List<Chart>> stocksHistory ){
+        this.clientName = clientName;
+        this.portfolioName = portfolioName;
+        this.stocksAmount = stocksAmount;
+        this.stocksHistory = stocksHistory;
+        System.out.println("Client created\nName: " + clientName + " -- Portfolio Name: " + portfolioName);
 
-    public Client(){
-
-        userShares = new HashMap<>();
-        //Write write = new Write();
 
     }
+    public static Client getInstance(String clientName, String portfolioName, HashMap<String, Double> stocksAmount, Map<String, List<Chart>> stocksHistory ){
+        if(single_client == null){
+            single_client = new Client(clientName, portfolioName, stocksAmount, stocksHistory);
 
-
-    //Print the map in a nice format
-   public static <K, V> String printMap (Map<String[], Integer> map){
-        String result = "";
-        Iterator<Map.Entry<String[], Integer>> it = map.entrySet().iterator();
-        while(it.hasNext()) {
-            Map.Entry<String[], Integer> entry = it.next();
-            result += "Company: " + entry.getKey() + " - Share Quantity: " + entry.getValue() + "\n";
         }
-
-        return result;
-   }
-
-    //Method to retrieve bank balance
-    int getBalance (){
-    return this.bankBalance;
+        return single_client;
+    }
+    public String toString(){
+        return clientName;
     }
 
-    //Sets the bank balance from the user input
-    void setBalance(int balance){
-        this.bankBalance = balance;
+    public static Client[] toArray(ArrayList<Client> arrayList){
+        Client[] clientArray = arrayList.toArray(new Client[arrayList.size()]);
+        return clientArray;
     }
 
-    Map<String[], Integer> getUserShares(){
-        return this.userShares;
-    }
-
-    void setUserShares(String[] companyName, int shareQuantity){
-        this.userShares.put(companyName, shareQuantity);
+    public void saveProfile(Client c) throws IOException {
+        clientProfileList.add(c);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("profiles.bin"));
+        objectOutputStream.writeObject(clientProfileList);
 
     }
+    public Client loadProfile(String clientName) throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("profiles.bin"));
+        ArrayList<Client> loadedProfiles = (ArrayList<Client>) objectInputStream.readObject();
+        for(Client c : loadedProfiles){
+            System.out.println(c.clientName);
+            if(c.clientName.equals(clientName) ){
+                System.out.println("Loaded " + c.clientName + " with a balance of: " + c.bankBalance + " and " + c.stocksAmount.toString());
 
-    void setShareQuantity(int shareQuantity){
-        this.shareQuantity = shareQuantity;
+                return c;
+            }
+            else{
+                System.out.println("Couldn't load profile for " + clientName);
+            }
+        }
+        return null;
+    }
+    public void resetClient(){
+        single_client = null;
     }
 
-    int getShareQuantity(){
-        return this.shareQuantity;
-    }
-
-    int getShareCount(){    return userShares.size();   }
 }
+
+
