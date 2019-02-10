@@ -12,8 +12,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +25,8 @@ import com.github.lgooddatepicker.components.DatePicker;
 import net.miginfocom.swing.MigLayout;
 
 import static java.lang.Math.toIntExact;
+import static pesonalFinanceApp.GUI.loadAllProfiles;
+import static pesonalFinanceApp.GUI.saveClientList;
 
 
 public class GUI extends JFrame {
@@ -41,17 +42,18 @@ public class GUI extends JFrame {
     JLabel activeClientTitle;
     JLabel clientNameTop;
     JLabel activeClientBalance;
-    JComboBox<Client> profiles;
-    DefaultComboBoxModel<Client> comboBoxModel;
+    JComboBox<Client> profilesComboBox;
     JButtonBlue loadClientButton;
     JPanel top;
+    JPanel clientLoadPanel;
+
 
     // Blue theme of the program, use these when colouring components
-    public static final Color primary_color = new Color(103,121,150);
-    public static final Color secondary_color = new Color(61,86,125);
-    public static final Color text_color = new Color(232,231,237);
+    public static final Color primary_color = new Color(103, 121, 150);
+    public static final Color secondary_color = new Color(61, 86, 125);
+    public static final Color text_color = new Color(232, 231, 237);
     public static final Color border_color = new Color(45, 59, 90);
-    public static final Color field_color = new Color(232,231,237);
+    public static final Color field_color = new Color(232, 231, 237);
 
     Market market;
     Charts chart = new Charts();
@@ -67,7 +69,19 @@ public class GUI extends JFrame {
     DatePicker dateInput = new DatePicker();
     JLabelBlue dataOutput;
 
-    public GUI(){
+
+
+    public GUI() {
+        try {
+            loadAllProfiles();
+            for(Client c : Client.clientProfileList){
+                System.out.println("Loading profile.. " + c.toString());
+            }
+        }
+        catch(IOException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
         market = new Market();
         getContentPane().setBackground(Color.WHITE);
 
@@ -104,7 +118,7 @@ public class GUI extends JFrame {
         JPanel inputInfoPanel = new JPanelBlue(new BorderLayout());
         JPanel clientStartPanel = new JPanel();
         JPanel clientAddPanel = new JPanel();
-        JPanel clientLoadPanel = new JPanel();
+        clientLoadPanel = new JPanel();
         JPanel clientActivePanel = new JPanel();
 
         //component for title panel
@@ -113,7 +127,7 @@ public class GUI extends JFrame {
 
         //component for message panel
         JLabel message = new JLabelBlue("");
-        message.setFont(message.getFont().deriveFont(15f) );
+        message.setFont(message.getFont().deriveFont(15f));
 
         //components for inputInfoPanel
         JButton newClientButton = new JButtonBlue("New Client");
@@ -168,7 +182,7 @@ public class GUI extends JFrame {
 
         // clientStartPanel components (1/4)
         // Initial panel displayed on the input tab
-        Font font = new Font("Segoe UI", Font.PLAIN,40);
+        Font font = new Font("Segoe UI", Font.PLAIN, 40);
         clientStartPanel.setLayout(new MigLayout("fillx", "[center]", "40[]30[]20"));
         clientStartTitle.setFont(font);
         clientStartPanel.setBackground(Color.WHITE);
@@ -177,8 +191,8 @@ public class GUI extends JFrame {
         clientStartPanel.add(loadButton, "cell 0 2, al center, span");
         newClientButton.setPreferredSize(new Dimension(300, 30));
         loadButton.setPreferredSize(new Dimension(300, 30));
-        newClientButton.addActionListener(new NewClientHandler(this,1, cardSwitcher, c));
-        loadButton.addActionListener(new NewClientHandler(this,3, cardSwitcher, c));
+        newClientButton.addActionListener(new NewClientHandler(this, 1, cardSwitcher, c));
+        loadButton.addActionListener(new NewClientHandler(this, 3, cardSwitcher, c));
 
         // clientAddPanel components (2/4)
         // Panel allows users to create a client
@@ -192,21 +206,24 @@ public class GUI extends JFrame {
         clientAddPanel.add(profileNameFieldLbl, "cell 0 4, al center");
         clientAddPanel.add(profileNameField, "cell 0 5, al center");
         clientAddPanel.add(createClient, "cell 0 6, al center");
-        backButton1.addActionListener(new NewClientHandler(this,2, cardSwitcher, c));
-        createClient.addActionListener(new NewClientHandler(this,4, cardSwitcher, c));
+        backButton1.addActionListener(new NewClientHandler(this, 2, cardSwitcher, c));
+        createClient.addActionListener(new NewClientHandler(this, 4, cardSwitcher, c));
 
         // loadClientPanel components (3/4)
         // Panel allows users to load a save client profile
         clientLoadPanel.setLayout(new MigLayout("fillx", "[center]", "10[]25[]20[]30"));
         loadClientTitle.setFont(font.deriveFont(26.0f));
         clientLoadPanel.setBackground(Color.WHITE);
-        profiles = new JComboBox();
+
+        profilesComboBox = new JComboBox<>();
+        clientLoadPanel.add(profilesComboBox, "cell 0 3, al center");
+
+
         loadClientButton = new JButtonBlue("Load Selected Profile");
         clientLoadPanel.add(backButton2, "cell 0 0 , al left");
         clientLoadPanel.add(loadClientTitle, "cell 0 1, al center");
-        clientLoadPanel.add(profiles, "cell 0 3, al center");
         clientLoadPanel.add(loadClientButton, "cell 0 4, al center");
-        backButton2.addActionListener(new NewClientHandler(this,2, cardSwitcher, c));
+        backButton2.addActionListener(new NewClientHandler(this, 2, cardSwitcher, c));
         loadClientButton.addActionListener(new NewClientHandler(this, 7, cardSwitcher, c));
 
         // activeClientPanel components (4/4)
@@ -227,13 +244,12 @@ public class GUI extends JFrame {
         exitButton.addActionListener(new NewClientHandler(this, 5, cardSwitcher, c));
 
 
-
         // adding components to textPanel
         switchPanel.add(clientStartPanel, "1");
         switchPanel.add(clientAddPanel, "2");
         switchPanel.add(clientLoadPanel, "3");
         switchPanel.add(clientActivePanel, "4");
-        textPanel.setLayout(new MigLayout("fillx, debug", "[center]", "25[center]"));
+        textPanel.setLayout(new MigLayout("fillx", "[center]", "25[center]"));
         textPanel.setBackground(Color.LIGHT_GRAY);
         textPanel.add(switchPanel, " cell 0 0, width 400!, height 300!, al center");
 
@@ -255,7 +271,6 @@ public class GUI extends JFrame {
         inputInfoPanelRow2.add(companySharesButton);
 
 
-
         inputInfoPanel.add(inputInfoPanelRow1, BorderLayout.NORTH);
         inputInfoPanel.add(inputInfoPanelRow2, BorderLayout.CENTER);
 
@@ -270,7 +285,7 @@ public class GUI extends JFrame {
         bankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
                     //formats balance to 2 decimal places
                     String formattedBalance = String.format("%.2f", Double.parseDouble(bankField.getText()));
 
@@ -279,9 +294,8 @@ public class GUI extends JFrame {
                     c.bankBalance = Double.parseDouble(formattedBalance);
                     activeClientBalance.setText(Double.toString(c.bankBalance));
                     activeClientBalance.setText("Balance: $" + activeClientBalance.getText());
-                }
-                catch(Exception n){
-                   message.setText("Please provide a numerical value for the Bank Balance.");
+                } catch (Exception n) {
+                    message.setText("Please provide a numerical value for the Bank Balance.");
                 }
                 bankField.setText("");
             }
@@ -294,28 +308,28 @@ public class GUI extends JFrame {
         companySharesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    if (c.stocksAmount.size() <= 4) {
-                        try {
-                            String company_symbol = companyData.getSymbol(companyField.getText());
-                            System.out.println(company_symbol);
-                            Double share_amount = Double.parseDouble(sharesField.getText());
+                if (c.stocksAmount.size() <= 4) {
+                    try {
+                        String company_symbol = companyData.getSymbol(companyField.getText());
+                        System.out.println(company_symbol);
+                        Double share_amount = Double.parseDouble(sharesField.getText());
 
-                            List<Chart> stock_list = market.getStockPrice(company_symbol);
-                            c.stocksAmount.put(company_symbol, share_amount);
-                            c.stocksHistory.put(company_symbol, stock_list);
+                        List<Chart> stock_list = market.getStockPrice(company_symbol);
+                        c.stocksAmount.put(company_symbol, share_amount);
+                        c.stocksHistory.put(company_symbol, stock_list);
 
-                            System.out.println("Your shares: " + c.stocksAmount.toString());
-                        } catch (IEXTradingException ex) {
-                            System.out.println("Please provide a valid company name.");
-                        } catch (Exception ex) {
-                            System.out.println("Please provide an integer value for the share amount.");
-                            System.err.println(ex.toString());
-                        }
-                        sharesField.setText("");
-                    } else {
-                        System.out.println("You can only enter up to 5 companies. Your list:" + c.stocksAmount.toString());
-                        sharesField.setText("");
+                        System.out.println("Your shares: " + c.stocksAmount.toString());
+                    } catch (IEXTradingException ex) {
+                        System.out.println("Please provide a valid company name.");
+                    } catch (Exception ex) {
+                        System.out.println("Please provide an integer value for the share amount.");
+                        System.err.println(ex.toString());
                     }
+                    sharesField.setText("");
+                } else {
+                    System.out.println("You can only enter up to 5 companies. Your list:" + c.stocksAmount.toString());
+                    sharesField.setText("");
+                }
 
             }
         });
@@ -353,7 +367,7 @@ public class GUI extends JFrame {
         showDataTab.add(bottom, BorderLayout.SOUTH);
 
         add(tabPane);
-        setSize(1000,500);
+        setSize(1000, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
@@ -372,13 +386,13 @@ public class GUI extends JFrame {
     private void restyleFormattedTextField(JFormattedTextField f) {
         setBackground(field_color);
         Border line = new LineBorder(border_color);
-        Border margin = new EmptyBorder(3,5,2,5);
-        Border compound  = new CompoundBorder(line, margin);
+        Border margin = new EmptyBorder(3, 5, 2, 5);
+        Border compound = new CompoundBorder(line, margin);
         f.setBorder(compound);
     }
 
     // -- Helper function ( for JTabbedPane ) --
-     BasicTabbedPaneUI tabUIStyle =  new BasicTabbedPaneUI() {
+    BasicTabbedPaneUI tabUIStyle = new BasicTabbedPaneUI() {
         @Override
         protected void installDefaults() {
             super.installDefaults();
@@ -387,155 +401,193 @@ public class GUI extends JFrame {
             shadow = secondary_color;
             darkShadow = secondary_color;
             focus = secondary_color;
-            tabInsets = new Insets(1,35,1,35);
+            tabInsets = new Insets(1, 35, 1, 35);
         }
     };
 
-    public DefaultComboBoxModel<Client> getComboBoxModel(ArrayList<Client> profileList){
+    public void updateClientList(){
+
+        profilesComboBox.setModel(getComboBoxModel(Client.clientProfileList));
+
+    }
+
+    public DefaultComboBoxModel<Client> getComboBoxModel(ArrayList<Client> profileList) {
         Client[] comboBoxModel = profileList.toArray(new Client[0]);
         return new DefaultComboBoxModel<>(comboBoxModel);
     }
 
+    public static void saveClientList(ArrayList<Client> clientProfileList) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("profiles.bin"));
+        objectOutputStream.writeObject(clientProfileList);
 
-}
-
-// Second Tab : Button Portfolio Value
-class CurrentValueHandler implements ActionListener {
-    GUI app;
-
-
-    CurrentValueHandler(GUI app) {
-        this.app = app;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        Map<String, Double> portfolio = new LinkedHashMap<>();
+    public static ArrayList<Client> loadAllProfiles() throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("profiles.bin"));
+        Client.clientProfileList.addAll((List<Client>) objectInputStream.readObject());
+        return Client.clientProfileList;
 
-        if(!app.c.stocksHistory.isEmpty()) {
-            app.c.stocksHistory.forEach((String company, List<Chart> list) -> {
+    }
 
-                for (int i = list.size() - 1; i > 0; i--) {
-                    String currentDay = list.get(i).getDate();
 
-                    Double shareCount = app.c.stocksAmount.get(company);
-                    Double sharePrice = list.get(i).getClose().doubleValue();
-                    Double shareTotal = shareCount * sharePrice;
+    public Client loadProfile(String clientName)  {
+        for (Client c : Client.clientProfileList) {
+            System.out.println(c.clientName);
+            if (c.clientName.equals(clientName)) {
+                System.out.println("Loaded " + c.clientName + " with a balance of: " + c.bankBalance + " and " + c.stocksAmount.toString());
 
-                    if (portfolio.containsKey(currentDay)) {
-                        portfolio.put(currentDay, portfolio.get(currentDay) + shareTotal);
-                    } else {
-                        portfolio.put(currentDay, app.c.bankBalance + shareTotal);
+                return c;
+            } else {
+            }
+        }
+        return null;
+    }
+
+
+
+
+
+
+    }
+
+    // Second Tab : Button Portfolio Value
+    class CurrentValueHandler implements ActionListener {
+        GUI app;
+
+
+        CurrentValueHandler(GUI app) {
+            this.app = app;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            Map<String, Double> portfolio = new LinkedHashMap<>();
+
+            if (!app.c.stocksHistory.isEmpty()) {
+                app.c.stocksHistory.forEach((String company, List<Chart> list) -> {
+
+                    for (int i = list.size() - 1; i > 0; i--) {
+                        String currentDay = list.get(i).getDate();
+
+                        Double shareCount = app.c.stocksAmount.get(company);
+                        Double sharePrice = list.get(i).getClose().doubleValue();
+                        Double shareTotal = shareCount * sharePrice;
+
+                        if (portfolio.containsKey(currentDay)) {
+                            portfolio.put(currentDay, portfolio.get(currentDay) + shareTotal);
+                        } else {
+                            portfolio.put(currentDay, app.c.bankBalance + shareTotal);
+                        }
                     }
+
+                });
+                int days = 30;
+
+                SimpleDateFormat inputDf = new SimpleDateFormat("d MMMMM yyyy");
+                SimpleDateFormat outputDf = new SimpleDateFormat("dd/MM/yyyy");
+
+                try {
+                    // Input date
+                    Date dateFormatted = inputDf.parse(app.dateInput.getText());
+                    String inputFormatted = outputDf.format(dateFormatted);
+
+                    // Current date
+                    Date today = new Date();
+                    String todayFormatted = outputDf.format(today);
+
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate inputDate = LocalDate.parse(inputFormatted, df);
+                    LocalDate currentDate = LocalDate.parse(todayFormatted, df);
+
+                    // Get the days between the current date and the input date
+                    days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+                } catch (Exception ex) {
                 }
 
-            });
-            int days = 30;
 
-            SimpleDateFormat inputDf = new SimpleDateFormat("d MMMMM yyyy");
-            SimpleDateFormat outputDf = new SimpleDateFormat("dd/MM/yyyy");
-
-            try {
-                // Input date
-                Date dateFormatted = inputDf.parse(app.dateInput.getText());
-                String inputFormatted = outputDf.format(dateFormatted);
-
-                // Current date
-                Date today = new Date();
-                String todayFormatted = outputDf.format(today);
-
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate inputDate = LocalDate.parse(inputFormatted, df);
-                LocalDate currentDate = LocalDate.parse(todayFormatted, df);
-
-                // Get the days between the current date and the input date
-                days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+                app.chart.removeAll();
+                app.chart.updateChart(portfolio, days);
+                app.revalidate();
             }
-            catch (Exception ex) {}
-
-
-            app.chart.removeAll();
-            app.chart.updateChart(portfolio, days);
-            app.revalidate();
         }
     }
-}
 
-// Second Tab : Stock Value Button
-class StockValueHandler implements ActionListener {
-    GUI app;
+    // Second Tab : Stock Value Button
+    class StockValueHandler implements ActionListener {
+        GUI app;
 
-    StockValueHandler(GUI app) {
-        this.app = app;
-    }
+        StockValueHandler(GUI app) {
+            this.app = app;
+        }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(!app.c.stocksHistory.isEmpty()) {
-            // Default days: 30
-            int days = 30;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!app.c.stocksHistory.isEmpty()) {
+                // Default days: 30
+                int days = 30;
 
-            SimpleDateFormat inputDf = new SimpleDateFormat("d MMMMM yyyy");
-            SimpleDateFormat outputDf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat inputDf = new SimpleDateFormat("d MMMMM yyyy");
+                SimpleDateFormat outputDf = new SimpleDateFormat("dd/MM/yyyy");
 
-            try {
-                // Input date
-                Date dateFormatted = inputDf.parse(app.dateInput.getText());
-                String inputFormatted = outputDf.format(dateFormatted);
+                try {
+                    // Input date
+                    Date dateFormatted = inputDf.parse(app.dateInput.getText());
+                    String inputFormatted = outputDf.format(dateFormatted);
 
-                // Current date
-                Date today = new Date();
-                String todayFormatted = outputDf.format(today);
+                    // Current date
+                    Date today = new Date();
+                    String todayFormatted = outputDf.format(today);
 
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate inputDate = LocalDate.parse(inputFormatted, df);
-                LocalDate currentDate = LocalDate.parse(todayFormatted, df);
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate inputDate = LocalDate.parse(inputFormatted, df);
+                    LocalDate currentDate = LocalDate.parse(todayFormatted, df);
 
-                // Get the days between the current date and the input date
-                days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+                    // Get the days between the current date and the input date
+                    days = toIntExact(ChronoUnit.DAYS.between(inputDate, currentDate));
+                } catch (Exception ex) {
+                }
+
+
+                app.chart.removeAll();
+                app.chart.updateChart(app.c.stocksHistory, days, 0);
+                app.revalidate();
             }
-            catch (Exception ex) {}
-
-
-            app.chart.removeAll();
-            app.chart.updateChart(app.c.stocksHistory, days, 0);
-            app.revalidate();
         }
     }
-}
 
-class NewClientHandler implements ActionListener {
-    int state;
-    CardSwitcher switcher;
-    GUI app;
-    Client c;
+    class NewClientHandler implements ActionListener {
+        int state;
+        CardSwitcher switcher;
+        GUI app;
+        Client c;
 
-    public NewClientHandler(GUI app, int state, CardSwitcher switcher, Client c) {
-        this.state = state;
-        this.switcher = switcher;
-        this.app = app;
-        this.c = c;
-    }
+        public NewClientHandler(GUI app, int state, CardSwitcher switcher, Client c) {
+            this.state = state;
+            this.switcher = switcher;
+            this.app = app;
+            this.c = c;
+        }
 
-    public void actionPerformed(ActionEvent evt)  {
-        switch (state){
-            // New Client Panel Button
-            case 1: switcher.switchTo("2");
-                break;
+        public void actionPerformed(ActionEvent evt) {
+            switch (state) {
+                // New Client Panel Button
+                case 1:
+                    switcher.switchTo("2");
+                    break;
                 //Back Button
-            case 2: switcher.switchTo("1");
-                break;
+                case 2:
+                    switcher.switchTo("1");
+                    break;
                 //Load Panel Button
-            case 3: switcher.switchTo("3");
-                break;
+                case 3:
+                    app.updateClientList();
+                    switcher.switchTo("3");
+
+
+                    break;
                 //Create Client Button
-            case 4: String clientName = app.nameField.getText();
+                case 4:
+                    String clientName = app.nameField.getText();
                     String portfolioName = app.profileNameField.getText();
-                    if (c == null){
-                        System.out.println("No client yet..");
-                    }
-                    else {
-                        System.out.println("Client already exists");
-                    }
                     c = Client.getInstance(clientName, portfolioName, new HashMap<>(), new HashMap<>());
                     app.c = c;
                     app.nameField.setText("");
@@ -550,9 +602,8 @@ class NewClientHandler implements ActionListener {
                     app.clientNameTop.setText(clientName + "'s Portfolio");
                     switcher.switchTo("4");
                     break;
-                    //Exit button to sign out client
-            case 5:
-
+                //Exit button to sign out client
+                case 5:
                     app.c.resetClient();
                     app.activeClientBalance.setText("Set your balance below.");
                     app.activeClientTitle.setText("");
@@ -563,68 +614,61 @@ class NewClientHandler implements ActionListener {
                     app.tabPane.setEnabledAt(1, false);
                     switcher.switchTo("1");
                     break;
-            case 6:
-                //Save profile button
-                System.out.println("Saving Profile...");
-                try {
-                    app.c.saveProfile(app.c);
-                    app.comboBoxModel = app.getComboBoxModel(app.c.clientProfileList);
-                    app.profiles.setModel(app.comboBoxModel);
-                    for(Client c : app.c.clientProfileList){
-                        System.out.println(c.toString());
+                case 6:
+                    //Save profile button
+                    System.out.println("Saving Profile...");
+                    try {
+                        saveClientList(Client.clientProfileList);
+                    }catch (IOException e){
+                        System.out.println(e.getMessage());
                     }
-                }
-                catch(IOException e){
-                    System.out.println(e.getMessage());
-                }
-                break;
+
+
+
+
+
+
+                    break;
                 //Loading a selected profile
-            case 7:
+                case 7:
+                    Object selected = app.profilesComboBox.getSelectedItem();
+                    String name = selected.toString();
 
-                Object selected = app.profiles.getSelectedItem();
-                String name = selected.toString();
-                try {
-                    c = app.c.loadProfile(name);
-
-                }
-                catch (IOException | ClassNotFoundException e ){
-                }
-                app.c = c;
-                app.companySharesButton.setEnabled(true);
-                app.sharesField.setEditable(true);
-                app.bankField.setEditable(true);
-                app.bankButton.setEnabled(true);
-                app.tabPane.setEnabledAt(1, true);
-                app.activeClientTitle.setText("Name: " + c.clientName);
-                app.activeClientBalance.setText("Balance: $" + Double.toString(c.bankBalance));
-                app.clientNameTop.setText(c.clientName + "'s Portfolio");
-                switcher.switchTo("4");
+                    c = app.loadProfile(name);
+                    app.c = c;
+                    app.companySharesButton.setEnabled(true);
+                    app.sharesField.setEditable(true);
+                    app.bankField.setEditable(true);
+                    app.bankButton.setEnabled(true);
+                    app.tabPane.setEnabledAt(1, true);
+                    app.activeClientTitle.setText("Name: " + c.clientName);
+                    app.activeClientBalance.setText("Balance: $" + Double.toString(c.bankBalance));
+                    app.clientNameTop.setText(c.clientName + "'s Portfolio");
+                    switcher.switchTo("4");
 
 
+            }
 
 
         }
-
-
-
-
-
-
-
     }
-}
 
-class CardSwitcher {
-    CardLayout layout;
-    Container container;
-    public CardSwitcher(Container container, CardLayout layout) {
-        this.layout = layout;
-        this.container = container;
+
+    class CardSwitcher {
+        CardLayout layout;
+        Container container;
+
+        public CardSwitcher(Container container, CardLayout layout) {
+            this.layout = layout;
+            this.container = container;
+        }
+
+        public void switchTo(String card) {
+            layout.show(container, card);
+        }
     }
-    public void switchTo(String card) {
-        layout.show(container, card);
-    }
-}
+
+
 
 
 
