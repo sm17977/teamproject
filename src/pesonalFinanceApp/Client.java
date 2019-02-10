@@ -23,10 +23,16 @@ public class Client implements Serializable {
         this.portfolioName = portfolioName;
         this.stocksAmount = stocksAmount;
         this.stocksHistory = stocksHistory;
-        System.out.println("Client created\nName: " + clientName + " -- Portfolio Name: " + portfolioName);
-
-
+        clientProfileList.add(this);
+        System.out.println("Client created... -> Name: " + clientName + " -- Portfolio Name: " + portfolioName);
+        for(Client c : clientProfileList){
+            System.out.println(c.toString());
+        }
     }
+
+
+
+
     public static Client getInstance(String clientName, String portfolioName, HashMap<String, Double> stocksAmount, Map<String, List<Chart>> stocksHistory ){
         if(single_client == null){
             single_client = new Client(clientName, portfolioName, stocksAmount, stocksHistory);
@@ -38,33 +44,6 @@ public class Client implements Serializable {
         return clientName;
     }
 
-    public static Client[] toArray(ArrayList<Client> arrayList){
-        Client[] clientArray = arrayList.toArray(new Client[arrayList.size()]);
-        return clientArray;
-    }
-
-    public void saveProfile(Client c) throws IOException {
-        clientProfileList.add(c);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("profiles.bin"));
-        objectOutputStream.writeObject(clientProfileList);
-
-    }
-    public Client loadProfile(String clientName) throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("profiles.bin"));
-        ArrayList<Client> loadedProfiles = (ArrayList<Client>) objectInputStream.readObject();
-        for(Client c : loadedProfiles){
-            System.out.println(c.clientName);
-            if(c.clientName.equals(clientName) ){
-                System.out.println("Loaded " + c.clientName + " with a balance of: " + c.bankBalance + " and " + c.stocksAmount.toString());
-
-                return c;
-            }
-            else{
-                System.out.println("Couldn't load profile for " + clientName);
-            }
-        }
-        return null;
-    }
     public void resetClient(){
         single_client = null;
     }
