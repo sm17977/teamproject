@@ -1,0 +1,12 @@
+<application>
+  <component name="libraryTable">
+    <library name="lib">
+      <CLASSES>
+        <root url="file://$USER_HOME$/intellij/teamproject/lib" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$USER_HOME$/intellij/teamproject/lib" recursive="false" />
+    </library>
+  </component>
+</application>
