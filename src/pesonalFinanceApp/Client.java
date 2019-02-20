@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 //Singleton class client to hold all information regarding the client (user)
 public class Client implements Serializable {
     private static Client single_client = null;
+    static final long serialVersionUID = 1L;
 
     public String clientName;
     private String portfolioName;
