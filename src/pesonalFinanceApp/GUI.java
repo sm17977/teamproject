@@ -586,21 +586,30 @@ public class GUI extends JFrame {
                     break;
                 //Create Client Button
                 case 4:
-                    String clientName = app.nameField.getText();
-                    String portfolioName = app.profileNameField.getText();
-                    c = Client.getInstance(clientName, portfolioName, new HashMap<>(), new HashMap<>());
-                    app.c = c;
-                    app.nameField.setText("");
-                    app.profileNameField.setText("");
-                    app.companySharesButton.setEnabled(true);
-                    app.sharesField.setEditable(true);
-                    app.bankField.setEditable(true);
-                    app.bankButton.setEnabled(true);
-                    app.tabPane.setEnabledAt(1, true);
-                    app.activeClientTitle.setText(clientName);
-                    app.activeClientTitle.setText("Name: " + app.activeClientTitle.getText());
-                    app.clientNameTop.setText(clientName + "'s Portfolio");
-                    switcher.switchTo("4");
+                    String clientName;
+                    String portfolioName;
+                    if(app.nameField.getText().isEmpty() || app.profileNameField.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(this.app, "Please enter a client name and portfolio name before saving.");
+                    }
+                    else {
+                        clientName = app.nameField.getText();
+                        portfolioName = app.profileNameField.getText();
+
+
+                        c = Client.getInstance(clientName, portfolioName, new HashMap<>(), new HashMap<>());
+                        app.c = c;
+                        app.nameField.setText("");
+                        app.profileNameField.setText("");
+                        app.companySharesButton.setEnabled(true);
+                        app.sharesField.setEditable(true);
+                        app.bankField.setEditable(true);
+                        app.bankButton.setEnabled(true);
+                        app.tabPane.setEnabledAt(1, true);
+                        app.activeClientTitle.setText(clientName);
+                        app.activeClientTitle.setText("Name: " + app.activeClientTitle.getText());
+                        app.clientNameTop.setText(clientName + "'s Portfolio");
+                        switcher.switchTo("4");
+                    }
                     break;
                 //Exit button to sign out client
                 case 5:
