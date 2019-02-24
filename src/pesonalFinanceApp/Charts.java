@@ -1,25 +1,26 @@
 package pesonalFinanceApp;
 
-import javax.swing.*;
-
-import java.util.HashMap;
-import java.util.List;
-
-import org.jfree.data.time.*;
 import pl.zankowski.iextrading4j.api.stocks.Chart;
+
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.data.time.*;
+import org.jfree.data.xy.XYDataset;
 
-import java.awt.*;
+import javax.swing.JPanel;
+
+import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.Color;
+
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 import static pesonalFinanceApp.GUI.secondary_color;
-
-
 
 public class Charts extends JPanel {
     private Map<String, List<Chart>> stockMap = null;
@@ -30,7 +31,7 @@ public class Charts extends JPanel {
         updateChart(stockMap, days, 0);
     }
 
-    // Stock
+    // -- Stock --
     public void updateChart(Map<String, List<Chart>> data, int display_days, int flag){
         stockMap = data;
         days = (int)((float)display_days / 1.4);
@@ -45,7 +46,7 @@ public class Charts extends JPanel {
         add(panel);
     }
 
-    // Portfolio
+    // -- Portfolio --
     public void updateChart(Map<String, Double> data, int display_days){
         portfolioMap = data;
         days = (int)((float)display_days / 1.4);
@@ -79,28 +80,25 @@ public class Charts extends JPanel {
     }
 
     private void styleChart(JFreeChart chrt) {
-        // -- Outside of chart
+        // -- Outside of chart --
         chrt.setBackgroundPaint(new Color(199,198,211));
         chrt.getLegend().setBackgroundPaint(new Color(199,198,211));
         this.setBackground(secondary_color);
 
-        // -- Inside of chart
+        // -- Inside of chart --
         chrt.getPlot().setBackgroundPaint(secondary_color);
         chrt.getPlot().setOutlinePaint(Color.BLACK);
     }
-
-
 
     // -- Portfolio Data Set --
     private XYDataset createPortfolioDataset() {
         TimeSeriesCollection portfolioSeries = new TimeSeriesCollection();
         TimeSeries portfolioLinePlot = new TimeSeries("Portfolio");
 
-
-        if(portfolioMap != null) {
+        if (portfolioMap != null) {
             int total_days = this.days;
-            for(Map.Entry<String, Double> entry : portfolioMap.entrySet()) {
-                if(total_days <= 0) break;
+            for (Map.Entry<String, Double> entry : portfolioMap.entrySet()) {
+                if (total_days <= 0) break;
                 String[] date_array = entry.getKey().split("-");
 
                 Integer year = Integer.parseInt(date_array[0]);
@@ -120,11 +118,11 @@ public class Charts extends JPanel {
     private XYDataset createDataset() {
         TimeSeriesCollection stockSeries = new TimeSeriesCollection();
 
-        if(stockMap != null) {
+        if (stockMap != null) {
             stockMap.forEach((String stockName, List<Chart> stockGroup) -> {
 
                 TimeSeries stockLinePlot = new TimeSeries(stockName);
-                if(days > 1100) { days = 1100; }
+                if (days > 1100) { days = 1100; }
                 for (int i = stockGroup.size() - 1; i > (stockGroup.size() > days ? stockGroup.size() - days : stockGroup.size()); i--) {
                     try {
                         String[] stockDatePoint = stockGroup.get(i).getDate().split("-");
@@ -139,20 +137,19 @@ public class Charts extends JPanel {
                     }
                 }
                 stockSeries.addSeries(stockLinePlot);
-
-
             });
-            // If more than 1 stock, calculate average of stocks
-            if(stockMap.size() > 1){
+
+            // -- If there is more than 1 stock, calculate the average of stocks --
+            if (stockMap.size() > 1) {
                 TimeSeries averageLinePlot = buildAverageLinePlot(stockSeries);
                 stockSeries.addSeries(averageLinePlot);
             }
-        } else {
+        }
+        else {
             TimeSeries emptyStockPlot = new TimeSeries("Empty");
             emptyStockPlot.add(new Day(10,10, 2018), 0);
             stockSeries.addSeries(emptyStockPlot);
         }
-
         return stockSeries;
     }
 
@@ -171,13 +168,13 @@ public class Charts extends JPanel {
     private HashMap<RegularTimePeriod, Float> getDatesAndValuesFromCollection(TimeSeriesCollection stocks) {
         HashMap<RegularTimePeriod, Float> datesAndValues = new HashMap<>();
 
-        for(int i = 0; i < stocks.getSeriesCount(); i++) {
+        for (int i = 0; i < stocks.getSeriesCount(); i++) {
             TimeSeries stockSeries = stocks.getSeries(i);
 
-            for(int j = 0; j < stockSeries.getItemCount(); j++) {
+            for (int j = 0; j < stockSeries.getItemCount(); j++) {
                 TimeSeriesDataItem dayItem = stockSeries.getDataItem(j);
 
-                if( datesAndValues.containsKey(dayItem.getPeriod()) ) {
+                if (datesAndValues.containsKey(dayItem.getPeriod()) ) {
                     Float totalValue = datesAndValues.get( dayItem.getPeriod() );
                     Float dayValue = Float.valueOf(dayItem.getValue().toString());
                     datesAndValues.put(dayItem.getPeriod(), totalValue + dayValue);
@@ -188,20 +185,18 @@ public class Charts extends JPanel {
                 }
             }
         }
-
         return datesAndValues;
     }
 
     private TimeSeries calculateAveragesFromMap(HashMap<RegularTimePeriod, Float> map, Integer linePlotCount) {
 
         TimeSeries averageLinePlot = new TimeSeries("Average");
-        for(Map.Entry<RegularTimePeriod, Float> entry : map.entrySet()) {
+        for (Map.Entry<RegularTimePeriod, Float> entry : map.entrySet()) {
             RegularTimePeriod date = entry.getKey();
             Float valueAverage = entry.getValue() / linePlotCount;
 
             averageLinePlot.add(date, valueAverage);
         }
-
         return averageLinePlot;
     }
 }
