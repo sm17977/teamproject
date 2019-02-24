@@ -1,11 +1,12 @@
 package pesonalFinanceApp;
 
-import javax.swing.*;
+import javax.swing.JButton;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+
+import java.awt.Font;
 
 import static pesonalFinanceApp.GUI.border_color;
 import static pesonalFinanceApp.GUI.primary_color;
