@@ -19,7 +19,7 @@ public class Client implements Serializable {
     Map<String, List<Chart>> stocksHistory;
     public static ArrayList<Client> clientProfileList = new ArrayList<>();
 
-    private Client(String clientName, String portfolioName, HashMap<String, Double> stocksAmount, Map<String, List<Chart>> stocksHistory ){
+    protected Client(String clientName, String portfolioName, HashMap<String, Double> stocksAmount, Map<String, List<Chart>> stocksHistory){
         this.clientName = clientName;
         this.portfolioName = portfolioName;
         this.stocksAmount = stocksAmount;

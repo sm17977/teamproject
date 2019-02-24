@@ -17,9 +17,9 @@ public class ClientTest {
         assertEquals(client.clientName, instance.clientName);
         assertEquals(client.stocksAmount, instance.stocksAmount);
         assertEquals(client.stocksHistory, instance.stocksHistory);
+        assertNotNull(client.clientName);
+        assertNotNull(client.stocksAmount);
+        assertNotNull(client.stocksHistory);
     }
 
-    @Test
-    public void resetClient() {
-    }
 }
