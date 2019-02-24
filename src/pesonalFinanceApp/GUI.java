@@ -1,5 +1,10 @@
 package pesonalFinanceApp;
 
+/*
+PENDING - Class GUI 5 large classes and demonstrates poor OOP design.
+Can these classes be mitigated to their own files without compromising the functionality of the program?
+ */
+
 import pl.zankowski.iextrading4j.api.stocks.Chart;
 import pl.zankowski.iextrading4j.api.exception.IEXTradingException;
 
@@ -91,7 +96,7 @@ public class GUI extends JFrame {
     PENDING - Requires elaboration (E.g. "Second Tab components"?)
     Above code also needs elaboration for use of created components
     */
-    // Second Tab
+    // -- Second Tab --
     DatePicker dateInput = new DatePicker();
     JLabelBlue dataOutput;
 
@@ -135,7 +140,6 @@ public class GUI extends JFrame {
         tabPane.setEnabledAt(1, false);
 
         // --- FIRST TAB ---
-
         // -- JPanels for the inputInfo tab --
         JPanel titlePanel = new JPanelBlue();
         JPanel textPanel = new JPanelBlue(new BorderLayout());
