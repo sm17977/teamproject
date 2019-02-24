@@ -1,19 +1,21 @@
 package pesonalFinanceApp;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.*;
 
+/*
+PENDING - UNUSED IMPORT STATMENT
+import java.awt.*;
+*/
 
 import static pesonalFinanceApp.GUI.border_color;
 import static pesonalFinanceApp.GUI.field_color;
 
-
 public class JTextFieldBlue extends JTextField {
-    JTextFieldBlue(int col){
+    JTextFieldBlue(int col) {
         super();
         setColumns(col);
         setBackground(field_color);
@@ -23,4 +25,3 @@ public class JTextFieldBlue extends JTextField {
         setBorder(compound);
     }
 }
-

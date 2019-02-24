@@ -13,7 +13,7 @@ import static pesonalFinanceApp.GUI.primary_color;
 import static pesonalFinanceApp.GUI.text_color;
 
 public class JButtonBlue extends JButton {
-    JButtonBlue(String str){
+    JButtonBlue(String str) {
         super();
         setFont(new Font("Verdana", Font.BOLD, 11));
         setText(str);
