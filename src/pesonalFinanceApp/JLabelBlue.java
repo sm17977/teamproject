@@ -1,6 +1,6 @@
 package pesonalFinanceApp;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 import static pesonalFinanceApp.GUI.text_color;
 
