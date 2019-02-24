@@ -7,15 +7,16 @@ import pl.zankowski.iextrading4j.client.rest.request.stocks.*;
 
 import java.util.List;
 
-
 class Market {
     final private IEXTradingClient tradingClient = IEXTradingClient.create();
     Market() { }
-    // Current stock price of company
-    // Symbols for companies are listed here:
-    // https://iextrading.com/trading/eligible-symbols/
+    /*
+    Current stock price of company
+    Symbols for companies are listed here:
+    https://iextrading.com/trading/eligible-symbols/
+    */
 
-    // List of quotes for company for last 5 years
+    // -- List of quotes for company for last 5 years --
     List<Chart> getStockPrice(String symbol) {
         final List<Chart> chartList = tradingClient.executeRequest(new ChartRequestBuilder()
                 .withChartRange(ChartRange.FIVE_YEARS)
@@ -24,4 +25,3 @@ class Market {
         return chartList;
     }
 }
-
